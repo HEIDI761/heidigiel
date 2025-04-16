@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #111;
+  --color-text: #fff;
+  --color-accent: #605f9e;
+  /* --color-primary: #fff;
+  --color-secondary: #111;
+  --color-muted: #555;
+  --color-muted-text: #999; */
+}
+
+::selection {
+  @apply bg-text text-accent;
+}
+
+:root {
+  @apply bg-background text-text;
+
+  font-family: system-ui, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* :root:has(.no-doc-scroll) {
+  overflow: hidden;
+} */
