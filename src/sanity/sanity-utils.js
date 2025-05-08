@@ -4,7 +4,7 @@ export async function getAbout() {
   return client.fetch(
     `*[_type == 'about'][0]{
         homeImage{'url': asset->url},
-        highlight,
+        highlight->{title},
         bio, 
         contact, 
     }`,
