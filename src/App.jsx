@@ -17,45 +17,30 @@ function App() {
   console.log(data);
 
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center">
-      <header className="fixed top-4 z-10 flex w-full items-center justify-between p-4 shadow-lg">
-        <nav className="flex gap-4">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `rounded-lg p-2 ${isActive ? "bg-black" : ""}`
-            }
-          >
-            Home
-          </NavLink>
+    <div className="">
+      <header className="fixed top-0 z-10 flex w-full items-center justify-between p-4">
+        <NavLink
+          to="/"
+          className={({ isActive }) => `text-3xl ${isActive ? "" : ""}`}
+        >
+          <h1 className="text-primary font-serif font-black italic">
+            Heidi Giel
+          </h1>
+        </NavLink>
+
+        <div className="flex gap-4">
           <NavLink
             to="/about"
             className={({ isActive }) =>
-              `rounded-lg p-2 ${isActive ? "bg-black" : ""}`
+              `uppercase ${isActive ? "underline" : ""}`
             }
           >
             About
           </NavLink>
-          <NavLink
-            to="/audiovisual"
-            className={({ isActive }) =>
-              `rounded-lg p-2 ${isActive ? "bg-black" : ""}`
-            }
-          >
-            Audiovisual
-          </NavLink>
-          <NavLink
-            to="/music"
-            className={({ isActive }) =>
-              `rounded-lg p-2 ${isActive ? "bg-black" : ""}`
-            }
-          >
-            Music
-          </NavLink>
-        </nav>
-        <LanguageSwitcher />
+          <LanguageSwitcher />
+        </div>
       </header>
-      {data?.homeImage && (
+      {/* {data?.homeImage && (
         <div>
           <img
             className="absolute top-0 left-0 -z-10 h-screen w-screen object-cover"
@@ -63,21 +48,40 @@ function App() {
             alt="background"
           />
         </div>
-      )}
-      <h1 className="animate-pulse text-4xl">𝒲ℯ𝓁𝒸ℴ𝓂ℯ 𝓉ℴ ℋℯ𝒾𝒹𝒾'𝓈 𝓌ℯ𝒷𝓈𝒾𝓉ℯ</h1>
+      )} */}
+
+      <nav className="absolute inset-0 grid h-screen w-full grid-cols-[1fr_2px_1fr] items-end font-serif text-6xl">
+        <NavLink
+          to="/musica"
+          className={({ isActive }) =>
+            `px-8 py-4 text-end uppercase ${isActive ? "italic" : ""}`
+          }
+        >
+          Musica
+        </NavLink>
+        <NavLink
+          to="/audiovisual"
+          className={({ isActive }) =>
+            `px-8 py-4 uppercase ${isActive ? "italic" : ""}`
+          }
+        >
+          Audiovisual
+        </NavLink>
+      </nav>
+
       {data?.highlight && (
-        <div className="absolute right-0 bottom-0 left-0 m-4 rounded-lg p-4 text-center shadow-lg">
-          <p className="text-xl">
-            {data.highlight.title[language] || data.highlight.title.es}
-          </p>
+        <div className="bg-primary text-background absolute right-0 bottom-0 m-8 flex w-min -rotate-8 justify-end rounded-full p-8 text-center font-serif text-xl italic">
+          {data.highlight.title[language] || data.highlight.title.es}
         </div>
       )}
-      <Routes>
-        <Route path="/" element={null} />
-        <Route path="/about" element={<About />} />
-        <Route path="/audiovisual" element={<Audiovisual />} />
-        <Route path="/music" element={<Music />} />
-      </Routes>
+      <div className="px-4 py-16">
+        <Routes>
+          <Route path="/" element={null} />
+          <Route path="/about" element={<About />} />
+          <Route path="/audiovisual" element={<Audiovisual />} />
+          <Route path="/music" element={<Music />} />
+        </Routes>
+      </div>
     </div>
   );
 }

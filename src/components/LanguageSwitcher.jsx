@@ -4,11 +4,11 @@ export default function LanguageSwitcher() {
   const { language, setLanguage } = useLanguage();
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="">
       <button
-        className="cursor-pointer"
+        className="text-muted-text cursor-pointer uppercase"
         onClick={() => {
-          setLanguage(language === "es" ? "en" : "es");
+          setLanguage(language === "es" ? "es" : "en");
         }}
       >
         {language}
