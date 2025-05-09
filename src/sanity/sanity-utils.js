@@ -11,20 +11,17 @@ export async function getAbout() {
   );
 }
 
-export async function getRoles() {
+export async function getAudiovisualFilters() {
   return client.fetch(
-    `*[_type == 'role']{
-        title,
-        description,
-    }`,
-  );
-}
-
-export async function getAudiovisualProjectTypes() {
-  return client.fetch(
-    `*[_type == 'audiovisualProjectType']{
-        title,
-        description,
+    `{
+    'roles': *[_type == 'role']{
+        _id,
+        role,
+    },
+    'audiovisualProjectTypes': *[_type == 'audiovisualProjectType']{
+        _id,
+        type,
+    },
     }`,
   );
 }
