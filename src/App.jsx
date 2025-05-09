@@ -23,7 +23,7 @@ function App() {
           to="/"
           className={({ isActive }) => `text-3xl ${isActive ? "" : ""}`}
         >
-          <h1 className="text-primary font-serif font-black italic">
+          <h1 className="text-primary hover:text-accent font-serif font-black italic transition-colors">
             Heidi Giel
           </h1>
         </NavLink>
@@ -32,7 +32,7 @@ function App() {
           <NavLink
             to="/about"
             className={({ isActive }) =>
-              `uppercase ${isActive ? "underline" : ""}`
+              `hover:text-primary uppercase transition-colors ${isActive ? "underline" : ""}`
             }
           >
             About
@@ -50,31 +50,31 @@ function App() {
         </div>
       )} */}
 
-      <nav className="absolute inset-0 grid h-screen w-full grid-cols-[1fr_2px_1fr] items-end font-serif text-6xl">
+      <nav className="absolute bottom-0 left-0 grid w-full grid-cols-[1fr_2px_1fr] items-end font-serif text-6xl">
         <NavLink
           to="/musica"
           className={({ isActive }) =>
-            `px-8 py-4 text-end uppercase ${isActive ? "italic" : ""}`
+            `hover:text-primary px-8 py-4 text-end uppercase transition-colors hover:italic ${isActive ? "italic" : ""}`
           }
         >
-          Musica
+          {language === "es" ? "Música" : "Music"}
         </NavLink>
         <NavLink
           to="/audiovisual"
           className={({ isActive }) =>
-            `px-8 py-4 uppercase ${isActive ? "italic" : ""}`
+            `hover:text-primary px-8 py-4 uppercase transition-colors hover:italic ${isActive ? "italic" : ""}`
           }
         >
-          Audiovisual
+          {language === "es" ? "Audiovisual" : "Audiovisual"}
         </NavLink>
       </nav>
 
       {data?.highlight && (
-        <div className="bg-primary text-background absolute right-0 bottom-0 m-8 flex w-min -rotate-8 justify-end rounded-full p-8 text-center font-serif text-xl italic">
+        <div className="bg-primary text-background hover:bg-accent absolute right-0 bottom-0 m-8 flex w-min -rotate-8 justify-end rounded-full p-8 text-center font-serif text-xl italic transition-colors hover:rotate-3">
           {data.highlight.title[language] || data.highlight.title.es}
         </div>
       )}
-      <div className="px-4 py-16">
+      <div className="h-screen px-4 py-16">
         <Routes>
           <Route path="/" element={null} />
           <Route path="/about" element={<About />} />
