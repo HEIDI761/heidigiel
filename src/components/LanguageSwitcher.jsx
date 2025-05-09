@@ -8,7 +8,8 @@ export default function LanguageSwitcher() {
       <button
         className="text-muted-text cursor-pointer uppercase"
         onClick={() => {
-          setLanguage(language === "es" ? "es" : "en");
+          console.log("language", language);
+          setLanguage(language === "es" ? "en" : "es");
         }}
       >
         {language}
