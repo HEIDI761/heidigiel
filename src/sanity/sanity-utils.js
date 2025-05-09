@@ -69,6 +69,7 @@ export async function getMusicalItemTypes() {
 export async function getMusicalProjects() {
   return client.fetch(
     `*[_type == 'musicalProject']{
+        _id,
         title,
         date,
         endDate,
