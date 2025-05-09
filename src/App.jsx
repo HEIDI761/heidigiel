@@ -2,6 +2,7 @@ import LanguageSwitcher from "./components/LanguageSwitcher";
 import { useAbout } from "./sanity/hooks/getData";
 import useLanguage from "./hooks/useLanguage";
 import { Routes, Route, NavLink } from "react-router";
+import Loading from "./components/Loading";
 import About from "./pages/About";
 import Audiovisual from "./pages/Audiovisual";
 import Music from "./pages/Music";
@@ -10,7 +11,7 @@ function App() {
   const { data, isLoading, error } = useAbout();
   const { language } = useLanguage();
 
-  if (isLoading) return <div>...</div>;
+  if (isLoading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
   console.log(data);
