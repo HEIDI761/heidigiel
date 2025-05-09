@@ -7,3 +7,10 @@ export function useAbout() {
     queryFn: () => sanityUtils.getAbout(),
   });
 }
+
+export function useAudiovisualFilters() {
+  return useQuery({
+    queryKey: ["audiovisualFilters"],
+    queryFn: () => sanityUtils.getAudiovisualFilters(),
+  });
+}
