@@ -12,7 +12,7 @@ export default function Audiovisual() {
         <div className="flex flex-wrap">
           {filters.roles.map((role) => (
             <div
-              className="bg-secondary text-background border-primary rounded-full border px-2"
+              className="bg-tertiary hover:bg-text hover:text-background border-accent rounded-full border px-2 transition-colors"
               key={role._id}
             >
               {role.role.es}
@@ -24,7 +24,7 @@ export default function Audiovisual() {
         <div className="flex flex-wrap">
           {filters.audiovisualProjectTypes.map((type) => (
             <div
-              className="bg-accent text-background border-primary rounded-full border px-2"
+              className="bg-secondary hover:bg-text hover:text-background border-accent rounded-full border px-2 transition-colors"
               key={type._id}
             >
               {type.type.es}
