@@ -14,3 +14,10 @@ export function useAudiovisualFilters() {
     queryFn: () => sanityUtils.getAudiovisualFilters(),
   });
 }
+
+export function useMusicalProjects() {
+  return useQuery({
+    queryKey: ["musicalProjects"],
+    queryFn: () => sanityUtils.getMusicalProjects(),
+  });
+}
