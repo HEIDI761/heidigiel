@@ -3,6 +3,8 @@ import { useAbout } from "./sanity/hooks/getData";
 import useLanguage from "./hooks/useLanguage";
 import { Routes, Route, NavLink } from "react-router";
 import About from "./pages/About";
+import Audiovisual from "./pages/Audiovisual";
+import Music from "./pages/Music";
 
 function App() {
   const { data, isLoading, error } = useAbout();
@@ -33,6 +35,22 @@ function App() {
           >
             About
           </NavLink>
+          <NavLink
+            to="/audiovisual"
+            className={({ isActive }) =>
+              `rounded-lg p-2 ${isActive ? "bg-black" : ""}`
+            }
+          >
+            Audiovisual
+          </NavLink>
+          <NavLink
+            to="/music"
+            className={({ isActive }) =>
+              `rounded-lg p-2 ${isActive ? "bg-black" : ""}`
+            }
+          >
+            Music
+          </NavLink>
         </nav>
         <LanguageSwitcher />
       </header>
@@ -56,6 +74,8 @@ function App() {
       <Routes>
         <Route path="/" element={null} />
         <Route path="/about" element={<About />} />
+        <Route path="/audiovisual" element={<Audiovisual />} />
+        <Route path="/music" element={<Music />} />
       </Routes>
     </div>
   );
