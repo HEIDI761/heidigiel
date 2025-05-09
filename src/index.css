@@ -1,23 +1,31 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #111;
-  --color-text: #fff;
-  --color-accent: #605f9e;
-  /* --color-primary: #fff;
-  --color-secondary: #111;
+  --color-background: #dcd9cb;
+  --color-text: #000;
+  /* --color-accent: #881e0b; */
+  --color-accent: #11104c;
+  --color-primary: #2a7430;
+  --color-secondary: #4eaca9;
+  /* --color-secondary: #ffcc00; */
   --color-muted: #555;
-  --color-muted-text: #999; */
+  --color-muted-text: #999;
+
+  --font-serif: "EB Garamond", serif;
+  /* --font-serif: "Cormorant", serif; */
+  /* --font-serif: "Libre Caslon Text", serif; */
+  --font-sans: "Poppins", sans-serif;
+  /* --font-sans: "Source Sans", sans-serif; */
 }
 
 ::selection {
-  @apply bg-text text-accent;
+  @apply bg-accent text-secondary;
 }
 
 :root {
   @apply bg-background text-text;
 
-  font-family: system-ui, Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans), system-ui, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
