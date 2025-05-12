@@ -26,15 +26,17 @@ export async function getAudiovisualFilters() {
   );
 }
 
-export async function getProjects() {
+export async function getAudiovisualProjects() {
   return client.fetch(
-    `*[_type == 'project']{
+    `*[_type == 'audiovisualProject']{
+        _id,
         title,
+        slug,
         date,
         client,
         isFavorite,
-        audiovisualProjectType,
-        roles,
+        audiovisualProjectType[]->{_id, type},
+        roles[]->{_id, role},
         coverImage{'url': asset->url},
         previewUrl,
     }`,
