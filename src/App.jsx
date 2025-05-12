@@ -14,7 +14,7 @@ function App() {
   if (isLoading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className="">
@@ -50,7 +50,7 @@ function App() {
         </div>
       )} */}
 
-      <nav className="absolute bottom-0 left-0 grid w-full grid-cols-[1fr_2px_1fr] items-end font-serif text-6xl">
+      <nav className="fixed bottom-0 left-0 grid w-full grid-cols-[1fr_2px_1fr] items-end font-serif text-6xl">
         <NavLink
           to="/musica"
           className={({ isActive }) =>
@@ -70,7 +70,7 @@ function App() {
       </nav>
 
       {data?.highlight && (
-        <div className="bg-primary text-background hover:bg-accent absolute right-0 bottom-0 m-8 flex w-min -rotate-8 justify-end rounded-full p-8 text-center font-serif text-xl italic transition-colors hover:rotate-3">
+        <div className="bg-primary text-background hover:bg-accent fixed right-0 bottom-0 m-8 flex w-min -rotate-8 justify-end rounded-full p-8 text-center font-serif text-xl italic transition-colors hover:rotate-3">
           {data.highlight.title[language] || data.highlight.title.es}
         </div>
       )}
