@@ -15,6 +15,13 @@ export function useAudiovisualFilters() {
   });
 }
 
+export function useAudiovisualProjects() {
+  return useQuery({
+    queryKey: ["audiovisualProjects"],
+    queryFn: () => sanityUtils.getAudiovisualProjects(),
+  });
+}
+
 export function useMusicalProjects() {
   return useQuery({
     queryKey: ["musicalProjects"],
