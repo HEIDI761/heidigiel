@@ -37,7 +37,9 @@ export async function getAudiovisualProjects() {
         isFavorite,
         audiovisualProjectType[]->{_id, type},
         roles[]->{_id, role},
-        coverImage{'url': asset->url},
+        coverImage{'url': asset->url, 
+            "dimensions": asset->metadata.dimensions,
+        },
         previewUrl,
     }`,
   );
