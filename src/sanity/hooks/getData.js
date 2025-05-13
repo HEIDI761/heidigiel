@@ -22,10 +22,24 @@ export function useAudiovisualProjects() {
   });
 }
 
-export function useMusicalProjects() {
+export function useMainMusicalProject() {
   return useQuery({
-    queryKey: ["musicalProjects"],
-    queryFn: () => sanityUtils.getMusicalProjects(),
+    queryKey: ["mainMusicalProject"],
+    queryFn: () => sanityUtils.getMainMusicalProject(),
+  });
+}
+
+export function useMusicalProjectsList() {
+  return useQuery({
+    queryKey: ["musicalProjectsList"],
+    queryFn: () => sanityUtils.getMusicalProjectsList(),
+  });
+}
+
+export function useMusicalProject(slug) {
+  return useQuery({
+    queryKey: ["musicalProject", slug],
+    queryFn: () => sanityUtils.getMusicalProject(slug),
   });
 }
 
@@ -33,5 +47,12 @@ export function useMainMusicalItems() {
   return useQuery({
     queryKey: ["mainMusicalItems"],
     queryFn: () => sanityUtils.getMainMusicalItems(),
+  });
+}
+
+export function useMusicalItems(slug) {
+  return useQuery({
+    queryKey: ["musicalItems", slug],
+    queryFn: () => sanityUtils.getMusicalItem(slug),
   });
 }

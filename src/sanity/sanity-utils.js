@@ -68,11 +68,37 @@ export async function getMusicalItemTypes() {
   );
 }
 
-export async function getMusicalProjects() {
+export async function getMainMusicalProject() {
   return client.fetch(
-    `*[_type == 'musicalProject']{
+    `*[_type == 'musicalProject' && _id=='1f3fb03a-2431-4977-9753-c80314f61e07'][0]{
+        _id,
+        description,
+        images[]{
+            _key, 
+            'url': asset->url,
+            "dimensions": asset->metadata.dimensions,
+        },
+        links,
+    }`,
+  );
+}
+
+export async function getMusicalProjectsList() {
+  return client.fetch(
+    `*[_type == 'musicalProject' && _id!='1f3fb03a-2431-4977-9753-c80314f61e07']{
         _id,
         title,
+        slug,
+    }`,
+  );
+}
+
+export async function getMusicalProject(slug) {
+  return client.fetch(
+    `*[_type == 'musicalProject' && slug.current == $slug][0]{
+        _id,
+        title,
+        slug,
         date,
         endDate,
         description,
@@ -83,6 +109,7 @@ export async function getMusicalProjects() {
         },
         links,
     }`,
+    { slug },
   );
 }
 
@@ -110,5 +137,33 @@ export async function getMainMusicalItems() {
         },
         links,
     }`,
+  );
+}
+
+export async function getMusicalItem(slug) {
+  return client.fetch(
+    `*[_type=='musicalItem' && musicalProject->slug.current==$slug]{
+        _id,
+        title,
+        date,
+        slug,
+        coverImage{'url': asset->url},
+        type->{type},
+        description,
+        images[]{
+            _key, 
+            'url': asset->url,
+            "dimensions": asset->metadata.dimensions,
+        },
+        vimeoVideos,
+        externalVideo,
+        customFields[]{
+            _key,
+            name,
+            value,
+        },
+        links,
+    }`,
+    { slug },
   );
 }

@@ -6,6 +6,7 @@ import Loading from "./components/Loading";
 import About from "./pages/About";
 import Audiovisual from "./pages/Audiovisual";
 import Music from "./pages/Music";
+import MusicalProject from "./pages/MusicalProject";
 
 function App() {
   const { data, isLoading, error } = useAbout();
@@ -80,6 +81,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/audiovisual" element={<Audiovisual />} />
           <Route path="/musica" element={<Music />} />
+          <Route path="/musica/:slug" element={<MusicalProject />} />
         </Routes>
       </div>
     </div>
