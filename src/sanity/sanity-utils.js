@@ -86,24 +86,29 @@ export async function getMusicalProjects() {
   );
 }
 
-export async function getMusicalItems() {
+export async function getMainMusicalItems() {
   return client.fetch(
-    `*[_type == 'musicalItem']{
+    `*[_type=='musicalItem' && musicalProject._ref=='1f3fb03a-2431-4977-9753-c80314f61e07']{
+        _id,
         title,
         date,
-        musicalProject,
-        type,
-        description,
+        slug,
         coverImage{'url': asset->url},
-        vimeoVideos,
-        externalVideos,
+        type->{type},
+        description,
         images[]{
             _key, 
             'url': asset->url,
             "dimensions": asset->metadata.dimensions,
         },
+        vimeoVideos,
+        externalVideo,
+        customFields[]{
+            _key,
+            name,
+            value,
+        },
         links,
-        customFields,
     }`,
   );
 }

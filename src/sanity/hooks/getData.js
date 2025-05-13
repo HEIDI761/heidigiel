@@ -28,3 +28,10 @@ export function useMusicalProjects() {
     queryFn: () => sanityUtils.getMusicalProjects(),
   });
 }
+
+export function useMainMusicalItems() {
+  return useQuery({
+    queryKey: ["mainMusicalItems"],
+    queryFn: () => sanityUtils.getMainMusicalItems(),
+  });
+}
