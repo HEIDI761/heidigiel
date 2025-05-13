@@ -6,7 +6,7 @@ export default function LanguageSwitcher() {
   return (
     <div className="">
       <button
-        className="text-muted-text hover:text-primary cursor-pointer uppercase transition-colors"
+        className="cursor-pointer uppercase"
         onClick={() => {
           setLanguage(language === "es" ? "en" : "es");
         }}
