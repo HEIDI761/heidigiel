@@ -5,6 +5,7 @@ import {
 import Loading from "../components/Loading";
 import useLanguage from "../hooks/useLanguage";
 import { useEffect, useState } from "react";
+import VimeoPlayer from "../components/VimeoPlayer";
 
 export default function Audiovisual() {
   const { data: filters, isLoading } = useAudiovisualFilters();
@@ -162,14 +163,27 @@ function ProjectsGrid({ projects }) {
             {project.title.es} -{" "}
             <span className="italic">{project.client}</span>
           </h2> */}
-          <img
-            src={
-              project.coverImage.url +
-              `?fm=webp&h=${project.isFavorite ? 800 : 500}`
-            }
-            alt={project.title}
-            className="rounded-sm"
-          />
+
+          {project.previewUrl ? (
+            <div
+              style={{
+                backgroundImage: `url("${project.coverImage.url}?fm=webp&h=400")`,
+              }}
+              className="relative aspect-video bg-cover"
+            >
+              <VimeoPlayer
+                url={project.previewUrl}
+                autoplay={1}
+                background={1}
+                loop={1}
+              />
+            </div>
+          ) : (
+            <img
+              src={project.coverImage.url + "?fm=webp&h=400"}
+              alt={project.title}
+            />
+          )}
         </div>
       ))}
     </div>
