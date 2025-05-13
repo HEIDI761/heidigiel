@@ -14,7 +14,7 @@ export async function getAbout() {
 export async function getAudiovisualFilters() {
   return client.fetch(
     `{
-    'roles': *[_type == 'role']{
+    'roles': *[_type == 'audiovisualProjectRole']{
         _id,
         role,
     },
