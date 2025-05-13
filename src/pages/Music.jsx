@@ -34,29 +34,32 @@ export default function Music() {
 
   return (
     <div>
-      <div>
-        {mainMusicalProject.description && (
-          <PortableText
-            value={
-              mainMusicalProject.description[language] ||
-              mainMusicalProject.description.es
-            }
-          />
-        )}
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="max-w-prose pt-16">
+          {mainMusicalProject.description && (
+            <PortableText
+              value={
+                mainMusicalProject.description[language] ||
+                mainMusicalProject.description.es
+              }
+            />
+          )}
+        </div>
+        <div className="bg-secondary-dim max-w-3xs rounded-sm px-4 py-2 text-center">
+          <div className="text-xs uppercase italic">Otros proyectos</div>
+          {musicalProjectsList.map((project) => (
+            <NavLink
+              to={project.slug.current}
+              key={project._id}
+              className="hover:text-accent flex cursor-pointer flex-col gap-2 font-serif text-xl hover:italic"
+            >
+              {project.title[language] || project.title.es}
+            </NavLink>
+          ))}
+        </div>
       </div>
-      <div>-----</div>
-      <div>otros proyectos:</div>
-      {musicalProjectsList.map((project) => (
-        <NavLink
-          to={project.slug.current}
-          key={project._id}
-          className="flex flex-col gap-2 underline"
-        >
-          {project.title[language] || project.title.es}
-        </NavLink>
-      ))}
-      <div>-----</div>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+
+      <div className="grid grid-cols-1 gap-16 pt-24 md:grid-cols-2 lg:grid-cols-4">
         {mainItems.map((item) => (
           <MuscialItem key={item._id} item={item} />
         ))}

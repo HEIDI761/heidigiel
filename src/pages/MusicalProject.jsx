@@ -23,15 +23,17 @@ export default function MusicalProject() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold">
+      <h1 className="pb-4 text-center font-serif text-4xl">
         {project.title[language] || project.title.es}
       </h1>
       {project.description && (
-        <PortableText
-          value={project.description[language] || project.description.es}
-        />
+        <div className="mx-auto max-w-prose">
+          <PortableText
+            value={project.description[language] || project.description.es}
+          />
+        </div>
       )}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 pt-8 md:grid-cols-2 lg:grid-cols-4">
         {items.map((item) => (
           <MusicalItem key={item._id} item={item} />
         ))}
