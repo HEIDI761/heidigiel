@@ -7,7 +7,7 @@ export default function About() {
   const { language } = useLanguage();
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-6">
+    <div className="fixed inset-0 flex min-h-screen w-full flex-col items-center justify-center gap-6">
       {data?.bio && (
         <div className="flex max-w-prose flex-col gap-2">
           <PortableText value={data.bio[language] || data.bio.es} />
