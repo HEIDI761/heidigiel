@@ -6,7 +6,6 @@ export default function MusicalItem({ item }) {
   const { language } = useLanguage();
   const [isDescriptionOpen, setDescriptionIsOpen] = useState(false);
 
-  console.log(item);
   return (
     <div>
       <div key={item._id} className="flex flex-col gap-2 pb-4">
