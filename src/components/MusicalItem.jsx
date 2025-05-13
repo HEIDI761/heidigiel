@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { PortableText } from "@portabletext/react";
 import useLanguage from "../hooks/useLanguage";
+import VimeoPlayer from "./VimeoPlayer";
 
 export default function MusicalItem({ item }) {
   const { language } = useLanguage();
@@ -37,7 +38,9 @@ export default function MusicalItem({ item }) {
       {item.vimeoVideos && (
         <div className="flex flex-col gap-2">
           {item.vimeoVideos.map((video, index) => (
-            <div key={index}>{video}</div>
+            <div key={index}>
+              <VimeoPlayer url={video} />
+            </div>
           ))}
         </div>
       )}
