@@ -2,6 +2,7 @@ import { useState } from "react";
 import { PortableText } from "@portabletext/react";
 import useLanguage from "../hooks/useLanguage";
 import VimeoPlayer from "./VimeoPlayer";
+import Tag from "./Tag";
 
 export default function MusicalItem({ item }) {
   const { language } = useLanguage();
@@ -9,11 +10,9 @@ export default function MusicalItem({ item }) {
 
   return (
     <div key={item._id} className="flex flex-col gap-2 pb-4">
-      <div className="flex flex-wrap items-center gap-2">
-        <div className="self-start rounded-full border px-2 text-xs">
-          {item.type.type[language] || item.type.type.es}
-        </div>
-        <p className="text-xs italic">{item.date.slice(0, 4)}</p>
+      <div className="flex flex-wrap items-center gap-2 text-xs">
+        <Tag tag={item.type.type} key={item.type._id} clickabe={false} />
+        <p className="italic">{item.date.slice(0, 4)}</p>
       </div>
       <h2 className="font-serif text-2xl">
         {item.title[language] || item.title.es}

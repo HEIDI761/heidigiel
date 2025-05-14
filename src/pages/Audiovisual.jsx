@@ -7,6 +7,7 @@ import useLanguage from "../hooks/useLanguage";
 import { useEffect, useState } from "react";
 import VimeoPlayer from "../components/VimeoPlayer";
 import { NavLink } from "react-router";
+import Tag from "../components/Tag";
 
 export default function Audiovisual() {
   const { data: filters, isLoading } = useAudiovisualFilters();
@@ -75,44 +76,35 @@ export default function Audiovisual() {
 
   return (
     <div className="flex flex-col gap-8 pb-22">
-      <div className="sticky top-26 z-10 -ml-8 flex flex-col items-start gap-1 text-xs lowercase">
+      <div className="sticky top-26 z-10 -ml-8 flex max-w-1/2 flex-col items-start gap-1 text-xs lowercase">
         {filters.roles && (
           <div className="flex flex-wrap">
             {filters.roles.map((role) => (
-              <div
-                className={`hover:bg-text hover:text-background border-text cursor-pointer rounded-full border px-2 transition-colors select-none ${
-                  selectedFilters.roles.some(
-                    (selectedRole) => selectedRole._id === role._id,
-                  )
-                    ? "bg-text text-background"
-                    : "bg-background/50"
-                }`}
+              <Tag
                 key={role._id}
+                tag={role.role}
                 onClick={() => handleFilterChange("roles", role)}
-              >
-                {role.role[language] || role.role.es}
-              </div>
+                selected={selectedFilters.roles.some(
+                  (selectedRole) => selectedRole._id === role._id,
+                )}
+              />
             ))}
           </div>
         )}
         {filters.audiovisualProjectTypes && (
           <div className="flex flex-wrap">
             {filters.audiovisualProjectTypes.map((type) => (
-              <div
-                className={`hover:bg-text hover:text-background border-text cursor-pointer rounded-full border px-2 transition-colors select-none ${
-                  selectedFilters.audiovisualProjectTypes.some(
-                    (selectedType) => selectedType._id === type._id,
-                  )
-                    ? "bg-text text-background"
-                    : "bg-background/50"
-                }`}
+              <Tag
                 key={type._id}
+                tag={type.type}
                 onClick={() =>
                   handleFilterChange("audiovisualProjectTypes", type)
                 }
-              >
-                {type.type[language] || type.type.es}
-              </div>
+                selected={selectedFilters.audiovisualProjectTypes.some(
+                  (selectedType) => selectedType._id === type._id,
+                )}
+                roundness="sm"
+              />
             ))}
           </div>
         )}
@@ -159,11 +151,6 @@ function ProjectsGrid({ projects }) {
           className={`relative flex flex-col gap-2 ${project.isFavorite ? (project.coverImage.dimensions.height > project.coverImage.dimensions.width ? "col-span-2 row-span-2" : "col-span-3") : ""}`}
           to={`/audiovisual/${project.slug.current}`}
         >
-          {/* <h2 className="absoulte font-serif text-2xl">
-            {project.title.es} -{" "}
-            <span className="italic">{project.client}</span>
-          </h2> */}
-
           {project.previewUrl ? (
             <div
               style={{
