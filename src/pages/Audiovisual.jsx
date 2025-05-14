@@ -76,7 +76,7 @@ export default function Audiovisual() {
 
   return (
     <div className="flex flex-col gap-8 pb-22">
-      <div className="sticky top-26 z-10 -ml-8 flex max-w-1/2 flex-col items-start gap-1 text-xs lowercase">
+      <div className="sticky top-26 z-10 -ml-8 flex max-w-2xl flex-col items-start gap-1 text-xs lowercase">
         {filters.roles && (
           <div className="flex flex-wrap">
             {filters.roles.map((role) => (
@@ -144,7 +144,7 @@ export default function Audiovisual() {
 
 function ProjectsGrid({ projects }) {
   return (
-    <div className="grid grid-flow-dense grid-cols-1 items-center gap-16 md:grid-cols-2 lg:grid-cols-6">
+    <div className="grid grid-flow-dense grid-cols-3 items-center gap-8 lg:grid-cols-6 lg:gap-16">
       {projects.map((project) => (
         <NavLink
           key={project._id}
