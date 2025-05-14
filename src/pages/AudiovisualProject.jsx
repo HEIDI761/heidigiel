@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import Loading from "../components/Loading";
 import { PortableText } from "@portabletext/react";
 import VimeoPlayer from "../components/VimeoPlayer";
+import Tag from "../components/Tag";
 
 export default function AudiovisualProject() {
   const { slug } = useParams();
@@ -13,84 +14,85 @@ export default function AudiovisualProject() {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div>
-      <h1>{data.title[language] || data.title.es}</h1>
-      {data.description && (
-        <div className="mx-auto max-w-prose">
-          <PortableText
-            value={data.description[language] || data.description.es}
+    <div className="pt-16">
+      <div>
+        <h1 className="text-center font-serif text-6xl">
+          {data.title[language] || data.title.es} -{" "}
+          <span className="italic">{data.client}</span>
+        </h1>
+        {/* {data.roles && (
+          <ul className="flex flex-wrap text-xs">
+            {data.roles.map((role) => (
+              <Tag key={role._id} tag={role.role} clickabe={false} />
+            ))}
+          </ul>
+        )} */}
+        {data.audiovisualProjectType && (
+          <ul className="flex flex-wrap justify-center pt-2 text-xs lowercase">
+            {data.audiovisualProjectType.map((type) => (
+              <Tag
+                key={type._id}
+                tag={type.type}
+                clickabe={false}
+                roundness="sm"
+              />
+            ))}
+          </ul>
+        )}
+        {data.date && (
+          <p className="pt-2 text-center text-xs italic">
+            {new Date(data.date).toLocaleDateString()}
+          </p>
+        )}
+      </div>
+
+      <div className="grid grid-cols-6 place-items-center gap-8 pt-16">
+        {data.video ? (
+          <div className="col-span-6 mx-auto w-full max-w-7xl pb-16">
+            <VimeoPlayer url={data.video} />
+          </div>
+        ) : (
+          <img
+            src={data.coverImage.url + "?fm=webp&h=600"}
+            alt=""
+            className="col-span-3 h-auto rounded-sm"
           />
-        </div>
-      )}
-      {data.video ? (
-        <div className="mx-auto max-w-prose">
-          <VimeoPlayer url={data.video} />
-        </div>
-      ) : (
-        <img
-          src={data.coverImage.url + "?fm=webp&h=600"}
-          alt=""
-          className="h-auto w-full"
-        />
-      )}
-      {data.images && (
-        <div className="grid grid-cols-1 gap-4 pt-8 md:grid-cols-2 lg:grid-cols-4">
-          {data.images.map((image) => (
-            <img
-              key={image._key}
-              src={image.url + "?fm=webp&h=600"}
-              alt=""
-              className="h-auto w-full"
+        )}
+
+        {data.description && (
+          <div className="col-span-3 max-w-prose">
+            <PortableText
+              value={data.description[language] || data.description.es}
             />
-          ))}
-        </div>
-      )}
-      {data.links && (
-        <div className="mx-auto max-w-prose">
-          <h2>Links:</h2>
-          <ul>
+          </div>
+        )}
+
+        {
+          data.images &&
+            // (<div className="grid grid-cols-1 gap-4 pt-8 md:grid-cols-2 lg:grid-cols-4">
+            data.images.map((image) => (
+              <img
+                key={image._key}
+                src={image.url + "?fm=webp&h=600"}
+                alt=""
+                className="h-auto w-full rounded-sm"
+              />
+            ))
+          // </div>)
+        }
+        {data.links && (
+          <ul className="bg-background col-span-2 col-start-5 w-full rounded-sm p-4">
+            <p className="text-muted-text text-xs">LINKS EXTERNOS</p>
             {data.links.map((link) => (
-              <li key={link._key}>
+              <li key={link._key} className="hover:underline">
                 <a href={link.url} target="_blank" rel="noopener noreferrer">
                   {link.title[language] || link.title.es}
                 </a>
               </li>
             ))}
           </ul>
-        </div>
-      )}
-      {data.roles && (
-        <div className="mx-auto max-w-prose">
-          <h2>Roles:</h2>
-          <ul>
-            {data.roles.map((role) => (
-              <li key={role._id}>{role.role[language] || role.role.es}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {data.audiovisualProjectType && (
-        <div className="mx-auto max-w-prose">
-          <h2>Tipos de proyecto:</h2>
-          <ul>
-            {data.audiovisualProjectType.map((type) => (
-              <li key={type._id}>{type.type[language] || type.type.es}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {data.client && (
-        <div className="mx-auto max-w-prose">
-          <h2>Cliente:</h2>
-          <p>{data.client}</p>
-        </div>
-      )}
-      {data.date && (
-        <div className="mx-auto max-w-prose">
-          <h2>Fecha:</h2>
-          <p>{new Date(data.date).toLocaleDateString()}</p>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
