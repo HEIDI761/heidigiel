@@ -26,7 +26,7 @@ export async function getAudiovisualFilters() {
   );
 }
 
-export async function getAudiovisualProjects() {
+export async function getAudiovisualProjectsList() {
   return client.fetch(
     `*[_type == 'audiovisualProject'] | order(date desc){
         _id,
@@ -47,7 +47,16 @@ export async function getAudiovisualProjects() {
 
 export async function getAudiovisualProject(slug) {
   return client.fetch(
-    `*[_type == 'project' && slug.current == $slug][0]{
+    `*[_type == 'audiovisualProject' && slug.current == $slug][0]{
+        _id,
+        title,
+        date,
+        client,
+        coverImage{'url': asset->url, 
+            "dimensions": asset->metadata.dimensions,
+        },
+        audiovisualProjectType[]->{_id, type},
+        roles[]->{_id, role},
         images[]{
             _key, 
             'url': asset->url,
@@ -142,7 +151,7 @@ export async function getMainMusicalItems() {
   );
 }
 
-export async function getMusicalItem(slug) {
+export async function getMusicalItems(slug) {
   return client.fetch(
     `*[_type=='musicalItem' && musicalProject->slug.current==$slug] | order(date desc){
         _id,
