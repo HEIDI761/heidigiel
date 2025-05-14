@@ -4,6 +4,7 @@ import useLanguage from "./hooks/useLanguage";
 import About from "./pages/About";
 import Audiovisual from "./pages/Audiovisual";
 import Music from "./pages/Music";
+import AudiovisualProject from "./pages/AudiovisualProject";
 import MusicalProject from "./pages/MusicalProject";
 import Loading from "./components/Loading";
 import CursorDecoration from "./components/CursorDecoration";
@@ -33,6 +34,7 @@ function App() {
           <Route path="/" element={null} />
           <Route path="/about" element={<About />} />
           <Route path="/audiovisual" element={<Audiovisual />} />
+          <Route path="/audiovisual/:slug" element={<AudiovisualProject />} />
           <Route path="/musica" element={<Music />} />
           <Route path="/musica/:slug" element={<MusicalProject />} />
         </Routes>

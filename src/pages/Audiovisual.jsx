@@ -1,16 +1,17 @@
 import {
   useAudiovisualFilters,
-  useAudiovisualProjects,
+  useAudiovisualProjectsList,
 } from "../sanity/hooks/getData";
 import Loading from "../components/Loading";
 import useLanguage from "../hooks/useLanguage";
 import { useEffect, useState } from "react";
 import VimeoPlayer from "../components/VimeoPlayer";
+import { NavLink } from "react-router";
 
 export default function Audiovisual() {
   const { data: filters, isLoading } = useAudiovisualFilters();
   const { data: projectsData, isLoading: projectsLoading } =
-    useAudiovisualProjects();
+    useAudiovisualProjectsList();
   const { language } = useLanguage();
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({
@@ -71,8 +72,6 @@ export default function Audiovisual() {
   };
 
   if (isLoading || projectsLoading) return <Loading />;
-
-  console.log(projectsData);
 
   return (
     <div className="flex flex-col gap-8 pb-22">
@@ -155,9 +154,10 @@ function ProjectsGrid({ projects }) {
   return (
     <div className="grid grid-flow-dense grid-cols-1 items-center gap-16 md:grid-cols-2 lg:grid-cols-6">
       {projects.map((project) => (
-        <div
+        <NavLink
           key={project._id}
           className={`relative flex flex-col gap-2 ${project.isFavorite ? (project.coverImage.dimensions.height > project.coverImage.dimensions.width ? "col-span-2 row-span-2" : "col-span-3") : ""}`}
+          to={`/audiovisual/${project.slug.current}`}
         >
           {/* <h2 className="absoulte font-serif text-2xl">
             {project.title.es} -{" "}
@@ -184,7 +184,7 @@ function ProjectsGrid({ projects }) {
               alt={project.title}
             />
           )}
-        </div>
+        </NavLink>
       ))}
     </div>
   );
@@ -195,8 +195,13 @@ function ProjectsList({ projects }) {
     <div>
       {projects.map((project) => (
         <div key={project._id} className="flex items-center gap-2">
-          <h2 className="font-serif text-2xl">{project.title.es} -</h2>
-          <p className="font-serif text-2xl italic">{project.client}</p>
+          <NavLink
+            className="flex gap-2 hover:underline"
+            to={`/audiovisual/${project.slug.current}`}
+          >
+            <h2 className="font-serif text-2xl">{project.title.es} -</h2>
+            <p className="font-serif text-2xl italic">{project.client}</p>
+          </NavLink>
 
           <div className="flex flex-wrap gap-2 text-xs">
             {project.audiovisualProjectType.map((type) => (
