@@ -4,7 +4,7 @@ export async function getAbout() {
   return client.fetch(
     `*[_type == 'about'][0]{
         homeImage{'url': asset->url},
-        highlight->{title},
+        highlight->{title, _type, 'slug': slug.current},
         bio, 
         contact, 
     }`,
@@ -154,6 +154,34 @@ export async function getMainMusicalItems() {
 export async function getMusicalItems(slug) {
   return client.fetch(
     `*[_type=='musicalItem' && musicalProject->slug.current==$slug] | order(date desc){
+        _id,
+        title,
+        date,
+        slug,
+        coverImage{'url': asset->url},
+        type->{type},
+        description,
+        images[]{
+            _key, 
+            'url': asset->url,
+            "dimensions": asset->metadata.dimensions,
+        },
+        vimeoVideos,
+        externalVideo,
+        customFields[]{
+            _key,
+            name,
+            value,
+        },
+        links,
+    }`,
+    { slug },
+  );
+}
+
+export async function getHighlightedMusicalItem(slug) {
+  return client.fetch(
+    `*[_type=='musicalItem' && slug.current == $slug][0]{
         _id,
         title,
         date,
