@@ -63,3 +63,10 @@ export function useMusicalItems(slug) {
     queryFn: () => sanityUtils.getMusicalItems(slug),
   });
 }
+
+export function useHighlightedMusicalItem(slug) {
+  return useQuery({
+    queryKey: ["highlightedMusicalItem", slug],
+    queryFn: () => sanityUtils.getHighlightedMusicalItem(slug),
+  });
+}
