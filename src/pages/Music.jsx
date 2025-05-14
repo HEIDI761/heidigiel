@@ -45,13 +45,15 @@ export default function Music() {
             />
           )}
         </div>
-        <div className="bg-secondary-dim max-w-3xs rounded-sm px-4 py-2 text-center">
-          <div className="text-xs uppercase italic">Otros proyectos</div>
+        <div className="bg-secondary-dim border-tertiary max-w-3xs rotate-1 rounded-sm border-2 px-4 py-2 text-center">
+          <div className="text-muted-text text-xs uppercase italic">
+            Otros proyectos
+          </div>
           {musicalProjectsList.map((project) => (
             <NavLink
               to={project.slug.current}
               key={project._id}
-              className="hover:text-accent flex cursor-pointer flex-col gap-2 font-serif text-xl hover:italic"
+              className="hover:text-accent flex cursor-pointer flex-col gap-2 font-serif text-2xl hover:italic"
             >
               {project.title[language] || project.title.es}
             </NavLink>
