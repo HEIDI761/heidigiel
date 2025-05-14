@@ -15,10 +15,17 @@ export function useAudiovisualFilters() {
   });
 }
 
-export function useAudiovisualProjects() {
+export function useAudiovisualProjectsList() {
   return useQuery({
-    queryKey: ["audiovisualProjects"],
-    queryFn: () => sanityUtils.getAudiovisualProjects(),
+    queryKey: ["audiovisualProjectsList"],
+    queryFn: () => sanityUtils.getAudiovisualProjectsList(),
+  });
+}
+
+export function useAudiovisualProject(slug) {
+  return useQuery({
+    queryKey: ["audiovisualProject", slug],
+    queryFn: () => sanityUtils.getAudiovisualProject(slug),
   });
 }
 
@@ -53,6 +60,6 @@ export function useMainMusicalItems() {
 export function useMusicalItems(slug) {
   return useQuery({
     queryKey: ["musicalItems", slug],
-    queryFn: () => sanityUtils.getMusicalItem(slug),
+    queryFn: () => sanityUtils.getMusicalItems(slug),
   });
 }
