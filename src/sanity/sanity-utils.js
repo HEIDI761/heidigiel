@@ -28,7 +28,7 @@ export async function getAudiovisualFilters() {
 
 export async function getAudiovisualProjects() {
   return client.fetch(
-    `*[_type == 'audiovisualProject']{
+    `*[_type == 'audiovisualProject'] | order(date desc){
         _id,
         title,
         slug,
@@ -87,7 +87,7 @@ export async function getMainMusicalProject() {
 
 export async function getMusicalProjectsList() {
   return client.fetch(
-    `*[_type == 'musicalProject' && _id!='1f3fb03a-2431-4977-9753-c80314f61e07']{
+    `*[_type == 'musicalProject' && _id!='1f3fb03a-2431-4977-9753-c80314f61e07'] | order(date desc){
         _id,
         title,
         slug,
@@ -117,7 +117,7 @@ export async function getMusicalProject(slug) {
 
 export async function getMainMusicalItems() {
   return client.fetch(
-    `*[_type=='musicalItem' && musicalProject._ref=='1f3fb03a-2431-4977-9753-c80314f61e07']{
+    `*[_type=='musicalItem' && musicalProject._ref=='1f3fb03a-2431-4977-9753-c80314f61e07'] | order(date desc){
         _id,
         title,
         date,
@@ -144,7 +144,7 @@ export async function getMainMusicalItems() {
 
 export async function getMusicalItem(slug) {
   return client.fetch(
-    `*[_type=='musicalItem' && musicalProject->slug.current==$slug]{
+    `*[_type=='musicalItem' && musicalProject->slug.current==$slug] | order(date desc){
         _id,
         title,
         date,
