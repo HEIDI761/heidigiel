@@ -112,21 +112,39 @@ export default function Audiovisual() {
           className="border-text hover:bg-text hover:text-background bg-background/50 cursor-pointer border px-2 transition-colors"
           onClick={handleResetFilters}
         >
-          clear filters
+          {language === "es" ? "Limpiar filtros" : "Clear filters"}
         </div>
 
         <div className="grid grid-cols-2 gap-2 pt-2 text-xs">
           <button
-            className={`border-text bg-background/50 cursor-pointer border px-2 uppercase ${display === "list" ? "" : "text-muted-text hover:bg-text hover:text-background"}`}
+            className={`border-text group bg-background/50 cursor-pointer rounded-full border px-2 uppercase ${display === "list" ? "bg-text text-background" : "text-muted-text hover:bg-text hover:text-background"}`}
             onClick={() => setDisplay("list")}
           >
-            list
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="20px"
+              viewBox="0 -960 960 960"
+              width="20px"
+              fill="#000000"
+              className={`opacity-75 group-hover:invert ${display === "list" ? "invert" : ""}`}
+            >
+              <path d="M144-264v-72h432v72H144Zm0-180v-72h672v72H144Zm0-180v-72h672v72H144Z" />
+            </svg>
           </button>
           <button
-            className={`border-text bg-background/50 cursor-pointer border px-2 uppercase ${display === "grid" ? "" : "text-muted-text hover:bg-text hover:text-background"}`}
+            className={`border-text group bg-background/50 cursor-pointer rounded-full border px-2 uppercase ${display === "grid" ? "bg-text text-background" : "text-muted-text hover:bg-text hover:text-background"}`}
             onClick={() => setDisplay("grid")}
           >
-            grid
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="20px"
+              viewBox="0 -960 960 960"
+              width="20px"
+              fill="#000000"
+              className={`opacity-75 group-hover:invert ${display === "grid" ? "invert" : ""}`}
+            >
+              <path d="M528-624v-192h288v192H528ZM144-432v-384h288v384H144Zm384 288v-384h288v384H528Zm-384 0v-192h288v192H144Zm72-360h144v-240H216v240Zm384 288h144v-240H600v240Zm0-479h144v-49H600v49ZM216-216h144v-48H216v48Zm144-288Zm240-191Zm0 239ZM360-264Z" />
+            </svg>
           </button>
         </div>
       </div>
