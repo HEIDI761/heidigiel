@@ -2,6 +2,7 @@
 
 @theme {
   --color-background: #cec6c1;
+  --color-background-dim: #a19b97;
   /* --color-background: #e8e0cd; */
   --color-text: #130f0c;
 
@@ -19,7 +20,8 @@
   --color-secondary: #757da1;
   /* --color-secondary: #8487e8; */
   /* --color-secondary: #869cff; */
-  --color-secondary-dim: #abb7ed;
+  --color-secondary-dim: #8189ad;
+  --color-secondary-intense: #768fff;
 
   --color-tertiary: #c08f35;
   /* --color-tertiary: #4f6c5c; */
@@ -38,6 +40,7 @@
 }
 
 :root {
+  /* color: #768fff; */
   @apply bg-background text-text;
 
   font-family: var(--font-sans), system-ui, Helvetica, Arial, sans-serif;
@@ -53,3 +56,29 @@
 /* :root:has(.no-doc-scroll) {
   overflow: hidden;
 } */
+
+html {
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--color-background-dim);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--color-secondary);
+  border-radius: 0.125rem;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-tertiary);
+}
