@@ -75,10 +75,10 @@ export default function Audiovisual() {
   if (isLoading || projectsLoading) return <Loading />;
 
   return (
-    <div className="flex flex-col gap-8 pb-22">
-      <div className="sticky top-26 z-10 -ml-8 flex max-w-2xl flex-col items-start gap-1 text-xs lowercase">
+    <div className="flex flex-col gap-16 pb-22">
+      <div className="sticky top-32 z-10 -ml-8 flex flex-col items-center gap-1 text-xs lowercase">
         {filters.roles && (
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap justify-center">
             {filters.roles.map((role) => (
               <Tag
                 key={role._id}
@@ -92,7 +92,7 @@ export default function Audiovisual() {
           </div>
         )}
         {filters.audiovisualProjectTypes && (
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap justify-center">
             {filters.audiovisualProjectTypes.map((type) => (
               <Tag
                 key={type._id}
@@ -169,6 +169,7 @@ function ProjectsGrid({ projects }) {
             <img
               src={project.coverImage.url + "?fm=webp&h=400"}
               alt={project.title}
+              className="rounded-sm"
             />
           )}
         </NavLink>
