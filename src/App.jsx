@@ -10,6 +10,7 @@ import Loading from "./components/Loading";
 import CursorDecoration from "./components/CursorDecoration";
 import Menu from "./components/Menu";
 import HighlightedMusicalItem from "./pages/HighlightedMusicalItem";
+import Home from "./pages/Home";
 
 function App() {
   const { data, isLoading, error } = useAbout();
@@ -47,7 +48,7 @@ function App() {
 
       <div className="px-16 pt-32 pb-36">
         <Routes>
-          <Route path="/" element={null} />
+          <Route path="/" element={<Home image={data?.homeImage?.url} />} />
           <Route path="/about" element={<About />} />
           <Route path="/audiovisual" element={<Audiovisual />} />
           <Route path="/audiovisual/:slug" element={<AudiovisualProject />} />
@@ -61,15 +62,3 @@ function App() {
 }
 
 export default App;
-
-{
-  /* {data?.homeImage && (
-  <div>
-    <img
-      className="absolute top-0 left-0 -z-10 h-screen w-screen object-cover"
-      src={data.homeImage.url + "?fm=webp"}
-      alt="background"
-    />
-  </div>
-)} */
-}
