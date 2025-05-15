@@ -88,7 +88,7 @@ export default function Music() {
               <NavLink
                 to={project.slug.current}
                 key={project._id}
-                className="hover:text-accent flex cursor-pointer flex-col gap-2 font-serif text-2xl hover:italic"
+                className="hover:text-accent flex cursor-pointer flex-col gap-2 font-serif text-2xl hover:underline"
               >
                 {project.title[language] || project.title.es}
               </NavLink>

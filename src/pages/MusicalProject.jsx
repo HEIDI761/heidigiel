@@ -41,7 +41,7 @@ export default function MusicalProject() {
         )}
       </AnimatePresence>
       <div>
-        <h1 className="pb-4 text-center font-serif text-4xl">
+        <h1 className="pb-4 text-center font-serif text-6xl">
           {project.title[language] || project.title.es}
         </h1>
         {project.description && (

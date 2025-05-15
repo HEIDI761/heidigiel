@@ -45,7 +45,7 @@ function App() {
         </button>
       )}
 
-      <div className="px-16 pt-26 pb-36">
+      <div className="px-16 pt-32 pb-36">
         <Routes>
           <Route path="/" element={null} />
           <Route path="/about" element={<About />} />

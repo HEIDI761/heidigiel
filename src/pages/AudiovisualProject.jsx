@@ -46,7 +46,7 @@ export default function AudiovisualProject() {
           </ul>
         )} */}
           {data.audiovisualProjectType && (
-            <ul className="flex flex-wrap justify-center pt-2 text-xs lowercase">
+            <ul className="flex flex-wrap justify-center pt-4 text-xs lowercase">
               {data.audiovisualProjectType.map((type) => (
                 <Tag
                   key={type._id}
