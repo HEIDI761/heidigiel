@@ -14,7 +14,11 @@ export default function Lightbox({ currentImage, setIsLightboxOpen }) {
     >
       {!imageLoaded && (
         <div className="fixed flex items-center justify-center">
-          <div className="h-12 w-12 animate-spin rounded-full border-2 border-solid border-white border-t-transparent"></div>
+          <img
+            src="https://static.thenounproject.com/png/hand-fan-icon-7565442-512.png"
+            alt=""
+            className="w-12 animate-spin invert transition-transform duration-300 hover:scale-105 hover:rotate-4"
+          />
         </div>
       )}
       <img
