@@ -23,7 +23,7 @@ export default function Menu() {
           </NavLink>
           <NavLink
             to={location.pathname === "/about" ? "/" : "/about"}
-            className="group hover:text-accent pointer-events-auto flex cursor-help flex-col items-center pt-0 transition-colors lg:pt-2"
+            className="group pointer-events-auto flex cursor-help flex-col items-center pt-0 transition-colors hover:opacity-75 hover:invert lg:pt-2"
           >
             <h1 className="font-serif text-2xl italic transition-colors lg:text-4xl">
               Heidi Giel
