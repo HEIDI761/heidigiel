@@ -7,8 +7,8 @@ export default function About() {
   const { language } = useLanguage();
 
   return (
-    <div className="fixed inset-0 grid min-h-screen w-full grid-cols-[1fr_2fr] items-start overflow-auto px-16 pt-40">
-      <div className="sticky top-0 flex flex-col font-serif uppercase">
+    <div className="grid w-full grid-cols-[1fr_2fr] items-start">
+      <div className="sticky top-1/4 flex flex-col font-serif uppercase">
         {data?.contact?.email && (
           <a href={`mailto:${data?.contact.email}`}>{data.contact.email}</a>
         )}
