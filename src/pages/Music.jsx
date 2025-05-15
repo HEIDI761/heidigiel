@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   useMainMusicalProject,
   useMainMusicalItems,
@@ -8,6 +9,9 @@ import Loading from "../components/Loading";
 import useLanguage from "../hooks/useLanguage";
 import { PortableText } from "@portabletext/react";
 import MuscialItem from "../components/MusicalItem";
+import Lightbox from "../components/Lightbox";
+import { AnimatePresence } from "motion/react";
+import useIsMobile from "../hooks/useIsMobile";
 
 export default function Music() {
   const {
@@ -26,6 +30,9 @@ export default function Music() {
     error: musicalProjectsListError,
   } = useMusicalProjectsList();
   const { language } = useLanguage();
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [currentImage, setCurrentImage] = useState(null);
+  const isMobile = useIsMobile();
 
   if (isLoading || mainItemsLoading || musicalProjectsListLoading)
     return <Loading />;
@@ -33,39 +40,68 @@ export default function Music() {
     return <div>Error {error}</div>;
 
   return (
-    <div>
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div className="max-w-prose pt-16">
-          {mainMusicalProject.description && (
-            <PortableText
-              value={
-                mainMusicalProject.description[language] ||
-                mainMusicalProject.description.es
-              }
-            />
-          )}
-        </div>
-        <div className="bg-secondary-dim border-tertiary max-w-3xs rotate-1 rounded-sm border-2 px-4 py-2 text-center">
-          <div className="text-muted-text text-xs uppercase italic">
-            Otros proyectos
+    <>
+      <AnimatePresence>
+        {isLightboxOpen && (
+          <Lightbox
+            key="lightbox"
+            currentImage={currentImage}
+            setIsLightboxOpen={setIsLightboxOpen}
+          />
+        )}
+      </AnimatePresence>
+      <div>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="max-w-prose pt-16">
+            {mainMusicalProject.description && (
+              <PortableText
+                value={
+                  mainMusicalProject.description[language] ||
+                  mainMusicalProject.description.es
+                }
+              />
+            )}
           </div>
-          {musicalProjectsList.map((project) => (
-            <NavLink
-              to={project.slug.current}
-              key={project._id}
-              className="hover:text-accent flex cursor-pointer flex-col gap-2 font-serif text-2xl hover:italic"
-            >
-              {project.title[language] || project.title.es}
-            </NavLink>
+
+          {mainMusicalProject.images && (
+            <div className="grid grid-cols-1 place-items-center gap-4 md:grid-cols-2 lg:grid-cols-4">
+              {mainMusicalProject.images.map((image) => (
+                <img
+                  onClick={() => {
+                    if (!isMobile) {
+                      setCurrentImage(image.url + "?fm=webp");
+                      setIsLightboxOpen(true);
+                    }
+                  }}
+                  key={image._key}
+                  src={image.url + "?fm=webp&h=400"}
+                  className="cursor-zoom-in rounded-sm"
+                />
+              ))}
+            </div>
+          )}
+          <div className="bg-secondary-dim border-tertiary max-w-3xs rotate-1 rounded-sm border-2 px-4 py-2 text-center">
+            <div className="text-muted-text text-xs uppercase italic">
+              Otros proyectos
+            </div>
+            {musicalProjectsList.map((project) => (
+              <NavLink
+                to={project.slug.current}
+                key={project._id}
+                className="hover:text-accent flex cursor-pointer flex-col gap-2 font-serif text-2xl hover:italic"
+              >
+                {project.title[language] || project.title.es}
+              </NavLink>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 gap-16 pt-24 md:grid-cols-2 lg:grid-cols-4">
+          {mainItems.map((item) => (
+            <MuscialItem key={item._id} item={item} />
           ))}
         </div>
       </div>
-
-      <div className="grid grid-cols-1 gap-16 pt-24 md:grid-cols-2 lg:grid-cols-4">
-        {mainItems.map((item) => (
-          <MuscialItem key={item._id} item={item} />
-        ))}
-      </div>
-    </div>
+    </>
   );
 }
