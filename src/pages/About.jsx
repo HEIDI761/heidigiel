@@ -7,13 +7,8 @@ export default function About() {
   const { language } = useLanguage();
 
   return (
-    <div className="fixed inset-0 flex min-h-screen w-full flex-col items-center justify-center gap-6">
-      {data?.bio && (
-        <div className="flex max-w-prose flex-col gap-2">
-          <PortableText value={data.bio[language] || data.bio.es} />
-        </div>
-      )}
-      <div className="flex flex-col text-center font-serif uppercase">
+    <div className="fixed inset-0 grid min-h-screen w-full grid-cols-[1fr_2fr] items-start overflow-auto px-16 pt-40">
+      <div className="sticky top-0 flex flex-col font-serif uppercase">
         {data?.contact?.email && (
           <a href={`mailto:${data?.contact.email}`}>{data.contact.email}</a>
         )}
@@ -31,6 +26,11 @@ export default function About() {
             </div>
           ))}
       </div>
+      {data?.bio && (
+        <div className="flex max-w-prose flex-col gap-2 pb-32">
+          <PortableText value={data.bio[language] || data.bio.es} />
+        </div>
+      )}
     </div>
   );
 }
