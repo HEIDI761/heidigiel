@@ -52,25 +52,7 @@ export default function Music() {
       </AnimatePresence>
       <div>
         <div className="grid grid-cols-1 place-items-center gap-16 pt-16 lg:grid-cols-2">
-          {mainMusicalProject.images && (
-            <div className="mx-auto flex flex-wrap gap-8 lg:col-span-2">
-              {mainMusicalProject.images.map((image) => (
-                <img
-                  onClick={() => {
-                    if (!isMobile) {
-                      setCurrentImage(image.url + "?fm=webp");
-                      setIsLightboxOpen(true);
-                    }
-                  }}
-                  key={image._key}
-                  src={image.url + "?fm=webp&h=400"}
-                  className="mx-auto max-w-[200px] cursor-zoom-in rounded-sm"
-                />
-              ))}
-            </div>
-          )}
-
-          <div className="max-w-prose -rotate-1">
+          <div className="max-w-prose -rotate-1 text-xl">
             {mainMusicalProject.description && (
               <PortableText
                 value={
@@ -80,6 +62,24 @@ export default function Music() {
               />
             )}
           </div>
+
+          {mainMusicalProject.images && (
+            <div className="mx-auto flex flex-wrap items-center gap-8 lg:col-span-2">
+              {mainMusicalProject.images.map((image, index) => (
+                <img
+                  onClick={() => {
+                    if (!isMobile) {
+                      setCurrentImage(image.url + "?fm=webp");
+                      setIsLightboxOpen(true);
+                    }
+                  }}
+                  key={image._key}
+                  src={image.url + "?fm=webp&h=400"}
+                  className={`mx-auto h-auto cursor-zoom-in rounded-sm ${index === 1 ? "max-w-[1200px] rotate-1" : "max-w-[200px]"}`}
+                />
+              ))}
+            </div>
+          )}
 
           <div className="bg-secondary-dim border-tertiary max-w-3xs rotate-1 rounded-sm border-2 px-4 py-2 text-center">
             <div className="text-xs uppercase italic">Otros proyectos</div>

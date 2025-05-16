@@ -40,8 +40,8 @@ export default function MusicalProject() {
           />
         )}
       </AnimatePresence>
-      <div>
-        <h1 className="pb-4 text-center font-serif text-6xl">
+      <div className="flex flex-col gap-16">
+        <h1 className="text-center font-serif text-6xl">
           {project.title[language] || project.title.es}
         </h1>
         {project.description && (
@@ -53,7 +53,7 @@ export default function MusicalProject() {
         )}
 
         {project.images && (
-          <div className="grid grid-cols-1 place-items-center gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mx-auto flex flex-wrap gap-8">
             {project.images.map((image) => (
               <img
                 onClick={() => {
@@ -65,12 +65,12 @@ export default function MusicalProject() {
                 key={image._key}
                 src={image.url + "?fm=webp&h=400"}
                 alt={project.title.es}
-                className="cursor-zoom-in rounded-sm"
+                className="mx-auto max-w-[200px] cursor-zoom-in rounded-sm"
               />
             ))}
           </div>
         )}
-        <div className="grid grid-cols-1 gap-4 pt-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="flex flex-col gap-32 pt-24">
           {items.map((item) => (
             <MusicalItem key={item._id} item={item} />
           ))}

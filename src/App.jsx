@@ -45,7 +45,7 @@ function App() {
         </button>
       )}
 
-      <div className="px-16 pt-32 pb-36">
+      <div className="px-16 pt-48 pb-36">
         <Routes>
           <Route path="/" element={<Home image={data?.homeImage?.url} />} />
           <Route path="/about" element={<About />} />
