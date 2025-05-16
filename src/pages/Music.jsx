@@ -51,20 +51,9 @@ export default function Music() {
         )}
       </AnimatePresence>
       <div>
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="max-w-prose pt-16">
-            {mainMusicalProject.description && (
-              <PortableText
-                value={
-                  mainMusicalProject.description[language] ||
-                  mainMusicalProject.description.es
-                }
-              />
-            )}
-          </div>
-
+        <div className="grid grid-cols-1 place-items-center gap-16 pt-16 lg:grid-cols-2">
           {mainMusicalProject.images && (
-            <div className="grid grid-cols-1 place-items-center gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <div className="mx-auto flex flex-wrap gap-8 lg:col-span-2">
               {mainMusicalProject.images.map((image) => (
                 <img
                   onClick={() => {
@@ -75,20 +64,30 @@ export default function Music() {
                   }}
                   key={image._key}
                   src={image.url + "?fm=webp&h=400"}
-                  className="cursor-zoom-in rounded-sm"
+                  className="mx-auto max-w-[200px] cursor-zoom-in rounded-sm"
                 />
               ))}
             </div>
           )}
+
+          <div className="max-w-prose -rotate-1">
+            {mainMusicalProject.description && (
+              <PortableText
+                value={
+                  mainMusicalProject.description[language] ||
+                  mainMusicalProject.description.es
+                }
+              />
+            )}
+          </div>
+
           <div className="bg-secondary-dim border-tertiary max-w-3xs rotate-1 rounded-sm border-2 px-4 py-2 text-center">
-            <div className="text-muted-text text-xs uppercase italic">
-              Otros proyectos
-            </div>
+            <div className="text-xs uppercase italic">Otros proyectos</div>
             {musicalProjectsList.map((project) => (
               <NavLink
                 to={project.slug.current}
                 key={project._id}
-                className="hover:text-accent flex cursor-pointer flex-col gap-2 font-serif text-2xl hover:underline"
+                className="text-background flex cursor-pointer flex-col gap-2 font-serif text-2xl hover:underline"
               >
                 {project.title[language] || project.title.es}
               </NavLink>
@@ -96,7 +95,7 @@ export default function Music() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-16 pt-24 md:grid-cols-2 lg:grid-cols-4">
+        <div className="flex flex-col gap-32 pt-24">
           {mainItems.map((item) => (
             <MuscialItem key={item._id} item={item} />
           ))}
