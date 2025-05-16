@@ -58,7 +58,7 @@ export default function MusicalItem({ item }) {
             </button>
           )}{" "}
           {item.description && isDescriptionOpen && (
-            <div className="border-tertiary bg-background absolute top-0 right-0 z-10 my-8 max-h-3/4 max-w-lg overflow-y-scroll rounded-lg border-2 p-4 pt-6 text-xs shadow-md">
+            <div className="border-tertiary bg-background absolute top-0 right-0 z-10 my-8 max-h-3/4 max-w-lg overflow-y-auto rounded-lg border-2 p-4 pt-6 text-xs shadow-md">
               <PortableText
                 value={item.description[language] || item.description.es}
               />
