@@ -14,40 +14,40 @@ export default function Menu() {
           <NavLink
             to="/musica"
             className={({ isActive }) =>
-              `pointer-events-auto rounded-full px-10 text-9xl uppercase transition-all ${isActive ? "bg-primary text-background -rotate-2 italic" : "text-background hover:bg-secondary/50 hover:scale-105 hover:-rotate-1"}`
+              `pointer-events-auto rounded-full px-6 text-6xl uppercase transition-all lg:text-8xl ${isActive ? "bg-primary text-background -rotate-2 italic" : "text-background hover:bg-secondary/50 hover:scale-105 hover:-rotate-1"}`
             }
           >
             {language === "es" ? "Musica" : "Music"}
           </NavLink>
-          <NavLink
-            to={location.pathname === "/about" ? "/" : "/about"}
-            className="group pointer-events-auto flex shrink-0 cursor-help flex-col items-center pt-0 transition-colors hover:opacity-75 hover:invert lg:pt-2"
-          >
-            {/* <h1 className="font-serif text-2xl italic transition-colors lg:text-4xl">
-              Heidi Giel
-            </h1> */}
-            <div className={`text-4xl uppercase transition-colors`}>
-              <img
-                src="https://static.thenounproject.com/png/hand-fan-icon-7565442-512.png"
-                alt=""
-                className="w-16 opacity-20 invert transition-transform duration-300 group-hover:scale-105 group-hover:rotate-4"
-              />
-            </div>
-          </NavLink>
+          <div className="border-background size-8 shrink-0 rounded-full border" />
 
           <NavLink
             to="/audiovisual"
             className={({ isActive }) =>
-              `pointer-events-auto rounded-full px-10 text-9xl uppercase transition-all ${isActive ? "bg-primary text-background rotate-1 italic" : "text-background hover:bg-secondary/50 hover:scale-105 hover:rotate-2"}`
+              `pointer-events-auto rounded-full px-6 text-6xl uppercase transition-all lg:text-8xl ${isActive ? "bg-primary text-background rotate-1 italic" : "text-background hover:bg-secondary/50 hover:scale-105 hover:rotate-2"}`
             }
           >
             {language === "es" ? "Audiovisual" : "Audiovisual"}
           </NavLink>
         </nav>
       </div>
-      <div className="bg-tertiary hover:bg-secondary hover:text-background text-muted-text fixed top-24 right-0 z-50 w-max rounded-l-full pr-2 pl-1.5 text-sm">
+
+      <div className="border-background text-background fixed right-4 bottom-4 z-10 size-8 rounded-[50%] border px-2 pt-2.25 text-center text-xs leading-none">
         <LanguageSwitcher />
       </div>
+
+      <NavLink
+        to="/about"
+        className="bg-background fixed bottom-24 left-2 z-50 size-6 rounded-full text-center mix-blend-difference hover:invert"
+      >
+        +
+      </NavLink>
+
+      <NavLink to="/">
+        <h1 className="text-background font-display hover:text-accent fixed bottom-4 left-2 z-10 rounded-full text-6xl leading-none italic mix-blend-difference transition-colors hover:invert">
+          Heidi Giel
+        </h1>
+      </NavLink>
     </>
   );
 }

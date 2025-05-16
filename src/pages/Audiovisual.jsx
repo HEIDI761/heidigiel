@@ -76,9 +76,9 @@ export default function Audiovisual() {
 
   return (
     <div className="flex flex-col gap-16 pb-22">
-      <div className="sticky top-48 z-10 -ml-8 flex flex-col items-center gap-1 text-xs lowercase">
+      <div className="sticky top-32 z-10 -ml-8 flex flex-col items-end gap-1 text-xs lowercase">
         {filters.roles && (
-          <div className="flex flex-wrap justify-center">
+          <div className="flex flex-wrap justify-end">
             {filters.roles.map((role) => (
               <Tag
                 key={role._id}
