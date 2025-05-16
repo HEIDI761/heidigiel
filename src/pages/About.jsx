@@ -7,8 +7,10 @@ export default function About() {
   const { language } = useLanguage();
 
   return (
-    <div className="grid w-full grid-cols-[1fr_2fr] items-start">
-      <div className="sticky top-1/4 flex flex-col font-serif uppercase">
+    <>
+      <div className="from-background fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
+
+      <div className="bg-background border-tertiary fixed bottom-1/4 left-0 flex flex-col rounded-r-sm border px-4 py-2 font-serif uppercase">
         {data?.contact?.email && (
           <a href={`mailto:${data?.contact.email}`}>{data.contact.email}</a>
         )}
@@ -26,11 +28,12 @@ export default function About() {
             </div>
           ))}
       </div>
+
       {data?.bio && (
-        <div className="flex max-w-prose flex-col gap-2 pb-32">
+        <div className="mx-auto flex max-w-prose flex-col gap-2 pt-16 pb-32">
           <PortableText value={data.bio[language] || data.bio.es} />
         </div>
       )}
-    </div>
+    </>
   );
 }
