@@ -32,7 +32,7 @@ function App() {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div>
+    <div className="via-primary/20 to-secondary/40 min-h-screen bg-radial/oklab from-transparent from-40% via-70% bg-fixed">
       <CursorDecoration />
 
       <Menu />
