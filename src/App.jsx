@@ -32,6 +32,14 @@ function App() {
 
   return (
     <div className="via-primary/20 to-secondary/40 min-h-screen bg-radial/oklab from-transparent from-40% via-70% bg-fixed">
+      <div className="fixed inset-0 -z-10 flex h-screen w-screen items-center justify-center">
+        <div className="via-background to-secondary absolute h-full w-full bg-radial/oklab from-transparent from-40% via-70% bg-fixed"></div>
+        <img
+          className="-z-10 h-full w-full object-cover"
+          src={data?.homeImage?.url + "?fm=webp"}
+          alt="background"
+        />
+      </div>
       <CursorDecoration />
 
       <Menu />
