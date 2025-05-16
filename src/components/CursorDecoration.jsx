@@ -57,7 +57,7 @@ export default function CursorDecoration() {
       ctx.filter = "blur(60px)";
 
       // Create radial gradient
-      const gradient = ctx.createRadialGradient(x, y, 10, x, y, 300);
+      const gradient = ctx.createRadialGradient(x, y, 10, x, y, 150);
       gradient.addColorStop(0.2, "rgb(152, 0, 0)");
       gradient.addColorStop(0.4, "rgb(255, 187, 0)");
       gradient.addColorStop(0.9, "rgb(132, 135, 232)");
@@ -65,7 +65,7 @@ export default function CursorDecoration() {
       // Draw blob
       ctx.globalCompositeOperation = "screen";
       ctx.beginPath();
-      ctx.arc(x, y, 300, 0, Math.PI * 2);
+      ctx.arc(x, y, 150, 0, Math.PI * 2);
       ctx.fillStyle = gradient;
       ctx.fill();
 
@@ -92,7 +92,7 @@ export default function CursorDecoration() {
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed inset-0 -z-10"
+      className="pointer-events-none fixed inset-0 -z-10 mix-blend-color-burn"
     />
   );
 }
