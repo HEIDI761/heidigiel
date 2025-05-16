@@ -18,7 +18,6 @@ function App() {
   const navigate = useNavigate();
 
   const handleHighlightClick = (highlight) => {
-    console.log(highlight);
     if (highlight._type === "audiovisualProject") {
       navigate(`/audiovisual/${highlight.slug}`);
     } else if (highlight._type === "musicalProject") {

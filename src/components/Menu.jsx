@@ -7,8 +7,6 @@ export default function Menu() {
   const { language } = useLanguage();
   const location = useLocation();
 
-  console.log(location);
-
   return (
     <>
       <div className="pointer-events-none fixed inset-0 z-50">
