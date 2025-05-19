@@ -48,7 +48,7 @@ function App() {
       {data?.highlight && (
         <button
           onClick={() => handleHighlightClick(data.highlight)}
-          className="bg-primary text-background hover:bg-accent font-serif-italic fixed right-0 bottom-0 z-50 m-8 flex w-min -rotate-8 cursor-pointer justify-end rounded-full p-8 text-center text-xl transition-all duration-300 hover:scale-105 hover:rotate-3"
+          className="bg-primary hover:bg-accent font-serif-italic fixed right-0 bottom-0 z-50 m-8 flex w-min -rotate-8 cursor-pointer justify-end rounded-full p-8 text-center text-xl text-white transition-all duration-300 hover:scale-105 hover:rotate-3"
         >
           {data.highlight.title[language] || data.highlight.title.es}
         </button>
