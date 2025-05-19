@@ -83,6 +83,7 @@ export async function getMainMusicalProject() {
   return client.fetch(
     `*[_type == 'musicalProject' && _id=='1f3fb03a-2431-4977-9753-c80314f61e07'][0]{
         _id,
+        title,
         description,
         images[]{
             _key, 
@@ -131,7 +132,10 @@ export async function getMainMusicalItems() {
         title,
         date,
         slug,
-        coverImage{'url': asset->url},
+        coverImage{
+          'url': asset->url,
+          "dimensions": asset->metadata.dimensions,
+        },
         type->{type},
         description,
         images[]{
@@ -158,7 +162,10 @@ export async function getMusicalItems(slug) {
         title,
         date,
         slug,
-        coverImage{'url': asset->url},
+        coverImage{
+          'url': asset->url,
+          "dimensions": asset->metadata.dimensions,
+        },
         type->{type},
         description,
         images[]{
@@ -186,7 +193,10 @@ export async function getHighlightedMusicalItem(slug) {
         title,
         date,
         slug,
-        coverImage{'url': asset->url},
+        coverImage{
+          'url': asset->url,
+          "dimensions": asset->metadata.dimensions,
+        },
         type->{type},
         description,
         images[]{
