@@ -185,7 +185,7 @@ function ProjectsGrid({ projects }) {
             </div>
           ) : (
             <img
-              src={project.coverImage.url + "?fm=webp&h=400"}
+              src={project.coverImage.url + "?fm=webp&h=800"}
               alt={project.title}
               className="border-background rounded-sm border"
             />
