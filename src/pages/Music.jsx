@@ -86,7 +86,7 @@ export default function Music() {
                     }
                   }}
                   key={image._key}
-                  src={image.url + "?fm=webp&h=400"}
+                  src={image.url + "?fm=webp&h=800"}
                   className={`mx-auto h-auto cursor-zoom-in rounded-sm ${index === 1 ? "max-w-[1200px] rotate-1" : "max-w-[200px]"}`}
                 />
               ))}

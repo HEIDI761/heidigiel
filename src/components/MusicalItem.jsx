@@ -45,7 +45,7 @@ export default function MusicalItem({ item }) {
                 }
               }}
               className="border-background cursor-zoom-in rounded-sm border"
-              src={item.coverImage.url + "?fm=webp&h=400"}
+              src={item.coverImage.url + "?fm=webp&h=800"}
               alt={item.title}
             />
           </div>
@@ -76,7 +76,7 @@ export default function MusicalItem({ item }) {
                   }
                 }}
                 key={image._key}
-                src={image.url + "?fm=webp&h=400"}
+                src={image.url + "?fm=webp&h=800"}
                 alt={item.title.es}
                 className="border-background max-w-[300px] cursor-zoom-in rounded-sm border"
               />

@@ -64,7 +64,7 @@ export default function MusicalProject() {
                       }
                     }}
                     key={image._key}
-                    src={image.url + "?fm=webp&h=600"}
+                    src={image.url + "?fm=webp&h=800"}
                     alt={project.title.es}
                     className="border-background max-w-[600px] cursor-zoom-in rounded-sm border"
                   />

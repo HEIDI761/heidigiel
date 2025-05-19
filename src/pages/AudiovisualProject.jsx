@@ -71,7 +71,7 @@ export default function AudiovisualProject() {
             </div>
           ) : (
             <img
-              src={data.coverImage.url + "?fm=webp&h=600"}
+              src={data.coverImage.url + "?fm=webp&h=800"}
               alt=""
               className="border-background col-span-3 h-auto cursor-zoom-in rounded-sm border"
               onClick={() => {
@@ -103,7 +103,7 @@ export default function AudiovisualProject() {
                     }
                   }}
                   key={image._key}
-                  src={image.url + "?fm=webp&h=600"}
+                  src={image.url + "?fm=webp&h=800"}
                   alt=""
                   className="border-background h-auto w-full cursor-zoom-in rounded-sm border"
                 />

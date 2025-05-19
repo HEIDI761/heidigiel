@@ -172,7 +172,7 @@ function ProjectsGrid({ projects }) {
           {project.previewUrl ? (
             <div
               style={{
-                backgroundImage: `url("${project.coverImage.url}?fm=webp&h=400")`,
+                backgroundImage: `url("${project.coverImage.url}?fm=webp&h=800")`,
               }}
               className="relative aspect-video bg-cover"
             >
