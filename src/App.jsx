@@ -11,6 +11,7 @@ import CursorDecoration from "./components/CursorDecoration";
 import Menu from "./components/Menu";
 import HighlightedMusicalItem from "./pages/HighlightedMusicalItem";
 import Home from "./pages/Home";
+import Ornaments from "./components/Ornaments";
 
 function App() {
   const { data, isLoading, error } = useAbout();
@@ -40,6 +41,7 @@ function App() {
           alt="background"
         />
       </div>
+      <Ornaments />
       <CursorDecoration />
 
       <Menu />
