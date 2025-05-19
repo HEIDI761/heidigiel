@@ -10,7 +10,6 @@ import Loading from "./components/Loading";
 import CursorDecoration from "./components/CursorDecoration";
 import Menu from "./components/Menu";
 import HighlightedMusicalItem from "./pages/HighlightedMusicalItem";
-import Home from "./pages/Home";
 import Ornaments from "./components/Ornaments";
 
 function App() {
@@ -57,7 +56,7 @@ function App() {
 
       <div className="px-8 pt-32 pb-36">
         <Routes>
-          {/* <Route path="/" element={<Home image={data?.homeImage?.url} />} /> */}
+          <Route path="/" element={null} />
           <Route path="/about" element={<About />} />
           <Route path="/audiovisual" element={<Audiovisual />} />
           <Route path="/audiovisual/:slug" element={<AudiovisualProject />} />
