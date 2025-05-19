@@ -174,7 +174,7 @@ function ProjectsGrid({ projects }) {
               style={{
                 backgroundImage: `url("${project.coverImage.url}?fm=webp&h=800")`,
               }}
-              className="relative aspect-video bg-cover"
+              className="border-background relative aspect-video overflow-hidden rounded-sm border bg-cover bg-center"
             >
               <VimeoPlayer
                 url={project.previewUrl}
