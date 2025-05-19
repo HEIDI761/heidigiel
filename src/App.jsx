@@ -1,6 +1,7 @@
 import { Routes, Route, useNavigate } from "react-router";
 import { useAbout } from "./sanity/hooks/getData";
 import useLanguage from "./hooks/useLanguage";
+import useLightbox from "./hooks/useLightbox";
 import About from "./pages/About";
 import Audiovisual from "./pages/Audiovisual";
 import Music from "./pages/Music";
@@ -11,10 +12,13 @@ import CursorDecoration from "./components/CursorDecoration";
 import Menu from "./components/Menu";
 import HighlightedMusicalItem from "./pages/HighlightedMusicalItem";
 import Ornaments from "./components/Ornaments";
+import Lightbox from "./components/Lightbox";
+import { AnimatePresence } from "motion/react";
 
 function App() {
   const { data, isLoading, error } = useAbout();
   const { language } = useLanguage();
+  const { isLightboxOpen } = useLightbox();
   const navigate = useNavigate();
 
   const handleHighlightClick = (highlight) => {
@@ -32,6 +36,9 @@ function App() {
 
   return (
     <div className="via-primary/20 to-secondary/40 min-h-screen bg-radial/oklab from-transparent from-40% via-70% bg-fixed">
+      <AnimatePresence>
+        {isLightboxOpen && <Lightbox key="lightbox" />}
+      </AnimatePresence>
       <div className="fixed inset-0 -z-10 flex h-screen w-screen items-center justify-center">
         <div className="via-background to-secondary absolute h-full w-full bg-radial/oklab from-transparent from-40% via-70% bg-fixed"></div>
         <img

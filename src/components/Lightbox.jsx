@@ -1,8 +1,11 @@
 import { useState } from "react";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
+import useLightbox from "../hooks/useLightbox";
 
-export default function Lightbox({ currentImage, setIsLightboxOpen }) {
+export default function Lightbox() {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const { currentImage, setIsLightboxOpen } = useLightbox();
 
   return (
     <motion.div
