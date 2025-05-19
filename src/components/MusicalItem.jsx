@@ -28,7 +28,7 @@ export default function MusicalItem({ item }) {
       <div key={item._id} className="flex flex-col gap-16 pb-4">
         <div className="relative mx-auto flex max-h-[400px] items-end gap-2">
           <div className="flex rotate-180 flex-col gap-2 [writing-mode:vertical-rl]">
-            <h2 className="font-serif text-2xl">
+            <h2 className="bg-background/50 rounded-sm border px-2 font-serif text-2xl">
               {item.title[language] || item.title.es}
             </h2>
             <div className="flex flex-wrap items-center gap-2 text-xs">
@@ -44,14 +44,14 @@ export default function MusicalItem({ item }) {
                   setIsLightboxOpen(true);
                 }
               }}
-              className="cursor-zoom-in rounded-sm"
+              className="border-background cursor-zoom-in rounded-sm border"
               src={item.coverImage.url + "?fm=webp&h=400"}
               alt={item.title}
             />
           </div>
           {item.description && (
             <button
-              className="bg-tertiary hover:bg-accent text-background -mt-4 size-10 shrink-0 cursor-pointer self-start rounded-full text-2xl"
+              className="bg-tertiary hover:bg-accent -mt-4 size-10 shrink-0 cursor-pointer self-start rounded-full text-2xl text-white"
               onClick={() => setDescriptionIsOpen(!isDescriptionOpen)}
             >
               {isDescriptionOpen ? "-" : "+"}
@@ -78,7 +78,7 @@ export default function MusicalItem({ item }) {
                 key={image._key}
                 src={image.url + "?fm=webp&h=400"}
                 alt={item.title.es}
-                className="max-w-[300px] cursor-zoom-in rounded-sm"
+                className="border-background max-w-[300px] cursor-zoom-in rounded-sm border"
               />
             ))}
           </div>
@@ -111,7 +111,7 @@ export default function MusicalItem({ item }) {
           </div>
         )}
         {item.links && (
-          <div className="bg-tertiary/50 flex -rotate-5 flex-col gap-2 self-start rounded-lg p-4 text-xs">
+          <div className="bg-secondary border-tertiary flex -rotate-5 flex-col gap-2 self-center rounded-lg border-2 p-4 text-xs text-white">
             {item.links.map((link) => (
               <a
                 key={link._key}

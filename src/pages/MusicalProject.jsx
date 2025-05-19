@@ -40,36 +40,39 @@ export default function MusicalProject() {
           />
         )}
       </AnimatePresence>
-      <div className="flex flex-col gap-16">
+      <div className="flex flex-col gap-8">
         <h1 className="text-center font-serif text-6xl">
           {project.title[language] || project.title.es}
         </h1>
-        {project.description && (
-          <div className="mx-auto max-w-prose">
-            <PortableText
-              value={project.description[language] || project.description.es}
-            />
-          </div>
-        )}
-
-        {project.images && (
-          <div className="mx-auto flex flex-wrap gap-8">
-            {project.images.map((image) => (
-              <img
-                onClick={() => {
-                  if (!isMobile) {
-                    setCurrentImage(image.url + "?fm=webp");
-                    setIsLightboxOpen(true);
-                  }
-                }}
-                key={image._key}
-                src={image.url + "?fm=webp&h=400"}
-                alt={project.title.es}
-                className="mx-auto max-w-[200px] cursor-zoom-in rounded-sm"
+        <div className="flex flex-wrap justify-center gap-16">
+          {project.description && (
+            <div className="border-background max-w-prose place-self-start rounded-sm border bg-white/30 p-3 pt-2">
+              <PortableText
+                value={project.description[language] || project.description.es}
               />
-            ))}
-          </div>
-        )}
+            </div>
+          )}
+          {project.images && (
+            <div className="flex rotate-2 flex-wrap gap-8">
+              {project.images.map((image) => (
+                <div className="mx-auto">
+                  <img
+                    onClick={() => {
+                      if (!isMobile) {
+                        setCurrentImage(image.url + "?fm=webp");
+                        setIsLightboxOpen(true);
+                      }
+                    }}
+                    key={image._key}
+                    src={image.url + "?fm=webp&h=600"}
+                    alt={project.title.es}
+                    className="border-background max-w-[600px] cursor-zoom-in rounded-sm border"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
         <div className="flex flex-col gap-32 pt-24">
           {items.map((item) => (
             <MusicalItem key={item._id} item={item} />

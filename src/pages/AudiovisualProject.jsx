@@ -73,7 +73,7 @@ export default function AudiovisualProject() {
             <img
               src={data.coverImage.url + "?fm=webp&h=600"}
               alt=""
-              className="col-span-3 h-auto cursor-zoom-in rounded-sm"
+              className="border-background col-span-3 h-auto cursor-zoom-in rounded-sm border"
               onClick={() => {
                 if (!isMobile) {
                   setCurrentImage(data.coverImage.url + "?fm=webp");
@@ -105,7 +105,7 @@ export default function AudiovisualProject() {
                   key={image._key}
                   src={image.url + "?fm=webp&h=600"}
                   alt=""
-                  className="h-auto w-full cursor-zoom-in rounded-sm"
+                  className="border-background h-auto w-full cursor-zoom-in rounded-sm border"
                 />
               ))
             // </div>)

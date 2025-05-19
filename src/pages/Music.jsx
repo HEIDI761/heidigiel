@@ -52,7 +52,7 @@ export default function Music() {
       </AnimatePresence>
       <div>
         <div className="grid grid-cols-1 place-items-center gap-16 pt-16 lg:grid-cols-2">
-          <div className="max-w-prose -rotate-1 text-xl">
+          <div className="border-background mx-auto max-w-prose place-self-start rounded-sm border bg-white/30 p-3 pt-2">
             {mainMusicalProject.description && (
               <PortableText
                 value={
@@ -61,6 +61,18 @@ export default function Music() {
                 }
               />
             )}
+          </div>
+          <div className="bg-secondary-dim border-tertiary max-w-3xs rotate-1 rounded-sm border-2 px-4 py-2 text-center">
+            <div className="text-xs uppercase italic">Otros proyectos</div>
+            {musicalProjectsList.map((project) => (
+              <NavLink
+                to={project.slug.current}
+                key={project._id}
+                className="flex cursor-pointer flex-col gap-2 font-serif text-2xl text-white hover:underline"
+              >
+                {project.title[language] || project.title.es}
+              </NavLink>
+            ))}
           </div>
 
           {mainMusicalProject.images && (
@@ -80,19 +92,6 @@ export default function Music() {
               ))}
             </div>
           )}
-
-          <div className="bg-secondary-dim border-tertiary max-w-3xs rotate-1 rounded-sm border-2 px-4 py-2 text-center">
-            <div className="text-xs uppercase italic">Otros proyectos</div>
-            {musicalProjectsList.map((project) => (
-              <NavLink
-                to={project.slug.current}
-                key={project._id}
-                className="text-background flex cursor-pointer flex-col gap-2 font-serif text-2xl hover:underline"
-              >
-                {project.title[language] || project.title.es}
-              </NavLink>
-            ))}
-          </div>
         </div>
 
         <div className="flex flex-col gap-32 pt-24">

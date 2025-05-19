@@ -187,7 +187,7 @@ function ProjectsGrid({ projects }) {
             <img
               src={project.coverImage.url + "?fm=webp&h=400"}
               alt={project.title}
-              className="rounded-sm"
+              className="border-background rounded-sm border"
             />
           )}
         </NavLink>
