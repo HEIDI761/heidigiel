@@ -9,7 +9,7 @@ export default function ImageContainer({ image, item }) {
 
   return (
     <div
-      className="ronded-sm"
+      className="border-background overflow-hidden rounded-sm border"
       onClick={() => {
         if (!isMobile) openLightbox(image);
       }}
@@ -23,7 +23,7 @@ export default function ImageContainer({ image, item }) {
       <img
         src={image.url + "?fm=webp&h=800"}
         alt={item.title.es}
-        className="border-background w-full cursor-zoom-in rounded-sm border"
+        className="h-auto w-full cursor-zoom-in"
       />
     </div>
   );
