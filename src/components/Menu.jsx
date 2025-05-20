@@ -48,19 +48,19 @@ export default function Menu() {
         </nav>
       </div>
 
-      <div className="border-background text-background fixed right-4 bottom-4 z-10 size-8 rounded-[50%] border px-2 pt-2.25 text-center text-xs leading-none">
+      <div className="fixed right-4 bottom-4 z-10">
         <LanguageSwitcher />
       </div>
 
       <NavLink
         to="/about"
-        className="bg-background fixed bottom-16 left-2 z-50 size-6 rounded-full text-center mix-blend-difference hover:invert"
+        className="bg-background hover:bg-accent hover:text-background fixed bottom-16 left-2 z-50 size-6 rounded-full text-center mix-blend-difference hover:mix-blend-normal"
       >
         +
       </NavLink>
 
       <NavLink to="/">
-        <h1 className="text-background font-display hover:text-accent fixed bottom-4 left-2 z-10 rounded-full text-4xl leading-none italic mix-blend-difference transition-colors hover:invert">
+        <h1 className="text-background font-display hover:text-accent fixed bottom-4 left-2 z-10 rounded-full text-4xl leading-none italic mix-blend-difference hover:mix-blend-normal">
           Heidi Giel
         </h1>
       </NavLink>
