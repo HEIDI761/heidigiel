@@ -81,7 +81,7 @@ export default function Audiovisual() {
   return (
     <div className="flex flex-col gap-8 pb-22">
       <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
-      <div className="sticky top-32 z-10 -ml-8 flex flex-col items-center gap-1 text-xs lowercase">
+      <div className="sticky top-32 z-40 -ml-8 flex flex-col items-center gap-1 text-xs lowercase">
         {filters.roles && (
           <div className="flex flex-wrap justify-center">
             {filters.roles.map((role) => (
