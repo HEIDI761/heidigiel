@@ -14,7 +14,15 @@ export default function Menu() {
           <NavLink
             to="/musica"
             className={({ isActive }) =>
-              `pointer-events-auto rounded-full px-6 text-6xl uppercase transition-all lg:text-8xl ${isActive ? "bg-primary font-serif-italic -rotate-2 text-white" : location.pathname.startsWith("/audiovisual") ? "text-background hover:bg-secondary/50 hover:scale-105 hover:-rotate-1 hover:text-white" : "hover:bg-secondary/50 text-white hover:scale-105 hover:-rotate-1"}`
+              `pointer-events-auto rounded-full uppercase transition-all ${
+                isActive
+                  ? "bg-primary font-serif-italic -rotate-1 text-white"
+                  : "hover:bg-secondary/50 hover:scale-105 hover:-rotate-2"
+              } ${
+                location.pathname.startsWith("/audiovisual")
+                  ? "text-background hover:text-white"
+                  : "text-white"
+              } ${location.pathname.split("/").length > 2 ? "px-4 text-2xl" : "px-6 text-6xl lg:text-7xl"}`
             }
           >
             {language === "es" ? "Musica" : "Music"}
@@ -24,7 +32,15 @@ export default function Menu() {
           <NavLink
             to="/audiovisual"
             className={({ isActive }) =>
-              `pointer-events-auto rounded-full px-6 text-6xl uppercase transition-all lg:text-8xl ${isActive ? "bg-primary font-serif-italic rotate-1 text-white" : location.pathname.startsWith("/musica") ? "hover:bg-secondary/50 text-background hover:scale-105 hover:rotate-2 hover:text-white" : "hover:bg-secondary/50 text-white hover:scale-105 hover:rotate-2"}`
+              `pointer-events-auto rounded-full uppercase transition-all ${
+                isActive
+                  ? "bg-primary font-serif-italic rotate-1 text-white"
+                  : "hover:bg-secondary/50 hover:scale-105 hover:rotate-2"
+              } ${
+                location.pathname.startsWith("/musica")
+                  ? "text-background hover:text-white"
+                  : "text-white"
+              } ${location.pathname.split("/").length > 2 ? "px-4 text-2xl" : "px-6 text-6xl lg:text-7xl"}`
             }
           >
             {language === "es" ? "Audiovisual" : "Audiovisual"}
