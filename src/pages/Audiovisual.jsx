@@ -72,6 +72,10 @@ export default function Audiovisual() {
     });
   };
 
+  const noFiltersSelected =
+    selectedFilters.roles.length == 0 &&
+    selectedFilters.audiovisualProjectTypes.length == 0;
+
   if (isLoading || projectsLoading) return <Loading />;
 
   return (
@@ -110,8 +114,12 @@ export default function Audiovisual() {
           </div>
         )}
         <div
-          className="border-text hover:bg-text hover:text-background bg-background/50 cursor-pointer border px-2 transition-colors"
-          onClick={handleResetFilters}
+          className={`border-text bg-background/50 border px-2 transition-colors select-none ${noFiltersSelected ? "text-muted-text" : "hover:bg-text hover:text-background cursor-pointer"}`}
+          onClick={() => {
+            if (!noFiltersSelected) {
+              handleResetFilters();
+            }
+          }}
         >
           {language === "es" ? "Limpiar filtros" : "Clear filters"}
         </div>
