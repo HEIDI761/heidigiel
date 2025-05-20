@@ -65,33 +65,39 @@ export default function MusicalItem({ item }) {
           ))}
         </div>
       )}
-      {item.customFields && (
-        <div className="text-muted-text flex flex-col">
-          {item.customFields.map((field) => (
-            <div key={field._key} className="flex items-center gap-2">
-              <span className="text-xs uppercase">
-                {field.name[language] || field.name.es}:{" "}
-              </span>
-              <span className="italic">
-                {field.value[language] || field.value.es}
-              </span>
+      {(item.customFields || item.links) && (
+        <div className="bg-background flex -rotate-2 flex-col gap-8 self-center rounded-md p-4">
+          {item.customFields && (
+            <div className="text-muted-text flex flex-col">
+              {item.customFields.map((field) => (
+                <div key={field._key} className="flex items-center gap-2">
+                  <span className="text-muted-text text-xs uppercase">
+                    {field.name[language] || field.name.es}:{" "}
+                  </span>
+                  <span className="italic">
+                    {field.value[language] || field.value.es}
+                  </span>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      )}
-      {item.links && (
-        <div className="bg-secondary border-tertiary flex -rotate-5 flex-col gap-2 self-center rounded-lg border-2 p-4 text-xs text-white">
-          {item.links.map((link) => (
-            <a
-              key={link._key}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline"
-            >
-              {link.title[language] || link.title.es}
-            </a>
-          ))}
+          )}
+          {item.customFields && item.links && <hr />}
+          {item.links && (
+            <div className="flex flex-col">
+              <p className="text-muted-text text-xs italic">LINKS</p>
+              {item.links.map((link) => (
+                <a
+                  key={link._key}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cursor-pointer hover:underline"
+                >
+                  {link.title[language] || link.title.es}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>
