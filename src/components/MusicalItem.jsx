@@ -27,7 +27,7 @@ export default function MusicalItem({ item }) {
         </div>
         {item.description && (
           <button
-            className="bg-tertiary hover:bg-accent -mt-4 size-10 shrink-0 cursor-pointer self-start rounded-full text-2xl text-white"
+            className="bg-background -mt-4 size-8 shrink-0 cursor-pointer self-start rounded-full border text-2xl transition-transform duration-300 ease-in-out hover:scale-105 hover:rotate-12"
             onClick={() => setDescriptionIsOpen(!isDescriptionOpen)}
           >
             {isDescriptionOpen ? "-" : "+"}

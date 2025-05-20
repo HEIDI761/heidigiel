@@ -1,7 +1,7 @@
 export default function TextContainer({ children, className, variant = "1" }) {
   const variants = {
-    1: "bg-white/50 border-background border border-4",
-    2: "bg-tertiary border-secondary border-2",
+    1: "bg-white/50 border-background border border-4 shadow-xl shadow-background",
+    2: "bg-background border shadow-md shadow-background",
     3: "bg-none border-none",
   };
   return (

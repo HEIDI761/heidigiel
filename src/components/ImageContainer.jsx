@@ -9,7 +9,7 @@ export default function ImageContainer({ image, item }) {
 
   return (
     <div
-      className="border-background overflow-hidden rounded-sm border"
+      className="border-background drop-shadow-background overflow-hidden rounded-sm border drop-shadow-xl"
       onClick={() => {
         if (!isMobile) openLightbox(image);
       }}
