@@ -201,14 +201,12 @@ function ProjectsList({ projects }) {
   return (
     <div>
       {projects.map((project) => (
-        <div
+        <NavLink
+          to={`/audiovisual/${project.slug.current}`}
           key={project._id}
           className="group hover:bg-background/50 flex flex-col flex-wrap gap-1 border-b p-2 md:flex-row md:items-center md:gap-2"
         >
-          <NavLink
-            className="flex items-center gap-1 hover:underline"
-            to={`/audiovisual/${project.slug.current}`}
-          >
+          <div className="flex items-center gap-1 group-hover:underline">
             {project.isFavorite && (
               <div className="rotate-3">
                 <svg
@@ -226,7 +224,7 @@ function ProjectsList({ projects }) {
               {project.title.es} -
             </h2>
             <p className="font-serif text-2xl italic">{project.client}</p>
-          </NavLink>
+          </div>
 
           <div className="flex flex-wrap text-xs lowercase">
             {project.audiovisualProjectType.map((type) => (
@@ -250,7 +248,7 @@ function ProjectsList({ projects }) {
           </div>
 
           <p className="text-xs italic">{project.date.slice(0, 4)}</p>
-        </div>
+        </NavLink>
       ))}
     </div>
   );
