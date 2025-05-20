@@ -31,7 +31,7 @@ export default function About() {
       </div>
 
       {data?.bio && (
-        <TextContainer variant="3">
+        <TextContainer className="mx-auto" variant="3">
           <PortableText value={data.bio[language] || data.bio.es} />
         </TextContainer>
       )}
