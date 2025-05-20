@@ -12,9 +12,9 @@ export default function MusicalItem({ item }) {
 
   return (
     <div key={item._id} className="flex flex-col gap-16 pb-4">
-      <div className="relative mx-auto flex max-h-[400px] items-end gap-2">
+      <div className="relative mx-auto flex max-w-3xl items-end gap-2">
         <div className="flex rotate-180 flex-col gap-2 [writing-mode:vertical-rl]">
-          <h2 className="bg-background/50 rounded-sm border px-2 font-serif text-2xl">
+          <h2 className="bg-background max-h-[600px] border px-2 font-serif text-2xl">
             {item.title[language] || item.title.es}
           </h2>
           <div className="flex flex-wrap items-center gap-2 text-xs">
@@ -47,7 +47,7 @@ export default function MusicalItem({ item }) {
       {item.images && (
         <div className="flex flex-wrap items-center justify-center gap-8">
           {item.images.map((image) => (
-            <div key={image._key} className="max-w-[300px]">
+            <div key={image._key} className="max-w-sm">
               <ImageContainer image={image} item={item} />
             </div>
           ))}
@@ -56,10 +56,7 @@ export default function MusicalItem({ item }) {
       {item.vimeoVideos && (
         <div className="flex flex-col items-center justify-center gap-2">
           {item.vimeoVideos.map((video, index) => (
-            <div
-              key={index}
-              className="w-full max-w-4xl overflow-hidden rounded-sm"
-            >
+            <div key={index} className="w-full max-w-4xl">
               <VimeoPlayer url={video} />
             </div>
           ))}
