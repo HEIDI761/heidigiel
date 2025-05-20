@@ -82,9 +82,9 @@ export default function Audiovisual() {
   return (
     <div className="flex flex-col gap-8 pb-22">
       <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
-      <div className="sticky top-32 z-40 -ml-8 flex flex-col items-center gap-1 text-xs lowercase">
+      <div className="pointer-events-none sticky top-32 z-40 flex flex-col items-center gap-1 self-center text-xs lowercase">
         {filters.roles && (
-          <div className="flex flex-wrap justify-center">
+          <div className="pointer-events-auto flex flex-wrap justify-center">
             {filters.roles.map((role) => (
               <Tag
                 key={role._id}
@@ -98,7 +98,7 @@ export default function Audiovisual() {
           </div>
         )}
         {filters.audiovisualProjectTypes && (
-          <div className="flex flex-wrap justify-center">
+          <div className="pointer-events-auto flex flex-wrap justify-center">
             {filters.audiovisualProjectTypes.map((type) => (
               <Tag
                 key={type._id}
@@ -115,7 +115,7 @@ export default function Audiovisual() {
           </div>
         )}
         <div
-          className={`border-text bg-background/50 border px-2 transition-colors select-none ${noFiltersSelected ? "text-muted-text" : "hover:bg-text hover:text-background cursor-pointer"}`}
+          className={`border-text bg-background/50 pointer-events-auto border px-2 transition-colors select-none ${noFiltersSelected ? "text-muted-text" : "hover:bg-text hover:text-background cursor-pointer"}`}
           onClick={() => {
             if (!noFiltersSelected) {
               handleResetFilters();
@@ -125,7 +125,7 @@ export default function Audiovisual() {
           {language === "es" ? "Limpiar filtros" : "Clear filters"}
         </div>
 
-        <div className="grid grid-cols-2 gap-2 pt-2 text-xs">
+        <div className="pointer-events-auto grid grid-cols-2 gap-2 pt-2 text-xs">
           <button
             className={`border-text group bg-background/50 cursor-pointer rounded-full border px-2 uppercase ${display === "list" ? "bg-text text-background" : "text-muted-text hover:bg-text hover:text-background"}`}
             onClick={() => setDisplay("list")}
