@@ -5,6 +5,8 @@ import { useParams } from "react-router";
 import MusicalItem from "../components/MusicalItem";
 import { PortableText } from "@portabletext/react";
 import ImageContainer from "../components/ImageContainer";
+import TextContainer from "../components/TextContainer";
+import BackButton from "../components/BackButton";
 
 export default function MusicalProject() {
   const { slug } = useParams();
@@ -24,33 +26,36 @@ export default function MusicalProject() {
   if (itemsError || projectError) return <div>Error: {itemsError.message}</div>;
 
   return (
-    <div className="flex flex-col gap-8">
-      <h1 className="text-center font-serif text-6xl">
-        {project.title[language] || project.title.es}
-      </h1>
-      <div className="flex flex-wrap justify-center gap-16">
-        {project.description && (
-          <div className="border-background max-w-prose place-self-start rounded-sm border bg-white/30 p-3 pt-2">
-            <PortableText
-              value={project.description[language] || project.description.es}
-            />
-          </div>
-        )}
-        {project.images && (
-          <div className="flex rotate-2 flex-wrap gap-8">
-            {project.images.map((image) => (
-              <div key={image._key} className="mx-auto">
-                <ImageContainer image={image} item={project} />
-              </div>
-            ))}
-          </div>
-        )}
+    <>
+      <BackButton />
+      <div className="flex flex-col gap-8">
+        <h1 className="text-center font-serif text-6xl">
+          {project.title[language] || project.title.es}
+        </h1>
+        <div className="flex flex-wrap justify-center gap-16">
+          {project.description && (
+            <TextContainer className="place-self-start pt-2">
+              <PortableText
+                value={project.description[language] || project.description.es}
+              />
+            </TextContainer>
+          )}
+          {project.images && (
+            <div className="flex rotate-2 flex-wrap gap-8">
+              {project.images.map((image) => (
+                <div key={image._key} className="mx-auto">
+                  <ImageContainer image={image} item={project} />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="flex flex-col gap-32 pt-24">
+          {items.map((item) => (
+            <MusicalItem key={item._id} item={item} />
+          ))}
+        </div>
       </div>
-      <div className="flex flex-col gap-32 pt-24">
-        {items.map((item) => (
-          <MusicalItem key={item._id} item={item} />
-        ))}
-      </div>
-    </div>
+    </>
   );
 }

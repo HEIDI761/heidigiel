@@ -1,6 +1,7 @@
 import { useAbout } from "../sanity/hooks/getData";
 import useLanguage from "../hooks/useLanguage";
 import { PortableText } from "@portabletext/react";
+import TextContainer from "../components/TextContainer";
 
 export default function About() {
   const { data } = useAbout();
@@ -30,9 +31,9 @@ export default function About() {
       </div>
 
       {data?.bio && (
-        <div className="mx-auto flex max-w-prose flex-col gap-2 pt-16 pb-32">
+        <TextContainer variant="3">
           <PortableText value={data.bio[language] || data.bio.es} />
-        </div>
+        </TextContainer>
       )}
     </>
   );

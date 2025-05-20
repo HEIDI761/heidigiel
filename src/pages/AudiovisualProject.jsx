@@ -6,6 +6,8 @@ import { PortableText } from "@portabletext/react";
 import VimeoPlayer from "../components/VimeoPlayer";
 import Tag from "../components/Tag";
 import ImageContainer from "../components/ImageContainer";
+import TextContainer from "../components/TextContainer";
+import BackButton from "../components/BackButton";
 
 export default function AudiovisualProject() {
   const { slug } = useParams();
@@ -16,13 +18,15 @@ export default function AudiovisualProject() {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className="pt-16">
-      <div>
-        <h1 className="text-center font-serif text-6xl">
-          {data.title[language] || data.title.es} -{" "}
-          <span className="italic">{data.client}</span>
-        </h1>
-        {/* {data.roles && (
+    <>
+      <BackButton />
+      <div className="">
+        <div>
+          <h1 className="mx-auto max-w-5xl text-center font-serif text-6xl">
+            {data.title[language] || data.title.es} -{" "}
+            <span className="italic">{data.client}</span>
+          </h1>
+          {/* {data.roles && (
           <ul className="flex flex-wrap text-xs">
             {data.roles.map((role) => (
               <Tag key={role._id} tag={role.role} clickabe={false} />
@@ -59,13 +63,13 @@ export default function AudiovisualProject() {
           </div>
         )}
 
-        {data.description && (
-          <div className="col-span-3 max-w-prose">
-            <PortableText
-              value={data.description[language] || data.description.es}
-            />
-          </div>
-        )}
+          {data.description && (
+            <TextContainer className="col-span-3 max-w-prose">
+              <PortableText
+                value={data.description[language] || data.description.es}
+              />
+            </TextContainer>
+          )}
 
         {
           data.images &&

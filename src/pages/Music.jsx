@@ -9,6 +9,7 @@ import useLanguage from "../hooks/useLanguage";
 import { PortableText } from "@portabletext/react";
 import MuscialItem from "../components/MusicalItem";
 import ImageContainer from "../components/ImageContainer";
+import TextContainer from "../components/TextContainer";
 
 export default function Music() {
   const {
@@ -36,17 +37,17 @@ export default function Music() {
   return (
     <div>
       <div className="grid grid-cols-1 place-items-center gap-16 pt-16 lg:grid-cols-2">
-        <div className="border-background mx-auto max-w-prose place-self-start rounded-sm border bg-white/30 p-3 pt-2">
-          {mainMusicalProject.description && (
+        {mainMusicalProject.description && (
+          <TextContainer className="self-start">
             <PortableText
               value={
                 mainMusicalProject.description[language] ||
                 mainMusicalProject.description.es
               }
             />
-          )}
-        </div>
-        <div className="bg-secondary-dim border-tertiary max-w-3xs rotate-1 rounded-sm border-2 px-4 py-2 text-center">
+          </TextContainer>
+        )}
+        <div className="bg-secondary-dim border-tertiary max-w-3xs rotate-1 border px-4 py-2 text-center">
           <div className="text-xs uppercase italic">Otros proyectos</div>
           {musicalProjectsList.map((project) => (
             <NavLink
