@@ -33,35 +33,35 @@ export default function AudiovisualProject() {
             ))}
           </ul>
         )} */}
-        {data.audiovisualProjectType && (
-          <ul className="flex flex-wrap justify-center pt-4 text-xs lowercase">
-            {data.audiovisualProjectType.map((type) => (
-              <Tag
-                key={type._id}
-                tag={type.type}
-                clickabe={false}
-                roundness="sm"
-              />
-            ))}
-          </ul>
-        )}
-        {data.date && (
-          <p className="pt-2 text-center text-xs italic">
-            {new Date(data.date).toLocaleDateString()}
-          </p>
-        )}
-      </div>
+          {data.audiovisualProjectType && (
+            <ul className="flex flex-wrap justify-center pt-4 text-xs lowercase">
+              {data.audiovisualProjectType.map((type) => (
+                <Tag
+                  key={type._id}
+                  tag={type.type}
+                  clickabe={false}
+                  roundness="sm"
+                />
+              ))}
+            </ul>
+          )}
+          {data.date && (
+            <p className="pt-2 text-center text-xs italic">
+              {new Date(data.date).toLocaleDateString()}
+            </p>
+          )}
+        </div>
 
-      <div className="grid grid-cols-6 place-items-center gap-8 pt-16">
-        {data.video ? (
-          <div className="col-span-6 mx-auto w-full max-w-7xl pb-16">
-            <VimeoPlayer url={data.video} />
-          </div>
-        ) : (
-          <div className="border-background col-span-3 h-auto cursor-zoom-in rounded-sm border">
-            <ImageContainer image={data.coverImage} item={data} />
-          </div>
-        )}
+        <div className="grid grid-cols-6 place-items-center gap-8 pt-16">
+          {data.video ? (
+            <div className="col-span-6 mx-auto w-full max-w-7xl pb-16">
+              <VimeoPlayer url={data.video} />
+            </div>
+          ) : (
+            <div className="border-background col-span-3 h-auto cursor-zoom-in rounded-sm border">
+              <ImageContainer image={data.coverImage} item={data} />
+            </div>
+          )}
 
           {data.description && (
             <TextContainer className="col-span-3 max-w-prose">
@@ -71,32 +71,33 @@ export default function AudiovisualProject() {
             </TextContainer>
           )}
 
-        {
-          data.images &&
-            // (<div className="grid grid-cols-1 gap-4 pt-8 md:grid-cols-2 lg:grid-cols-4">
-            data.images.map((image) => (
-              <div
-                key={image._key}
-                className="border-background h-auto w-full cursor-zoom-in rounded-sm border"
-              >
-                <ImageContainer image={image} item={data} />
-              </div>
-            ))
-          // </div>)
-        }
-        {data.links && (
-          <ul className="bg-background col-span-2 col-start-5 w-full rounded-sm p-4">
-            <p className="text-muted-text text-xs">LINKS EXTERNOS</p>
-            {data.links.map((link) => (
-              <li key={link._key} className="hover:underline">
-                <a href={link.url} target="_blank" rel="noopener noreferrer">
-                  {link.title[language] || link.title.es}
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
+          {
+            data.images &&
+              // (<div className="grid grid-cols-1 gap-4 pt-8 md:grid-cols-2 lg:grid-cols-4">
+              data.images.map((image) => (
+                <div
+                  key={image._key}
+                  className="border-background h-auto w-full cursor-zoom-in rounded-sm border"
+                >
+                  <ImageContainer image={image} item={data} />
+                </div>
+              ))
+            // </div>)
+          }
+          {data.links && (
+            <ul className="bg-background col-span-2 col-start-5 w-full rounded-sm p-4">
+              <p className="text-muted-text text-xs">LINKS EXTERNOS</p>
+              {data.links.map((link) => (
+                <li key={link._key} className="hover:underline">
+                  <a href={link.url} target="_blank" rel="noopener noreferrer">
+                    {link.title[language] || link.title.es}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
