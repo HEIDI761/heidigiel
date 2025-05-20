@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import VimeoPlayer from "../components/VimeoPlayer";
 import { NavLink } from "react-router";
 import Tag from "../components/Tag";
+import ImageContainer from "../components/ImageContainer";
 
 export default function Audiovisual() {
   const { data: filters, isLoading } = useAudiovisualFilters();
@@ -196,11 +197,7 @@ function ProjectsGrid({ projects }) {
               />
             </div>
           ) : (
-            <img
-              src={project.coverImage.url + "?fm=webp&h=800"}
-              alt={project.title}
-              className="border-background rounded-sm border"
-            />
+            <ImageContainer image={project.coverImage} item={project} />
           )}
         </NavLink>
       ))}
