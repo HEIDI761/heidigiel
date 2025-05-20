@@ -83,20 +83,6 @@ export default function Audiovisual() {
     <div className="flex flex-col gap-8 pb-22">
       <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
       <div className="pointer-events-none sticky top-32 z-40 flex flex-col items-center gap-1 self-center text-xs lowercase">
-        {filters.roles && (
-          <div className="pointer-events-auto flex flex-wrap justify-center">
-            {filters.roles.map((role) => (
-              <Tag
-                key={role._id}
-                tag={role.role}
-                onClick={() => handleFilterChange("roles", role)}
-                selected={selectedFilters.roles.some(
-                  (selectedRole) => selectedRole._id === role._id,
-                )}
-              />
-            ))}
-          </div>
-        )}
         {filters.audiovisualProjectTypes && (
           <div className="pointer-events-auto flex flex-wrap justify-center">
             {filters.audiovisualProjectTypes.map((type) => (
