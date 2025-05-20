@@ -75,10 +75,11 @@ export default function Audiovisual() {
   if (isLoading || projectsLoading) return <Loading />;
 
   return (
-    <div className="flex flex-col gap-16 pb-22">
-      <div className="sticky top-32 z-10 -ml-8 flex flex-col items-end gap-1 text-xs lowercase">
+    <div className="flex flex-col gap-8 pb-22">
+      <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
+      <div className="sticky top-32 z-10 -ml-8 flex flex-col items-center gap-1 text-xs lowercase">
         {filters.roles && (
-          <div className="flex flex-wrap justify-end">
+          <div className="flex flex-wrap justify-center">
             {filters.roles.map((role) => (
               <Tag
                 key={role._id}
@@ -162,7 +163,7 @@ export default function Audiovisual() {
 
 function ProjectsGrid({ projects }) {
   return (
-    <div className="grid grid-flow-dense grid-cols-3 items-center gap-8 lg:grid-cols-5">
+    <div className="grid grid-flow-dense grid-cols-3 items-start gap-4 lg:grid-cols-6">
       {projects.map((project) => (
         <NavLink
           key={project._id}
@@ -200,42 +201,54 @@ function ProjectsList({ projects }) {
   return (
     <div>
       {projects.map((project) => (
-        <div key={project._id} className="flex items-center gap-2">
+        <div
+          key={project._id}
+          className="group hover:bg-background/50 flex flex-col flex-wrap gap-1 border-b p-2 md:flex-row md:items-center md:gap-2"
+        >
           <NavLink
-            className="flex gap-2 hover:underline"
+            className="flex items-center gap-1 hover:underline"
             to={`/audiovisual/${project.slug.current}`}
           >
-            <h2 className="font-serif text-2xl">{project.title.es} -</h2>
+            {project.isFavorite && (
+              <div className="rotate-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="var(--color-primary)"
+                >
+                  <path d="M480-269 314-169q-11 7-23 6t-21-8q-9-7-14-17.5t-2-23.5l44-189-147-127q-10-9-12.5-20.5T140-571q4-11 12-18t22-9l194-17 75-178q5-12 15.5-18t21.5-6q11 0 21.5 6t15.5 18l75 178 194 17q14 2 22 9t12 18q4 11 1.5 22.5T809-528L662-401l44 189q3 13-2 23.5T690-171q-9 7-21 8t-23-6L480-269Z" />
+                </svg>
+              </div>
+            )}
+            <h2 className="group-hover:font-serif-italic font-serif text-2xl">
+              {project.title.es} -
+            </h2>
             <p className="font-serif text-2xl italic">{project.client}</p>
           </NavLink>
 
-          <div className="flex flex-wrap gap-2 text-xs">
+          <div className="flex flex-wrap text-xs lowercase">
             {project.audiovisualProjectType.map((type) => (
-              <p key={type._id} className="rounded border px-2">
-                {type.type.es}
-              </p>
+              <Tag
+                key={type._id}
+                tag={type.type}
+                roundness="sm"
+                clickabe={false}
+              />
             ))}
           </div>
-          <div className="flex flex-wrap gap-2 text-xs">
+          <div className="flex flex-wrap text-xs lowercase">
             {project.roles.map((role) => (
-              <p key={role._id} className="rounded-full border px-2">
-                {role.role.es}
-              </p>
+              <Tag
+                key={role._id}
+                tag={role.role}
+                roundness="full"
+                clickabe={false}
+              />
             ))}
           </div>
-          {project.isFavorite && (
-            <div className="rotate-3">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 -960 960 960"
-                width="24px"
-                fill="var(--color-primary)"
-              >
-                <path d="M480-269 314-169q-11 7-23 6t-21-8q-9-7-14-17.5t-2-23.5l44-189-147-127q-10-9-12.5-20.5T140-571q4-11 12-18t22-9l194-17 75-178q5-12 15.5-18t21.5-6q11 0 21.5 6t15.5 18l75 178 194 17q14 2 22 9t12 18q4 11 1.5 22.5T809-528L662-401l44 189q3 13-2 23.5T690-171q-9 7-21 8t-23-6L480-269Z" />
-              </svg>
-            </div>
-          )}
+
           <p className="text-xs italic">{project.date.slice(0, 4)}</p>
         </div>
       ))}
