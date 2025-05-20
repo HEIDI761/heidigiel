@@ -167,15 +167,18 @@ function ProjectsGrid({ projects }) {
       {projects.map((project) => (
         <NavLink
           key={project._id}
-          className={`relative flex flex-col gap-2 ${project.isFavorite ? (project.coverImage.dimensions.height > project.coverImage.dimensions.width ? "col-span-2 row-span-2" : "col-span-3") : ""}`}
+          className={`group relative flex flex-col gap-2 overflow-hidden rounded-[0%] transition-all duration-300 hover:rounded-[50%] ${project.isFavorite ? (project.coverImage.dimensions.height > project.coverImage.dimensions.width ? "col-span-2 row-span-2" : "col-span-3") : ""}`}
           to={`/audiovisual/${project.slug.current}`}
         >
+          <h1 className="text-background bg-text absolute z-10 flex h-full w-full items-center justify-center text-center font-serif text-2xl opacity-0 mix-blend-difference transition-opacity duration-300 group-hover:opacity-100">
+            {project.title.es}
+          </h1>
           {project.previewUrl ? (
             <div
               style={{
                 backgroundImage: `url("${project.coverImage.url}?fm=webp&h=800")`,
               }}
-              className="border-background relative aspect-video overflow-hidden rounded-sm border bg-cover bg-center"
+              className="relative aspect-video overflow-hidden rounded-sm bg-cover bg-center"
             >
               <VimeoPlayer
                 url={project.previewUrl}
