@@ -4,7 +4,7 @@ import {
 } from "../sanity/hooks/getData";
 import Loading from "../components/Loading";
 import useLanguage from "../hooks/useLanguage";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import VimeoPlayer from "../components/VimeoPlayer";
 import { NavLink } from "react-router";
 import Tag from "../components/Tag";
@@ -35,6 +35,20 @@ export default function Audiovisual() {
     }
   }, [projectsData, filteredType]);
 
+  const relevantProjectTypes = useMemo(() => {
+    if (!projectsData || !filters?.audiovisualProjectTypes) return [];
+    return filters.audiovisualProjectTypes.filter((type) =>
+      projectsData.some((project) =>
+        project.audiovisualProjectType.some((t) => t._id === type._id),
+      ),
+    );
+  }, [filters, projectsData]);
+
+  const hasFavorites = useMemo(() => {
+    if (!projectsData) return false;
+    return projectsData.some((project) => project.isFavorite);
+  }, [projectsData]);
+
   if (isLoading || projectsLoading) return <Loading />;
 
   return (
@@ -43,7 +57,7 @@ export default function Audiovisual() {
       <div className="pointer-events-none sticky top-32 z-40 flex flex-col items-center gap-1 self-center text-xs lowercase">
         {filters.audiovisualProjectTypes && (
           <div className="pointer-events-auto flex flex-wrap justify-center">
-            {filters.audiovisualProjectTypes.map((type) => (
+            {relevantProjectTypes.map((type) => (
               <Tag
                 key={type._id}
                 tag={type.type}
@@ -54,14 +68,16 @@ export default function Audiovisual() {
                 roundness="sm"
               />
             ))}
-            <Tag
-              tag={{ es: "destacados", en: "highlights" }}
-              onClick={() => {
-                setFilteredType("fav");
-              }}
-              selected={filteredType === "fav"}
-              roundness="sm"
-            />
+            {hasFavorites && (
+              <Tag
+                tag={{ es: "destacados", en: "highlights" }}
+                onClick={() => {
+                  setFilteredType("fav");
+                }}
+                selected={filteredType === "fav"}
+                roundness="sm"
+              />
+            )}
             <Tag tag={{ es: "x" }} onClick={() => setFilteredType(null)} />
           </div>
         )}
