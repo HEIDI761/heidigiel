@@ -14,67 +14,26 @@ export default function Audiovisual() {
   const { data: filters, isLoading } = useAudiovisualFilters();
   const { data: projectsData, isLoading: projectsLoading } =
     useAudiovisualProjectsList();
+  const [filteredType, setFilteredType] = useState(null);
   const [filteredProjects, setFilteredProjects] = useState([]);
-  const [selectedFilters, setSelectedFilters] = useState({
-    roles: [],
-    audiovisualProjectTypes: [],
-  });
   const [display, setDisplay] = useState("grid");
 
   useEffect(() => {
     if (projectsData) {
-      if (
-        selectedFilters.roles.length === 0 &&
-        selectedFilters.audiovisualProjectTypes.length === 0
-      ) {
+      if (!filteredType) {
         setFilteredProjects(projectsData);
       } else {
         const filtered = projectsData.filter((project) => {
-          const hasRole =
-            selectedFilters.roles.length === 0
-              ? true
-              : selectedFilters.roles.some((role) =>
-                  project.roles.some(
-                    (projectRole) => projectRole._id === role._id,
-                  ),
-                );
-
-          const hasType =
-            selectedFilters.audiovisualProjectTypes.length === 0
-              ? true
-              : selectedFilters.audiovisualProjectTypes.some((type) =>
-                  project.audiovisualProjectType.some(
-                    (projectType) => projectType._id === type._id,
-                  ),
-                );
-
-          return hasRole && hasType;
+          const hasType = project.audiovisualProjectType.some((type) => {
+            return type._id === filteredType._id;
+          });
+          const isFavorite = project.isFavorite && filteredType === "fav";
+          return hasType || isFavorite;
         });
-
         setFilteredProjects(filtered);
       }
     }
-  }, [projectsData, selectedFilters]);
-
-  const handleFilterChange = (filterType, filter) => {
-    setSelectedFilters((prev) => ({
-      ...prev,
-      [filterType]: prev[filterType].some((f) => f._id === filter._id)
-        ? prev[filterType].filter((f) => f._id !== filter._id)
-        : [...prev[filterType], filter],
-    }));
-  };
-
-  const handleResetFilters = () => {
-    setSelectedFilters({
-      roles: [],
-      audiovisualProjectTypes: [],
-    });
-  };
-
-  const noFiltersSelected =
-    selectedFilters.roles.length == 0 &&
-    selectedFilters.audiovisualProjectTypes.length == 0;
+  }, [projectsData, filteredType]);
 
   if (isLoading || projectsLoading) return <Loading />;
 
@@ -88,27 +47,24 @@ export default function Audiovisual() {
               <Tag
                 key={type._id}
                 tag={type.type}
-                onClick={() =>
-                  handleFilterChange("audiovisualProjectTypes", type)
-                }
-                selected={selectedFilters.audiovisualProjectTypes.some(
-                  (selectedType) => selectedType._id === type._id,
-                )}
+                onClick={() => {
+                  setFilteredType(filteredType?._id === type._id ? null : type);
+                }}
+                selected={filteredType?._id === type._id}
                 roundness="sm"
               />
             ))}
+            <Tag
+              tag={{ es: "destacados", en: "highlights" }}
+              onClick={() => {
+                setFilteredType("fav");
+              }}
+              selected={filteredType === "fav"}
+              roundness="sm"
+            />
+            <Tag tag={{ es: "x" }} onClick={() => setFilteredType(null)} />
           </div>
         )}
-        <div
-          className={`border-text bg-background/50 pointer-events-auto border px-2 transition-colors select-none ${noFiltersSelected ? "text-muted-text" : "hover:bg-text hover:text-background cursor-pointer"}`}
-          onClick={() => {
-            if (!noFiltersSelected) {
-              handleResetFilters();
-            }
-          }}
-        >
-          {language === "es" ? "Limpiar filtros" : "Clear filters"}
-        </div>
 
         <div className="pointer-events-auto grid grid-cols-2 gap-2 pt-2 text-xs">
           <button
