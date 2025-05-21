@@ -45,11 +45,6 @@ export default function AudiovisualProject() {
               ))}
             </ul>
           )}
-          {data.date && (
-            <p className="pt-2 text-center text-xs italic">
-              {new Date(data.date).toLocaleDateString()}
-            </p>
-          )}
         </div>
 
         <div className="grid grid-cols-6 place-items-center gap-8 pt-16">

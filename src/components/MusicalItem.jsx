@@ -19,7 +19,6 @@ export default function MusicalItem({ item }) {
           </h2>
           <div className="flex flex-wrap items-center gap-2 text-xs">
             <Tag tag={item.type.type} key={item.type._id} clickabe={false} />
-            <p className="italic">{item.date.slice(0, 4)}</p>
           </div>
         </div>
         <div className="self-center">
