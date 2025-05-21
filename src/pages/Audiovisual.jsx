@@ -116,34 +116,41 @@ function ProjectsGrid({ projects }) {
 
   return (
     <div className="grid grid-flow-dense grid-cols-3 items-start gap-4 lg:grid-cols-6">
-      {projects.map((project) => (
-        <NavLink
-          key={project._id}
-          className={`group relative flex flex-col gap-2 overflow-hidden rounded-[0%] transition-all duration-300 hover:rounded-[50%] ${project.isFavorite ? (project.coverImage.dimensions.height > project.coverImage.dimensions.width ? "col-span-2 row-span-2" : "col-span-3") : ""}`}
-          to={`/audiovisual/${project.slug.current}`}
-        >
-          <h1 className="text-background bg-text absolute z-10 flex h-full w-full items-center justify-center text-center font-serif text-2xl opacity-0 mix-blend-difference transition-opacity duration-300 group-hover:opacity-100">
-            {project.title[language] || project.title.es}
-          </h1>
-          {project.previewUrl ? (
-            <div
-              style={{
-                backgroundImage: `url("${project.coverImage.url}?fm=webp&h=800")`,
-              }}
-              className="relative aspect-video overflow-hidden rounded-sm bg-cover bg-center"
-            >
-              <VimeoPlayer
-                url={project.previewUrl}
-                autoplay={1}
-                background={1}
-                loop={1}
-              />
-            </div>
-          ) : (
-            <ImageContainer image={project.coverImage} item={project} />
-          )}
-        </NavLink>
-      ))}
+      {projects.map((project) =>
+        !project.isSingleImage ? (
+          <NavLink
+            key={project._id}
+            className={`group relative flex flex-col gap-2 overflow-hidden rounded-[0%] transition-all duration-300 hover:rounded-[50%] ${project.isFavorite ? (project.coverImage.dimensions.height > project.coverImage.dimensions.width ? "col-span-2 row-span-2" : "col-span-3") : ""}`}
+            to={`/audiovisual/${project.slug.current}`}
+          >
+            <h1 className="text-background bg-text absolute z-10 flex h-full w-full items-center justify-center text-center font-serif text-2xl opacity-0 mix-blend-difference transition-opacity duration-300 group-hover:opacity-100">
+              {project.title[language] || project.title.es}
+            </h1>
+            {project.previewUrl ? (
+              <div
+                style={{
+                  backgroundImage: `url("${project.coverImage.url}?fm=webp&h=800")`,
+                }}
+                className="relative aspect-video overflow-hidden rounded-sm bg-cover bg-center"
+              >
+                <VimeoPlayer
+                  url={project.previewUrl}
+                  autoplay={1}
+                  background={1}
+                  loop={1}
+                />
+              </div>
+            ) : (
+              <ImageContainer image={project.coverImage} item={project} />
+            )}
+          </NavLink>
+        ) : (
+          project.images &&
+          project.images.map((image) => (
+            <ImageContainer key={image._key} image={image} />
+          ))
+        ),
+      )}
     </div>
   );
 }
@@ -171,7 +178,7 @@ function ProjectsList({ projects }) {
                 </svg>
               </div>
             )}
-            <h2 className="group-hover:font-serif-italic font-serif text-2xl">
+            <h2 className="font-serif text-2xl italic group-hover:font-serif">
               {project.title.es} -
             </h2>
             <p className="font-serif text-2xl italic">{project.client}</p>
