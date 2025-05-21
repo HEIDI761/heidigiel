@@ -151,6 +151,7 @@ export async function getMainMusicalItems() {
             value,
         },
         links,
+        isSingleImage,
     }`,
   );
 }
