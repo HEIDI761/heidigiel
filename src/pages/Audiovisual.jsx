@@ -24,7 +24,7 @@ export default function Audiovisual() {
         setFilteredProjects(projectsData);
       } else {
         const filtered = projectsData.filter((project) => {
-          const hasType = project.audiovisualProjectType.some((type) => {
+          const hasType = project.audiovisualProjectType?.some((type) => {
             return type._id === filteredType._id;
           });
           const isFavorite = project.isFavorite && filteredType === "fav";
@@ -38,8 +38,8 @@ export default function Audiovisual() {
   const relevantProjectTypes = useMemo(() => {
     if (!projectsData || !filters?.audiovisualProjectTypes) return [];
     return filters.audiovisualProjectTypes.filter((type) =>
-      projectsData.some((project) =>
-        project.audiovisualProjectType.some((t) => t._id === type._id),
+      projectsData?.some((project) =>
+        project.audiovisualProjectType?.some((t) => t._id === type._id),
       ),
     );
   }, [filters, projectsData]);
