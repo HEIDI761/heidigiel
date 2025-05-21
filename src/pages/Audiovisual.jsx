@@ -14,7 +14,6 @@ export default function Audiovisual() {
   const { data: filters, isLoading } = useAudiovisualFilters();
   const { data: projectsData, isLoading: projectsLoading } =
     useAudiovisualProjectsList();
-  const { language } = useLanguage();
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [selectedFilters, setSelectedFilters] = useState({
     roles: [],
@@ -157,6 +156,8 @@ export default function Audiovisual() {
 }
 
 function ProjectsGrid({ projects }) {
+  const { language } = useLanguage();
+
   return (
     <div className="grid grid-flow-dense grid-cols-3 items-start gap-4 lg:grid-cols-6">
       {projects.map((project) => (
@@ -166,7 +167,7 @@ function ProjectsGrid({ projects }) {
           to={`/audiovisual/${project.slug.current}`}
         >
           <h1 className="text-background bg-text absolute z-10 flex h-full w-full items-center justify-center text-center font-serif text-2xl opacity-0 mix-blend-difference transition-opacity duration-300 group-hover:opacity-100">
-            {project.title.es}
+            {project.title[language] || project.title.es}
           </h1>
           {project.previewUrl ? (
             <div
