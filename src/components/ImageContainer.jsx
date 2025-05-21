@@ -22,7 +22,7 @@ export default function ImageContainer({ image, item }) {
     >
       <img
         src={image.url + "?fm=webp&h=800"}
-        alt={item.title.es}
+        alt={item ? item.title.es : ""}
         className="h-auto w-full cursor-zoom-in"
       />
     </div>

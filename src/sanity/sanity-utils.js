@@ -41,6 +41,15 @@ export async function getAudiovisualProjectsList() {
             "dimensions": asset->metadata.dimensions,
         },
         previewUrl,
+        isSingleImage,
+        "images": select(
+          isSingleImage => images[]{
+            _key,
+            "url": asset->url,
+            "dimensions": asset->metadata.dimensions
+          },
+          true => null
+        )
     }`,
   );
 }
@@ -151,6 +160,7 @@ export async function getMainMusicalItems() {
             value,
         },
         links,
+        isSingleImage,
     }`,
   );
 }
