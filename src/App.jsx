@@ -4,7 +4,7 @@ import useLanguage from "./hooks/useLanguage";
 import useLightbox from "./hooks/useLightbox";
 import About from "./pages/About";
 import Audiovisual from "./pages/Audiovisual";
-// import Music from "./pages/Music";
+import Music from "./pages/Music";
 // import AudiovisualProject from "./pages/AudiovisualProject";
 // import MusicalProject from "./pages/MusicalProject";
 import Loading from "./components/Loading";
@@ -67,7 +67,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/audiovisual" element={<Audiovisual />} />
           {/* <Route path="/audiovisual/:slug" element={<AudiovisualProject />} /> */}
-          {/* <Route path="/musica" element={<Music />} /> */}
+          <Route path="/musica" element={<Music />} />
           {/* <Route path="/musica/:slug" element={<MusicalProject />} /> */}
           {/* <Route path="/:slug" element={<HighlightedMusicalItem />} /> */}
         </Routes>
