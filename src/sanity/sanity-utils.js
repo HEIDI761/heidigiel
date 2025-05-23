@@ -4,225 +4,140 @@ export async function getAbout() {
   return client.fetch(
     `*[_type == 'about'][0]{
         homeImage{'url': asset->url},
-        highlight->{title, _type, 'slug': slug.current},
-        bio, 
-        contact, 
+        highlight{
+          text,
+          highlightRef->{
+            title, 
+            _type, 
+            'slug': slug.current
+          }
+        },
+        bio,
+        contact,
     }`,
   );
 }
 
-export async function getAudiovisualFilters() {
+export async function getAudiovisualContent() {
   return client.fetch(
-    `{
-    'roles': *[_type == 'audiovisualProjectRole']{
-        _id,
-        role,
-    },
-    'audiovisualProjectTypes': *[_type == 'audiovisualProjectType']{
+    `*[_type == 'audiovisual'][0] {
+      content[]{
+        _key,
+        _type,
+
+        _type == "audiovisualProject" => {
+          "project": @->{
+            _id,
+            title,
+            description,
+            slug,
+            isImageGallery,
+            date,
+            isFavorite,
+            client,
+            coverImage{
+              'url': asset->url,
+              "dimensions": asset->metadata.dimensions,
+            },
+            audiovisualProjectType[]->{_id, type}, 
+            roles[]->{_id, role},
+            images[]{
+              _key, 
+              'url': asset->url,
+              "dimensions": asset->metadata.dimensions,
+            },
+            previewUrl,
+            video,
+            description,
+            links,
+          }
+        },
+
+        _type == "image" => {
+          asset->{
+            _id,
+            url,
+            metadata { dimensions, lqip },
+          }
+        },
+      }
+    }`,
+  );
+}
+
+export async function getAudiovisualProjectTypes() {
+  return client.fetch(
+    `*[_type == 'audiovisualProjectType']{
         _id,
         type,
-    },
-    }`,
-  );
-}
-
-export async function getAudiovisualProjectsList() {
-  return client.fetch(
-    `*[_type == 'audiovisualProject'] | order(date desc){
-        _id,
-        title,
-        slug,
-        date,
-        client,
-        isFavorite,
-        audiovisualProjectType[]->{_id, type},
-        roles[]->{_id, role},
-        coverImage{'url': asset->url, 
-            "dimensions": asset->metadata.dimensions,
-        },
-        previewUrl,
-        isSingleImage,
-        "images": select(
-          isSingleImage => images[]{
-            _key,
-            "url": asset->url,
-            "dimensions": asset->metadata.dimensions
-          },
-          true => null
-        )
-    }`,
-  );
-}
-
-export async function getAudiovisualProject(slug) {
-  return client.fetch(
-    `*[_type == 'audiovisualProject' && slug.current == $slug][0]{
-        _id,
-        title,
-        date,
-        client,
-        coverImage{'url': asset->url, 
-            "dimensions": asset->metadata.dimensions,
-        },
-        audiovisualProjectType[]->{_id, type},
-        roles[]->{_id, role},
-        images[]{
-            _key, 
-            'url': asset->url,
-            "dimensions": asset->metadata.dimensions,
-        },
-        video,
-        description,
-        links,
       }`,
-    { slug },
   );
 }
 
-export async function getMusicalItemTypes() {
+export async function getMusicContent() {
   return client.fetch(
-    `*[_type == 'musicalItemType']{
-        title,
-        description,
-    }`,
-  );
-}
+    `*[_type == 'music'][0] {
+      content[]{
+        _key,
+        _type,
 
-export async function getMainMusicalProject() {
-  return client.fetch(
-    `*[_type == 'musicalProject' && _id=='1f3fb03a-2431-4977-9753-c80314f61e07'][0]{
-        _id,
-        title,
-        description,
-        images[]{
-            _key, 
-            'url': asset->url,
-            "dimensions": asset->metadata.dimensions,
+        _type == "item" => {
+          "item": @->{
+            _id,
+            isImageGallery,
+            title,
+            slug,
+            date,
+            musicalProject->{_id, title},
+            isFavorite,
+            type->{_id, type}, 
+            coverImage{
+              'url': asset->url,
+              "dimensions": asset->metadata.dimensions,
+            },
+            images[]{
+              _key, 
+              'url': asset->url,
+              "dimensions": asset->metadata.dimensions,
+            },
+            vimeoVideos,
+            description,
+            links,
+            customFields
+          }
         },
-        links,
+
+        _type == "image" => {
+          asset->{
+            _id,
+            url,
+            metadata { dimensions, lqip },
+          }
+        },
+      }
     }`,
   );
 }
 
 export async function getMusicalProjectsList() {
   return client.fetch(
-    `*[_type == 'musicalProject' && _id!='1f3fb03a-2431-4977-9753-c80314f61e07'] | order(date desc){
-        _id,
-        title,
-        slug,
-    }`,
-  );
-}
-
-export async function getMusicalProject(slug) {
-  return client.fetch(
-    `*[_type == 'musicalProject' && slug.current == $slug][0]{
+    `*[_type == 'musicalProject'] | order(date desc){
         _id,
         title,
         slug,
         date,
         endDate,
         description,
-        images[]{
-            _key, 
-            'url': asset->url,
-            "dimensions": asset->metadata.dimensions,
-        },
-        links,
-    }`,
-    { slug },
-  );
-}
-
-export async function getMainMusicalItems() {
-  return client.fetch(
-    `*[_type=='musicalItem' && musicalProject._ref=='1f3fb03a-2431-4977-9753-c80314f61e07'] | order(date desc){
-        _id,
-        title,
-        date,
-        slug,
-        coverImage{
-          'url': asset->url,
-          "dimensions": asset->metadata.dimensions,
-        },
-        type->{type},
-        description,
-        images[]{
-            _key, 
-            'url': asset->url,
-            "dimensions": asset->metadata.dimensions,
-        },
-        vimeoVideos,
-        externalVideo,
-        customFields[]{
-            _key,
-            name,
-            value,
-        },
-        links,
-        isSingleImage,
+        links
     }`,
   );
 }
 
-export async function getMusicalItems(slug) {
+export async function getMusicalItemTypes() {
   return client.fetch(
-    `*[_type=='musicalItem' && musicalProject->slug.current==$slug] | order(date desc){
-        _id,
-        title,
-        date,
-        slug,
-        coverImage{
-          'url': asset->url,
-          "dimensions": asset->metadata.dimensions,
-        },
-        type->{type},
-        description,
-        images[]{
-            _key, 
-            'url': asset->url,
-            "dimensions": asset->metadata.dimensions,
-        },
-        vimeoVideos,
-        externalVideo,
-        customFields[]{
-            _key,
-            name,
-            value,
-        },
-        links,
-    }`,
-    { slug },
-  );
-}
-
-export async function getHighlightedMusicalItem(slug) {
-  return client.fetch(
-    `*[_type=='musicalItem' && slug.current == $slug][0]{
-        _id,
-        title,
-        date,
-        slug,
-        coverImage{
-          'url': asset->url,
-          "dimensions": asset->metadata.dimensions,
-        },
-        type->{type},
-        description,
-        images[]{
-            _key, 
-            'url': asset->url,
-            "dimensions": asset->metadata.dimensions,
-        },
-        vimeoVideos,
-        externalVideo,
-        customFields[]{
-            _key,
-            name,
-            value,
-        },
-        links,
-    }`,
-    { slug },
+    `*[_type == 'musicalItemType']{
+        _id 
+        type,
+     }`,
   );
 }

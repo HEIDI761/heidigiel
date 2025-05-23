@@ -8,31 +8,24 @@ export function useAbout() {
   });
 }
 
-export function useAudiovisualFilters() {
+export function useAudiovisualContent() {
   return useQuery({
-    queryKey: ["audiovisualFilters"],
-    queryFn: () => sanityUtils.getAudiovisualFilters(),
+    queryKey: ["audiovisualContent"],
+    queryFn: () => sanityUtils.getAudiovisualContent(),
   });
 }
 
-export function useAudiovisualProjectsList() {
+export function useAudiovisualProjectTypes() {
   return useQuery({
-    queryKey: ["audiovisualProjectsList"],
-    queryFn: () => sanityUtils.getAudiovisualProjectsList(),
+    queryKey: ["audiovisualProjectTypes"],
+    queryFn: () => sanityUtils.getAudiovisualProjectTypes(),
   });
 }
 
-export function useAudiovisualProject(slug) {
+export function useMusicContent() {
   return useQuery({
-    queryKey: ["audiovisualProject", slug],
-    queryFn: () => sanityUtils.getAudiovisualProject(slug),
-  });
-}
-
-export function useMainMusicalProject() {
-  return useQuery({
-    queryKey: ["mainMusicalProject"],
-    queryFn: () => sanityUtils.getMainMusicalProject(),
+    queryKey: ["musicContent"],
+    queryFn: () => sanityUtils.getMusicContent(),
   });
 }
 
@@ -43,30 +36,9 @@ export function useMusicalProjectsList() {
   });
 }
 
-export function useMusicalProject(slug) {
+export function useMusicalItemTypes() {
   return useQuery({
-    queryKey: ["musicalProject", slug],
-    queryFn: () => sanityUtils.getMusicalProject(slug),
-  });
-}
-
-export function useMainMusicalItems() {
-  return useQuery({
-    queryKey: ["mainMusicalItems"],
-    queryFn: () => sanityUtils.getMainMusicalItems(),
-  });
-}
-
-export function useMusicalItems(slug) {
-  return useQuery({
-    queryKey: ["musicalItems", slug],
-    queryFn: () => sanityUtils.getMusicalItems(slug),
-  });
-}
-
-export function useHighlightedMusicalItem(slug) {
-  return useQuery({
-    queryKey: ["highlightedMusicalItem", slug],
-    queryFn: () => sanityUtils.getHighlightedMusicalItem(slug),
+    queryKey: ["musicalItemTypes"],
+    queryFn: () => sanityUtils.getMusicalItemTypes(),
   });
 }
