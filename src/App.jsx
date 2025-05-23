@@ -74,7 +74,7 @@ function App() {
         </button>
       </div>
 
-      <div className="px-4 py-16 pb-36">
+      <div className="px-4 pt-24">
         <Routes>
           <Route path="/" element={null} />
           <Route path="/about" element={<About />} />
