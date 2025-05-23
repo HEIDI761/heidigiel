@@ -12,9 +12,11 @@ export default function Audiovisual() {
   const [filters, setFilters] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState(null);
   // const [display, setDisplay] = useState("grid");
+  const [hovered, setHovered] = useState(null);
 
   const imgSize = {
-    sm: "?h=100&f=webp",
+    sm: "?h=400&f=webp",
+    md: "?h=800&f=webp",
   };
 
   useEffect(() => {
@@ -43,10 +45,10 @@ export default function Audiovisual() {
     <div className="flex flex-col gap-8 pb-22">
       <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
 
-      <div className="mb-4 flex gap-2">
+      <div className="sticky top-24 z-50 flex gap-1 font-mono text-xs">
         <button
           onClick={() => setSelectedFilter(null)}
-          className="border px-2 py-1 uppercase"
+          className="border-text size-4 rounded-full border leading-tight uppercase"
         >
           x
         </button>
@@ -58,13 +60,13 @@ export default function Audiovisual() {
                 ? setSelectedFilter(null)
                 : setSelectedFilter(type)
             }
-            className={`border px-2 py-1 uppercase ${selectedFilter === type ? "bg-black text-white" : ""}`}
+            className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase transition-colors duration-500 ${selectedFilter === type ? "bg-text text-background" : ""}`}
           >
             {type.type.es}
           </button>
         ))}
         <button
-          className={`border px-2 py-1 uppercase ${selectedFilter === "fav" ? "bg-black text-white" : ""}`}
+          className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase transition-colors duration-500 ${selectedFilter === "fav" ? "bg-text text-background" : ""}`}
           onClick={() =>
             selectedFilter === "fav"
               ? setSelectedFilter(null)
@@ -75,7 +77,7 @@ export default function Audiovisual() {
         </button>
       </div>
 
-      <div className="grid grid-cols-6 gap-4">
+      <div className="grid grid-flow-dense auto-rows-[250px] grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2">
         {data.content.flatMap((element) => {
           if (element._type === "audiovisualProject" && element.project) {
             const matchesFilter =
@@ -89,32 +91,49 @@ export default function Audiovisual() {
             const coverImage = element.project.coverImage?.url
               ? [
                   <div
+                    onMouseEnter={() => setHovered(element.project._id)}
+                    onMouseLeave={() => setHovered(null)}
                     key={`${element._key}-cover`}
-                    className={`border p-2 ${element.project.isFavorite ? "col-span-2 row-span-2 bg-blue-400" : ""}`}
+                    className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.project.isFavorite ? (element.project.coverImage.dimensions.height > element.project.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
                   >
                     <img
-                      src={element.project.coverImage.url + imgSize.sm}
+                      src={element.project.coverImage.url + imgSize.md}
                       alt="Cover"
+                      className="h-full w-full object-cover"
                     />
                     {!element.project.isImageGallery && (
-                      <div>{element.project.title.es}</div>
+                      <div
+                        className={`absolute inset-0 z-10 flex items-center justify-center p-4 text-center uppercase opacity-0 mix-blend-difference transition-opacity duration-500 ${hovered === element.project._id ? "opacity-100" : ""}`}
+                      >
+                        {element.project.title.es}
+                      </div>
                     )}
                   </div>,
                 ]
               : [];
 
             const projectImages =
-              element.project.images?.map((img) => (
-                <div
-                  key={img._key}
-                  className={`border p-2 ${element.project.isFavorite ? "bg-blue-400" : ""}`}
-                >
-                  <img src={img.url + imgSize.sm} alt="Project image" />
-                  {!element.project.isImageGallery && (
+              element.project.images?.map(
+                (img, index) =>
+                  element.project.isFavorite &&
+                  index < 4 && (
+                    <div
+                      onMouseEnter={() => setHovered(element.project._id)}
+                      onMouseLeave={() => setHovered(null)}
+                      key={img._key}
+                      className={`overflow-hidden border transition-all duration-500 ${element.project.isFavorite ? "" : ""} ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                    >
+                      <img
+                        src={img.url + imgSize.sm}
+                        alt="Project image"
+                        className="h-full w-full object-cover"
+                      />
+                      {/* {!element.project.isImageGallery && (
                     <div>{element.project.title.es}</div>
-                  )}
-                </div>
-              )) || [];
+                  )} */}
+                    </div>
+                  ),
+              ) || [];
 
             return [...coverImage, ...projectImages].filter(Boolean);
           }
@@ -125,8 +144,15 @@ export default function Audiovisual() {
             !selectedFilter
           ) {
             return (
-              <div key={element._key} className="border bg-amber-500 p-2">
-                <img src={element.asset.url + imgSize.sm} alt="Loose image" />
+              <div
+                key={element._key}
+                className={`cursor-zoom-in overflow-hidden border transition-all duration-500 ${hovered === element._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+              >
+                <img
+                  src={element.asset.url + imgSize.sm}
+                  alt="Loose image"
+                  className="h-full w-full object-cover"
+                />
               </div>
             );
           }
