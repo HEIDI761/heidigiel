@@ -1,8 +1,5 @@
-import {
-  useMainMusicalProject,
-  useMainMusicalItems,
-  useMusicalProjectsList,
-} from "../sanity/hooks/getData";
+import { useEffect, useState } from "react";
+import { useMusicContent } from "../sanity/hooks/getData";
 import { NavLink } from "react-router";
 import Loading from "../components/Loading";
 import useLanguage from "../hooks/useLanguage";
@@ -12,97 +9,186 @@ import ImageContainer from "../components/ImageContainer";
 import TextContainer from "../components/TextContainer";
 
 export default function Music() {
-  const {
-    data: mainMusicalProject,
-    isLoading,
-    error,
-  } = useMainMusicalProject();
-  const {
-    data: mainItems,
-    isLoading: mainItemsLoading,
-    error: mainItemsError,
-  } = useMainMusicalItems();
-  const {
-    data: musicalProjectsList,
-    isLoading: musicalProjectsListLoading,
-    error: musicalProjectsListError,
-  } = useMusicalProjectsList();
-  const { language } = useLanguage();
+  const { data, isLoading, error } = useMusicContent();
+  const [filters, setFilters] = useState(null);
+  const [selectedFilter, setSelectedFilter] = useState(null);
+  const [projects, setProjects] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(null);
 
-  if (isLoading || mainItemsLoading || musicalProjectsListLoading)
-    return <Loading />;
-  if (error || mainItemsError || musicalProjectsListError)
-    return <div>Error {error}</div>;
+  const imgSize = {
+    sm: "?h=100&f=webp",
+  };
+
+  useEffect(() => {
+    if (data) {
+      const seenProjects = new Set();
+      const uniqueProjects = [];
+
+      data.content.forEach((el) => {
+        if (el._type === "item" && el.item.musicalProject) {
+          if (
+            el.item.musicalProject._id &&
+            !seenProjects.has(el.item.musicalProject._id)
+          ) {
+            seenProjects.add(el.item.musicalProject._id);
+            uniqueProjects.push(el.item.musicalProject);
+          }
+        }
+      });
+      setProjects(uniqueProjects);
+
+      const seenTypes = new Set();
+      const uniqueTypes = [];
+
+      data.content.forEach((el) => {
+        if (
+          el._type === "item" &&
+          el.item.type &&
+          (!selectedProject ||
+            el.item.musicalProject._id === selectedProject._id)
+        ) {
+          if (el.item.type._id && !seenTypes.has(el.item.type._id)) {
+            seenTypes.add(el.item.type._id);
+            uniqueTypes.push(el.item.type);
+          }
+        }
+      });
+      setFilters(uniqueTypes);
+    }
+  }, [setFilters, setProjects, selectedProject, data]);
+
+  if (isLoading) return <Loading />;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div>
       <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
-      <div className="grid grid-cols-1 place-items-center gap-16 pt-16 lg:grid-cols-2">
-        {mainMusicalProject.description && (
-          <TextContainer className="self-start">
-            <PortableText
-              value={
-                mainMusicalProject.description[language] ||
-                mainMusicalProject.description.es
-              }
-            />
-          </TextContainer>
-        )}
-        <div className="bg-secondary-dim border-tertiary max-w-3xs rotate-1 border px-4 py-2 text-center">
-          <div className="text-xs uppercase italic">Otros proyectos</div>
-          {musicalProjectsList.map((project) => (
-            <NavLink
-              to={project.slug.current}
-              key={project._id}
-              className="flex cursor-pointer flex-col gap-2 font-serif text-2xl text-white hover:underline"
-            >
-              {project.title[language] || project.title.es}
-            </NavLink>
-          ))}
-        </div>
 
-        {mainMusicalProject.images && (
-          <div className="mx-auto flex flex-wrap items-center gap-8 lg:col-span-2">
-            {mainMusicalProject.images.map((image, index) => (
-              <div
-                key={image._key}
-                className={`mx-auto h-auto cursor-zoom-in rounded-sm ${index === 1 ? "max-w-[1200px] rotate-1" : "max-w-[200px]"}`}
-              >
-                <ImageContainer image={image} item={mainMusicalProject} />
-              </div>
-            ))}
-          </div>
-        )}
+      <div className="mb-4 flex gap-2">
+        <button
+          onClick={() => setSelectedProject(null)}
+          className="border px-2 py-1 uppercase"
+        >
+          x
+        </button>
+        {projects?.map((project) => (
+          <button
+            key={project._id}
+            onClick={() =>
+              selectedProject === project
+                ? setSelectedProject(null)
+                : setSelectedProject(project)
+            }
+            className={`border px-2 py-1 uppercase ${selectedProject === project ? "bg-black text-white" : ""}`}
+          >
+            {project._id === "1f3fb03a-2431-4977-9753-c80314f61e07"
+              ? "HG"
+              : project.title.es}
+          </button>
+        ))}
       </div>
 
-      <div className="flex flex-col gap-32 pt-24">
-        {mainItems.map((item) =>
-          !item.isSingleImage ? (
-            <div key={item._id}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 299.54 97.61"
-                fill="var(--color-accent)"
-                className="mx-auto size-20 pb-12"
-              >
-                <g id="Layer_1-2" data-name="Layer 1">
-                  <path d="M298.56,50.47C292.86,21.89,261.24-1.22,232.35.05c-39.94,1.76-59.97,47.71-82.58,68.98C127.16,47.76,107.13,1.81,67.19.05,38.29-1.22,6.68,21.89.97,50.47c-11.25,56.35,78.73,62.76,80.93,16.06.89-18.99-25.26-43.07-42.58-30.28-10.15,7.5-7.31,24.32,4.25,19.81,7.05-2.75-3.09-8.28,4.95-7.1,10.9,1.6,20.79,24.87,1.79,29.94C-1.89,92.85,3.59,23.34,48.46,8.08c50.31-17.12,71.28,35.31,99.93,62.22-6.1,5.43-12.42,8.99-19.39,9.33-6.55.32-18.87-8.4-16.79-14.33,1.77-5.03,7.93,3.97,10.88-1.76,3.1-6.01-4.25-13.38-10.09-14.6-23.13-4.82-31.44,25.63-8.06,33.7,18.44,6.36,32.4.15,44.83-11.05,12.43,11.21,26.39,17.41,44.83,11.05,23.38-8.06,15.07-38.52-8.06-33.7-5.84,1.22-13.18,8.59-10.09,14.6,2.95,5.73,9.11-3.27,10.88,1.76,2.09,5.93-10.24,14.64-16.79,14.33-6.97-.34-13.29-3.9-19.39-9.33,28.65-26.91,49.61-79.33,99.93-62.22,44.86,15.26,50.35,84.77-1.86,70.83-19-5.07-9.11-28.34,1.79-29.94,8.04-1.18-2.11,4.36,4.95,7.1,11.57,4.5,14.4-12.32,4.25-19.81-17.32-12.79-43.47,11.28-42.58,30.28,2.19,46.7,92.18,40.29,80.93-16.06Z" />
-                </g>
-              </svg>
-              <MuscialItem item={item} />
-            </div>
-          ) : (
-            item.images &&
-            item.images.map((image, index) => (
-              <div
-                className="mx-auto flex max-w-[400px] items-center justify-center"
-                key={image._key}
-              >
-                <ImageContainer key={image._key} image={image} />
+      <div className="mb-4 flex gap-2">
+        <button
+          onClick={() => setSelectedFilter(null)}
+          className="border px-2 py-1 uppercase"
+        >
+          x
+        </button>
+        {filters?.map((type) => (
+          <button
+            key={type._id}
+            onClick={() =>
+              selectedFilter === type
+                ? setSelectedFilter(null)
+                : setSelectedFilter(type)
+            }
+            className={`border px-2 py-1 uppercase ${selectedFilter === type ? "bg-black text-white" : ""}`}
+          >
+            {type.type.es}
+          </button>
+        ))}
+        <button
+          className={`border px-2 py-1 uppercase ${selectedFilter === "fav" ? "bg-black text-white" : ""}`}
+          onClick={() =>
+            selectedFilter === "fav"
+              ? setSelectedFilter(null)
+              : setSelectedFilter("fav")
+          }
+        >
+          fav
+        </button>
+      </div>
+
+      <div className="grid grid-cols-6 gap-4">
+        {data.content.flatMap((element) => {
+          if (element._type === "item" && element.item) {
+            const matchesFilter =
+              !selectedFilter ||
+              element.item.type?._id === selectedFilter._id ||
+              (element.item.isFavorite && selectedFilter === "fav");
+
+            const matchesProject =
+              !selectedProject ||
+              element.item.musicalProject._id === selectedProject._id;
+
+            if (!matchesProject || !matchesFilter) return [];
+
+            const coverImage = element.item.coverImage?.url
+              ? [
+                  <div
+                    key={`${element._key}-cover`}
+                    className={`border p-2 ${element.item.isFavorite ? "col-span-2 row-span-2 bg-blue-400" : ""}`}
+                  >
+                    <img
+                      src={element.item.coverImage.url + imgSize.sm}
+                      alt="Cover"
+                    />
+                    {!element.item.isImageGallery && (
+                      <>
+                        <div>{element.item.title.es}</div>
+                        <div className="bg-red-100">
+                          {element.item.musicalProject.title.es}
+                        </div>
+                        <div className="bg-yellow-400">
+                          {element.item.type.type.es}
+                        </div>
+                      </>
+                    )}
+                  </div>,
+                ]
+              : [];
+
+            const projectImages =
+              element.item.images?.map((img) => (
+                <div
+                  key={img._key}
+                  className={`border p-2 ${element.item.isFavorite ? "bg-blue-400" : ""}`}
+                >
+                  <img src={img.url + imgSize.sm} alt="Project image" />
+                  {!element.item.isImageGallery && (
+                    <div>{element.item.title.es}</div>
+                  )}
+                </div>
+              )) || [];
+
+            return [...coverImage, ...projectImages].filter(Boolean);
+          }
+
+          if (
+            element._type === "image" &&
+            element.asset?.url &&
+            !selectedFilter &&
+            !selectedProject
+          ) {
+            return (
+              <div key={element._key} className="border bg-amber-500 p-2">
+                <img src={element.asset.url + imgSize.sm} alt="Loose image" />
               </div>
-            ))
-          ),
-        )}
+            );
+          }
+          return [];
+        })}
       </div>
     </div>
   );
