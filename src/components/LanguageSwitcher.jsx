@@ -5,7 +5,7 @@ export default function LanguageSwitcher() {
 
   return (
     <button
-      className="border-background text-background hover:bg-background/80 hover:text-primary flex size-8 cursor-pointer justify-center rounded-[50%] border px-1 pt-2.25 text-center text-xs leading-none uppercase"
+      className="text-muted-text cursor-pointer text-xs uppercase"
       onClick={() => {
         setLanguage(language === "es" ? "en" : "es");
       }}

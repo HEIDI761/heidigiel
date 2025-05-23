@@ -2,54 +2,31 @@
 
 @font-face {
   font-family: "Display";
-  src: url("/fonts/PixelScriptRegular-0WnDG.otf");
-}
-
-@font-face {
-  font-family: "Serif";
-  src: url("/fonts/Redaction20-Regular.otf");
-}
-
-@font-face {
-  font-family: "Serif italic";
-  src: url("/fonts/Redaction20-Italic.otf");
+  src: url("/fonts/Sprat-CondensedMedium.woff");
 }
 
 @theme {
-  --color-background: #cec6c1;
+  --color-background: #40372d;
   --color-background-dim: #a19b97;
-  /* --color-background: #e8e0cd; */
-  --color-text: #130f0c;
+  --color-text: #cec6c1;
 
-  /* --color-accent: #5f180c; */
   --color-accent: #bd0000;
-  /* --color-accent: #8487e8; */
-  /* --color-accent-dim: #5f180c; */
   --color-accent-dim: #390d00;
 
   --color-primary: #54601c;
-  /* --color-primary: #b4810f; */
-  /* --color-primary: #799400; */
-  /* --color-primary-dim: #54601c; */
 
-  --color-secondary: #757da1;
-  /* --color-secondary: #8487e8; */
-  /* --color-secondary: #869cff; */
+  --color-secondary: #3f486e;
   --color-secondary-dim: #8189ad;
   --color-secondary-intense: #768fff;
 
   --color-tertiary: #c08f35;
-  /* --color-tertiary: #4f6c5c; */
-  /* --color-tertiary: #ffa600; */
-  /* --color-tertiary-dim: #c08f35; */
 
   --color-muted: #999;
-  --color-muted-text: #444;
+  --color-muted-text: #a09c99;
 
-  --font-serif: "Serif", "EB Garamond", serif;
-  --font-serif-italic: "Serif italic", "EB Garamond", serif;
-  --font-sans: "Helvetica", "Arial", sans-serif;
-  --font-display: "Display", "Monsieur La Doulaise", serif;
+  --font-sans: "Roboto Condensed", "Helvetica", "Arial", sans-serif;
+  --font-mono: "IBM Plex Mono", "Courier New", monospace;
+  --font-display: "Display", cursive;
 }
 
 ::selection {
@@ -57,7 +34,6 @@
 }
 
 :root {
-  /* color: #768fff; */
   @apply bg-background text-text;
 
   font-family: var(--font-sans), system-ui, Helvetica, Arial, sans-serif;
