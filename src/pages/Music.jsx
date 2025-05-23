@@ -14,9 +14,11 @@ export default function Music() {
   const [selectedFilter, setSelectedFilter] = useState(null);
   const [projects, setProjects] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [hovered, setHovered] = useState(null);
 
   const imgSize = {
-    sm: "?h=100&f=webp",
+    sm: "?h=400&f=webp",
+    md: "?h=800&f=webp",
   };
 
   useEffect(() => {
@@ -61,66 +63,67 @@ export default function Music() {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div>
+    <div className="flex flex-col gap-8 pb-24">
       <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
 
-      <div className="mb-4 flex gap-2">
-        <button
-          onClick={() => setSelectedProject(null)}
-          className="border px-2 py-1 uppercase"
-        >
-          x
-        </button>
-        {projects?.map((project) => (
+      <div className="sticky top-24 z-50 flex gap-1 font-mono text-xs">
+        <div className="flex gap-1">
           <button
-            key={project._id}
-            onClick={() =>
-              selectedProject === project
-                ? setSelectedProject(null)
-                : setSelectedProject(project)
-            }
-            className={`border px-2 py-1 uppercase ${selectedProject === project ? "bg-black text-white" : ""}`}
+            onClick={() => setSelectedProject(null)}
+            className="border-text size-4 rounded-full border leading-tight uppercase"
           >
-            {project._id === "1f3fb03a-2431-4977-9753-c80314f61e07"
-              ? "HG"
-              : project.title.es}
+            x
           </button>
-        ))}
-      </div>
-
-      <div className="mb-4 flex gap-2">
-        <button
-          onClick={() => setSelectedFilter(null)}
-          className="border px-2 py-1 uppercase"
-        >
-          x
-        </button>
-        {filters?.map((type) => (
+          {projects?.map((project) => (
+            <button
+              key={project._id}
+              onClick={() =>
+                selectedProject === project
+                  ? setSelectedProject(null)
+                  : setSelectedProject(project)
+              }
+              className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase transition-colors duration-500 ${selectedProject === project ? "bg-text text-background" : ""}`}
+            >
+              {project._id === "1f3fb03a-2431-4977-9753-c80314f61e07"
+                ? "HG"
+                : project.title.es}
+            </button>
+          ))}
+        </div>
+        <div className="flex gap-1">
           <button
-            key={type._id}
+            onClick={() => setSelectedFilter(null)}
+            className="border-text size-4 rounded-full border leading-tight uppercase"
+          >
+            x
+          </button>
+          {filters?.map((type) => (
+            <button
+              key={type._id}
+              onClick={() =>
+                selectedFilter === type
+                  ? setSelectedFilter(null)
+                  : setSelectedFilter(type)
+              }
+              className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase transition-colors duration-500 ${selectedFilter === type ? "bg-text text-background" : ""}`}
+            >
+              {type.type.es}
+            </button>
+          ))}
+          <button
+            className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase transition-colors duration-500 ${selectedFilter === "fav" ? "bg-text text-background" : ""}`}
             onClick={() =>
-              selectedFilter === type
+              selectedFilter === "fav"
                 ? setSelectedFilter(null)
-                : setSelectedFilter(type)
+                : setSelectedFilter("fav")
             }
-            className={`border px-2 py-1 uppercase ${selectedFilter === type ? "bg-black text-white" : ""}`}
           >
-            {type.type.es}
+            fav
           </button>
-        ))}
-        <button
-          className={`border px-2 py-1 uppercase ${selectedFilter === "fav" ? "bg-black text-white" : ""}`}
-          onClick={() =>
-            selectedFilter === "fav"
-              ? setSelectedFilter(null)
-              : setSelectedFilter("fav")
-          }
-        >
-          fav
-        </button>
+        </div>
       </div>
 
-      <div className="grid grid-cols-6 gap-4">
+      <div className="grid grid-flow-dense auto-rows-[250px] grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2">
         {data.content.flatMap((element) => {
           if (element._type === "item" && element.item) {
             const matchesFilter =
@@ -137,40 +140,47 @@ export default function Music() {
             const coverImage = element.item.coverImage?.url
               ? [
                   <div
+                    onMouseEnter={() => setHovered(element.item._id)}
+                    onMouseLeave={() => setHovered(null)}
                     key={`${element._key}-cover`}
-                    className={`border p-2 ${element.item.isFavorite ? "col-span-2 row-span-2 bg-blue-400" : ""}`}
+                    className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
                   >
                     <img
                       src={element.item.coverImage.url + imgSize.sm}
                       alt="Cover"
+                      className="h-full w-full object-cover"
                     />
                     {!element.item.isImageGallery && (
-                      <>
-                        <div>{element.item.title.es}</div>
-                        <div className="bg-red-100">
-                          {element.item.musicalProject.title.es}
-                        </div>
-                        <div className="bg-yellow-400">
-                          {element.item.type.type.es}
-                        </div>
-                      </>
+                      <div
+                        className={`absolute inset-0 z-10 flex items-center justify-center p-4 text-center uppercase opacity-0 mix-blend-difference transition-opacity duration-500 ${hovered === element.item._id ? "opacity-100" : ""}`}
+                      >
+                        {element.item.title.es}
+                      </div>
                     )}
                   </div>,
                 ]
               : [];
 
             const projectImages =
-              element.item.images?.map((img) => (
-                <div
-                  key={img._key}
-                  className={`border p-2 ${element.item.isFavorite ? "bg-blue-400" : ""}`}
-                >
-                  <img src={img.url + imgSize.sm} alt="Project image" />
-                  {!element.item.isImageGallery && (
-                    <div>{element.item.title.es}</div>
-                  )}
-                </div>
-              )) || [];
+              element.item.images?.map(
+                (img, index) =>
+                  element.item.isFavorite &&
+                  index < 4 &&
+                  img.url && (
+                    <div
+                      onMouseEnter={() => setHovered(element.item._id)}
+                      onMouseLeave={() => setHovered(null)}
+                      key={img._key}
+                      className={`overflow-hidden border transition-all duration-500 ${element.item.isFavorite ? "" : ""} ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                    >
+                      <img
+                        src={img.url + imgSize.sm}
+                        alt="Project image"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  ),
+              ) || [];
 
             return [...coverImage, ...projectImages].filter(Boolean);
           }
@@ -182,8 +192,15 @@ export default function Music() {
             !selectedProject
           ) {
             return (
-              <div key={element._key} className="border bg-amber-500 p-2">
-                <img src={element.asset.url + imgSize.sm} alt="Loose image" />
+              <div
+                key={element._key}
+                className={`cursor-zoom-in overflow-hidden border transition-all duration-500 ${hovered === element._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+              >
+                <img
+                  className="h-full w-full object-cover"
+                  src={element.asset.url + imgSize.sm}
+                  alt="Loose image"
+                />
               </div>
             );
           }
