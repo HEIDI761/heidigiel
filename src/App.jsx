@@ -8,7 +8,7 @@ import Audiovisual from "./pages/Audiovisual";
 // import AudiovisualProject from "./pages/AudiovisualProject";
 // import MusicalProject from "./pages/MusicalProject";
 import Loading from "./components/Loading";
-import CursorDecoration from "./components/CursorDecoration";
+import CursorDecorationV2 from "./components/CursorDecorationV2";
 import Menu from "./components/Menu";
 // import HighlightedMusicalItem from "./pages/HighlightedMusicalItem";
 import Ornaments from "./components/Ornaments";
@@ -48,7 +48,7 @@ function App() {
         />
       </div>
       {/* <Ornaments /> */}
-      <CursorDecoration />
+      <CursorDecorationV2 />
 
       <Menu />
 
