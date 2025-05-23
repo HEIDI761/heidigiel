@@ -53,7 +53,11 @@ export default function Audiovisual() {
         {filters?.map((type) => (
           <button
             key={type._id}
-            onClick={() => setSelectedFilter(type)}
+            onClick={() =>
+              selectedFilter === type
+                ? setSelectedFilter(null)
+                : setSelectedFilter(type)
+            }
             className={`border px-2 py-1 uppercase ${selectedFilter === type ? "bg-black text-white" : ""}`}
           >
             {type.type.es}
@@ -61,7 +65,11 @@ export default function Audiovisual() {
         ))}
         <button
           className={`border px-2 py-1 uppercase ${selectedFilter === "fav" ? "bg-black text-white" : ""}`}
-          onClick={() => setSelectedFilter("fav")}
+          onClick={() =>
+            selectedFilter === "fav"
+              ? setSelectedFilter(null)
+              : setSelectedFilter("fav")
+          }
         >
           fav
         </button>
