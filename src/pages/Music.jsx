@@ -66,7 +66,7 @@ export default function Music() {
     <div className="flex flex-col gap-8 pb-24">
       <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
 
-      <div className="sticky top-24 z-50 flex gap-1 font-mono text-xs">
+      <div className="sticky top-24 z-50 flex flex-col gap-1 font-mono text-xs">
         <div className="flex gap-1">
           <button
             onClick={() => setSelectedProject(null)}
