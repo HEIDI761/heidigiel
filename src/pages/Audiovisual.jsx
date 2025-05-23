@@ -1,128 +1,139 @@
-import {
-  useAudiovisualFilters,
-  useAudiovisualProjectsList,
-} from "../sanity/hooks/getData";
+import { useAudiovisualContent } from "../sanity/hooks/getData";
 import Loading from "../components/Loading";
 import useLanguage from "../hooks/useLanguage";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import VimeoPlayer from "../components/VimeoPlayer";
 import { NavLink } from "react-router";
 import Tag from "../components/Tag";
 import ImageContainer from "../components/ImageContainer";
 
 export default function Audiovisual() {
-  const { data: filters, isLoading } = useAudiovisualFilters();
-  const { data: projectsData, isLoading: projectsLoading } =
-    useAudiovisualProjectsList();
-  const [filteredType, setFilteredType] = useState(null);
-  const [filteredProjects, setFilteredProjects] = useState([]);
-  const [display, setDisplay] = useState("grid");
+  const { data, isLoading, error } = useAudiovisualContent();
+  const [filters, setFilters] = useState(null);
+  const [selectedFilter, setSelectedFilter] = useState(null);
+  // const [display, setDisplay] = useState("grid");
+
+  const imgSize = {
+    sm: "?h=100&f=webp",
+  };
 
   useEffect(() => {
-    if (projectsData) {
-      if (!filteredType) {
-        setFilteredProjects(projectsData);
-      } else {
-        const filtered = projectsData.filter((project) => {
-          const hasType = project.audiovisualProjectType?.some((type) => {
-            return type._id === filteredType._id;
+    if (data) {
+      const seen = new Set();
+      const uniqueTypes = [];
+
+      data.content.forEach((el) => {
+        if (el._type === "audiovisualProject") {
+          el.project?.audiovisualProjectType?.forEach((t) => {
+            if (!seen.has(t._id)) {
+              seen.add(t._id);
+              uniqueTypes.push(t);
+            }
           });
-          const isFavorite = project.isFavorite && filteredType === "fav";
-          return hasType || isFavorite;
-        });
-        setFilteredProjects(filtered);
-      }
+        }
+      });
+      setFilters(uniqueTypes);
     }
-  }, [projectsData, filteredType]);
+  }, [setFilters, data]);
 
-  const relevantProjectTypes = useMemo(() => {
-    if (!projectsData || !filters?.audiovisualProjectTypes) return [];
-    return filters.audiovisualProjectTypes.filter((type) =>
-      projectsData?.some((project) =>
-        project.audiovisualProjectType?.some((t) => t._id === type._id),
-      ),
-    );
-  }, [filters, projectsData]);
-
-  const hasFavorites = useMemo(() => {
-    if (!projectsData) return false;
-    return projectsData.some((project) => project.isFavorite);
-  }, [projectsData]);
-
-  if (isLoading || projectsLoading) return <Loading />;
+  if (isLoading) return <Loading />;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div className="flex flex-col gap-8 pb-22">
       <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
-      <div className="pointer-events-none sticky top-32 z-40 flex flex-col items-center gap-1 self-center text-xs lowercase">
-        {filters.audiovisualProjectTypes && (
-          <div className="pointer-events-auto flex flex-wrap justify-center">
-            {relevantProjectTypes.map((type) => (
-              <Tag
-                key={type._id}
-                tag={type.type}
-                onClick={() => {
-                  setFilteredType(filteredType?._id === type._id ? null : type);
-                }}
-                selected={filteredType?._id === type._id}
-                roundness="sm"
-              />
-            ))}
-            {hasFavorites && (
-              <Tag
-                tag={{ es: "destacados", en: "highlights" }}
-                onClick={() => {
-                  setFilteredType("fav");
-                }}
-                selected={filteredType === "fav"}
-                roundness="sm"
-              />
-            )}
-            <Tag tag={{ es: "x" }} onClick={() => setFilteredType(null)} />
-          </div>
-        )}
 
-        <div className="pointer-events-auto grid grid-cols-2 gap-2 pt-2 text-xs">
+      <div className="mb-4 flex gap-2">
+        <button
+          onClick={() => setSelectedFilter(null)}
+          className="border px-2 py-1 uppercase"
+        >
+          x
+        </button>
+        {filters?.map((type) => (
           <button
-            className={`border-text group bg-background/50 cursor-pointer rounded-full border px-2 uppercase ${display === "list" ? "bg-text text-background" : "text-muted-text hover:bg-text hover:text-background"}`}
-            onClick={() => setDisplay("list")}
+            key={type._id}
+            onClick={() => setSelectedFilter(type)}
+            className={`border px-2 py-1 uppercase ${selectedFilter === type ? "bg-black text-white" : ""}`}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="20px"
-              viewBox="0 -960 960 960"
-              width="20px"
-              fill="#000000"
-              className={`opacity-75 group-hover:invert ${display === "list" ? "invert" : ""}`}
-            >
-              <path d="M144-264v-72h432v72H144Zm0-180v-72h672v72H144Zm0-180v-72h672v72H144Z" />
-            </svg>
+            {type.type.es}
           </button>
-          <button
-            className={`border-text group bg-background/50 cursor-pointer rounded-full border px-2 uppercase ${display === "grid" ? "bg-text text-background" : "text-muted-text hover:bg-text hover:text-background"}`}
-            onClick={() => setDisplay("grid")}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="20px"
-              viewBox="0 -960 960 960"
-              width="20px"
-              fill="#000000"
-              className={`opacity-75 group-hover:invert ${display === "grid" ? "invert" : ""}`}
-            >
-              <path d="M528-624v-192h288v192H528ZM144-432v-384h288v384H144Zm384 288v-384h288v384H528Zm-384 0v-192h288v192H144Zm72-360h144v-240H216v240Zm384 288h144v-240H600v240Zm0-479h144v-49H600v49ZM216-216h144v-48H216v48Zm144-288Zm240-191Zm0 239ZM360-264Z" />
-            </svg>
-          </button>
-        </div>
+        ))}
+        <button
+          className={`border px-2 py-1 uppercase ${selectedFilter === "fav" ? "bg-black text-white" : ""}`}
+          onClick={() => setSelectedFilter("fav")}
+        >
+          fav
+        </button>
       </div>
 
-      {projectsData &&
-        filteredProjects.length > 0 &&
-        (display === "grid" ? (
-          <ProjectsGrid projects={filteredProjects} />
-        ) : (
-          <ProjectsList projects={filteredProjects} />
-        ))}
+      <div className="grid grid-cols-6 gap-4">
+        {data.content.flatMap((element) => {
+          if (element._type === "audiovisualProject" && element.project) {
+            const matchesFilter =
+              !selectedFilter ||
+              element.project.audiovisualProjectType?.some(
+                (t) => t.type === selectedFilter.type,
+              ) ||
+              (element.project.isFavorite && selectedFilter === "fav");
+            if (!matchesFilter) return [];
+
+            const coverImage = element.project.coverImage?.url
+              ? [
+                  <div
+                    key={`${element._key}-cover`}
+                    className={`border p-2 ${element.project.isFavorite ? "col-span-2 row-span-2 bg-blue-400" : ""}`}
+                  >
+                    <img
+                      src={element.project.coverImage.url + imgSize.sm}
+                      alt="Cover"
+                    />
+                    {!element.project.isImageGallery && (
+                      <div>{element.project.title.es}</div>
+                    )}
+                  </div>,
+                ]
+              : [];
+
+            const projectImages =
+              element.project.images?.map((img) => (
+                <div
+                  key={img._key}
+                  className={`border p-2 ${element.project.isFavorite ? "bg-blue-400" : ""}`}
+                >
+                  <img src={img.url + imgSize.sm} alt="Project image" />
+                  {!element.project.isImageGallery && (
+                    <div>{element.project.title.es}</div>
+                  )}
+                </div>
+              )) || [];
+
+            return [...coverImage, ...projectImages].filter(Boolean);
+          }
+
+          if (
+            element._type === "image" &&
+            element.asset?.url &&
+            !selectedFilter
+          ) {
+            return (
+              <div key={element._key} className="border bg-amber-500 p-2">
+                <img src={element.asset.url + imgSize.sm} alt="Loose image" />
+              </div>
+            );
+          }
+
+          return [];
+        })}
+      </div>
+
+      {/* {projectsData && */}
+      {/*   filteredProjects.length > 0 && */}
+      {/*   (display === "grid" ? ( */}
+      {/*     <ProjectsGrid projects={filteredProjects} /> */}
+      {/*   ) : ( */}
+      {/*     <ProjectsList projects={filteredProjects} /> */}
+      {/*   ))} */}
     </div>
   );
 }
