@@ -42,7 +42,7 @@ export default function Audiovisual() {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className="flex flex-col gap-8 pb-22">
+    <div className="flex flex-col gap-8 pb-24">
       <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
 
       <div className="sticky top-24 z-50 flex gap-1 font-mono text-xs">
@@ -128,9 +128,6 @@ export default function Audiovisual() {
                         alt="Project image"
                         className="h-full w-full object-cover"
                       />
-                      {/* {!element.project.isImageGallery && (
-                    <div>{element.project.title.es}</div>
-                  )} */}
                     </div>
                   ),
               ) || [];
