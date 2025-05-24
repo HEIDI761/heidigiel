@@ -77,11 +77,12 @@ export default function Music() {
           {projects?.map((project) => (
             <button
               key={project._id}
-              onClick={() =>
+              onClick={() => {
+                setSelectedFilter(null);
                 selectedProject === project
                   ? setSelectedProject(null)
-                  : setSelectedProject(project)
-              }
+                  : setSelectedProject(project);
+              }}
               className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase transition-colors duration-500 ${selectedProject === project ? "bg-text text-background" : ""}`}
             >
               {project._id === "1f3fb03a-2431-4977-9753-c80314f61e07"
