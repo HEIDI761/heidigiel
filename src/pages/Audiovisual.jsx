@@ -96,11 +96,26 @@ export default function Audiovisual() {
                     key={`${element._key}-cover`}
                     className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.project.isFavorite ? (element.project.coverImage.dimensions.height > element.project.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
                   >
-                    <img
-                      src={element.project.coverImage.url + imgSize.md}
-                      alt="Cover"
-                      className="h-full w-full object-cover"
-                    />
+                    {element.project.previewUrl ? (
+                      <div
+                        style={{
+                          backgroundImage: `url("${element.project.coverImage.url}?fm=webp&h=800")`,
+                        }}
+                        className="relative aspect-video overflow-hidden rounded-sm bg-cover bg-center"
+                      >
+                        <VimeoPlayer
+                          url={element.project.previewUrl}
+                          autoplay={1}
+                          background={1}
+                          loop={1}
+                        />
+                      </div>
+                    ) : (
+                      <ImageContainer
+                        image={element.project.coverImage}
+                        item={element.project}
+                      />
+                    )}
                     {!element.project.isImageGallery && (
                       <div
                         className={`absolute inset-0 z-10 flex items-center justify-center p-4 text-center uppercase opacity-0 mix-blend-difference transition-opacity duration-500 ${hovered === element.project._id ? "opacity-100" : ""}`}
