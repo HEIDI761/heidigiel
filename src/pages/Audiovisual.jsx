@@ -123,11 +123,7 @@ export default function Audiovisual() {
                       key={img._key}
                       className={`overflow-hidden border transition-all duration-500 ${element.project.isFavorite ? "" : ""} ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
                     >
-                      <img
-                        src={img.url + imgSize.sm}
-                        alt="Project image"
-                        className="h-full w-full object-cover"
-                      />
+                      <ImageContainer image={img} item={element.project} />
                     </div>
                   ),
               ) || [];
@@ -145,11 +141,7 @@ export default function Audiovisual() {
                 key={element._key}
                 className={`cursor-zoom-in overflow-hidden border transition-all duration-500 ${hovered === element._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
               >
-                <img
-                  src={element.asset.url + imgSize.sm}
-                  alt="Loose image"
-                  className="h-full w-full object-cover"
-                />
+                <ImageContainer image={element?.asset} />
               </div>
             );
           }

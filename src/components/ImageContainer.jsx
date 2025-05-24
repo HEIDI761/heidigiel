@@ -9,7 +9,7 @@ export default function ImageContainer({ image, item }) {
 
   return (
     <div
-      className="border-background drop-shadow-background overflow-hidden rounded-sm border drop-shadow-xl"
+      className="h-full w-full overflow-hidden"
       onClick={() => {
         if (!isMobile) openLightbox(image);
       }}
@@ -23,7 +23,7 @@ export default function ImageContainer({ image, item }) {
       <img
         src={image.url + "?fm=webp&h=800"}
         alt={item ? item.title.es : ""}
-        className="h-auto w-full cursor-zoom-in"
+        className="h-full w-full cursor-zoom-in object-cover"
       />
     </div>
   );
