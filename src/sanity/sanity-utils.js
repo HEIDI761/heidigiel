@@ -57,7 +57,7 @@ export async function getAudiovisualContent() {
           asset->{
             _id,
             url,
-            metadata { dimensions, lqip },
+            'dimensions': metadata.dimensions,
           }
         },
       }
