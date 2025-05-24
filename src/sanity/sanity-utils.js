@@ -111,7 +111,7 @@ export async function getMusicContent() {
           asset->{
             _id,
             url,
-            metadata { dimensions, lqip },
+            'dimensions': metadata.dimensions,
           }
         },
       }
