@@ -14,6 +14,7 @@ import Menu from "./components/Menu";
 import Ornaments from "./components/Ornaments";
 import Lightbox from "./components/Lightbox";
 import { AnimatePresence } from "motion/react";
+import MusicalItem from "./components/MusicalItem";
 
 function App() {
   const { data, isLoading, error } = useAbout();
@@ -83,9 +84,9 @@ function App() {
           <Route path="/audiovisual" element={<Audiovisual />}>
             <Route path=":slug" element={<AudiovisualProject />} />
           </Route>
-          {/* <Route path="/audiovisual/:slug" element={<AudiovisualProject />} /> */}
-          <Route path="/musica" element={<Music />} />
-          {/* <Route path="/musica/:slug" element={<MusicalProject />} /> */}
+          <Route path="/musica" element={<Music />}>
+            <Route path=":slug" element={<MusicalItem />} />
+          </Route>
           {/* <Route path="/:slug" element={<HighlightedMusicalItem />} /> */}
         </Routes>
       </div>

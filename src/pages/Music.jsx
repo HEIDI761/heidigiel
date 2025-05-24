@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useMusicContent } from "../sanity/hooks/getData";
-import { NavLink } from "react-router";
+import { NavLink, Outlet } from "react-router";
 import Loading from "../components/Loading";
 import useLanguage from "../hooks/useLanguage";
 import { PortableText } from "@portabletext/react";
@@ -64,6 +64,7 @@ export default function Music() {
 
   return (
     <div className="flex flex-col gap-8 pb-24">
+      <Outlet />
       <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
 
       <div className="sticky top-24 z-50 flex flex-col gap-1 font-mono text-xs">
@@ -140,9 +141,10 @@ export default function Music() {
 
             const coverImage = element.item.coverImage?.url
               ? [
-                  <div
+                  <NavLink
                     onMouseEnter={() => setHovered(element.item._id)}
                     onMouseLeave={() => setHovered(null)}
+                    to={`/musica/${element.item.slug?.current}`}
                     key={`${element._key}-cover`}
                     className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
                   >
@@ -158,7 +160,7 @@ export default function Music() {
                         {element.item.title.es}
                       </div>
                     )}
-                  </div>,
+                  </NavLink>,
                 ]
               : [];
 
