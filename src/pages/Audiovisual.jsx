@@ -3,7 +3,7 @@ import Loading from "../components/Loading";
 import useLanguage from "../hooks/useLanguage";
 import { useEffect, useState } from "react";
 import VimeoPlayer from "../components/VimeoPlayer";
-import { NavLink } from "react-router";
+import { NavLink, Outlet } from "react-router";
 import Tag from "../components/Tag";
 import ImageContainer from "../components/ImageContainer";
 
@@ -43,6 +43,7 @@ export default function Audiovisual() {
 
   return (
     <div className="flex flex-col gap-8 pb-24">
+      <Outlet />
       <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
 
       <div className="sticky top-24 z-50 flex gap-1 font-mono text-xs">
@@ -90,9 +91,10 @@ export default function Audiovisual() {
 
             const coverImage = element.project.coverImage?.url
               ? [
-                  <div
+                  <NavLink
                     onMouseEnter={() => setHovered(element.project._id)}
                     onMouseLeave={() => setHovered(null)}
+                    to={`/audiovisual/${element.project.slug?.current}`}
                     key={`${element._key}-cover`}
                     className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.project.isFavorite ? (element.project.coverImage.dimensions.height > element.project.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
                   >
@@ -123,7 +125,7 @@ export default function Audiovisual() {
                         {element.project.title.es}
                       </div>
                     )}
-                  </div>,
+                  </NavLink>,
                 ]
               : [];
 

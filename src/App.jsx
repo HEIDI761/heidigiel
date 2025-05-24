@@ -5,7 +5,7 @@ import useLightbox from "./hooks/useLightbox";
 import About from "./pages/About";
 import Audiovisual from "./pages/Audiovisual";
 import Music from "./pages/Music";
-// import AudiovisualProject from "./pages/AudiovisualProject";
+import AudiovisualProject from "./pages/AudiovisualProject";
 // import MusicalProject from "./pages/MusicalProject";
 import Loading from "./components/Loading";
 import CursorDecorationV2 from "./components/CursorDecorationV2";
@@ -22,12 +22,12 @@ function App() {
   const navigate = useNavigate();
 
   const handleHighlightClick = (highlight) => {
-    if (highlight._type === "audiovisualProject") {
-      navigate(`/audiovisual/${highlight.slug}`);
+    if (highlight.highlightRef._type === "audiovisualProject") {
+      navigate(`/audiovisual/${highlight.highlightRef.slug}`);
     } else if (highlight._type === "musicalProject") {
-      navigate(`/musica/${highlight.slug}`);
+      navigate(`/musica/${highlight.highlightRef.slug}`);
     } else if (highlight._type === "musicalItem") {
-      navigate(`/${highlight.slug}`);
+      navigate(`/${highlight.highlightRef.slug}`);
     }
   };
 
@@ -68,9 +68,11 @@ function App() {
       <div className="fixed right-4 bottom-6 z-50">
         <button
           onClick={() => handleHighlightClick(data.highlight)}
-          className="hover:bg-text hover:text-accent border-text cursor-pointer rounded-full border px-2 text-xs transition-colors duration-500"
+          className="hover:bg-text hover:text-accent border-text cursor-pointer rounded-full border px-2 text-xs uppercase transition-colors duration-500"
         >
-          ULTIMO LANZAMIENTO: CEREMONIA NOCTURNA
+          {data.highlight.text[language] || data.highlight.text.es}:{" "}
+          {data.highlight.highlightRef.title[language] ||
+            data.highlight.highlightRef.title.es}
         </button>
       </div>
 
@@ -78,7 +80,9 @@ function App() {
         <Routes>
           <Route path="/" element={null} />
           <Route path="/about" element={<About />} />
-          <Route path="/audiovisual" element={<Audiovisual />} />
+          <Route path="/audiovisual" element={<Audiovisual />}>
+            <Route path=":slug" element={<AudiovisualProject />} />
+          </Route>
           {/* <Route path="/audiovisual/:slug" element={<AudiovisualProject />} /> */}
           <Route path="/musica" element={<Music />} />
           {/* <Route path="/musica/:slug" element={<MusicalProject />} /> */}

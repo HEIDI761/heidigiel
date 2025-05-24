@@ -2,10 +2,11 @@ import { useState } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
 import useLightbox from "../hooks/useLightbox";
+import { NavLink } from "react-router";
 
 export default function Lightbox() {
   const [imageLoaded, setImageLoaded] = useState(false);
-  const { currentImage, setIsLightboxOpen } = useLightbox();
+  const { currentImage, setIsLightboxOpen, project } = useLightbox();
 
   return (
     <motion.div
@@ -26,6 +27,14 @@ export default function Lightbox() {
         className={`max-h-[95vh] max-w-full rounded-sm object-contain transition-opacity duration-300 ${!imageLoaded ? "opacity-0" : "opacity-100"}`}
         onLoad={() => setImageLoaded(true)}
       />
+      {project?.slug && (
+        <NavLink
+          to={`/audiovisual/${project.slug.current}`}
+          className="absolute bottom-0 left-1/2 m-4 rounded-sm bg-white px-4 py-2 text-sm font-bold uppercase hover:bg-gray-200"
+        >
+          ver más
+        </NavLink>
+      )}
     </motion.div>
   );
 }
