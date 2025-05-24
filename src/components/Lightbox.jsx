@@ -6,7 +6,8 @@ import { NavLink } from "react-router";
 
 export default function Lightbox() {
   const [imageLoaded, setImageLoaded] = useState(false);
-  const { currentImage, setIsLightboxOpen, project } = useLightbox();
+  const { currentImage, setIsLightboxOpen, relatedProject, setRelatedProject } =
+    useLightbox();
 
   return (
     <motion.div
@@ -14,7 +15,10 @@ export default function Lightbox() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="no-doc-scroll fixed inset-0 z-100 flex h-screen w-screen cursor-zoom-out items-center justify-center backdrop-brightness-20 backdrop-grayscale-100"
-      onClick={() => setIsLightboxOpen(false)}
+      onClick={() => {
+        setIsLightboxOpen(false);
+        setRelatedProject(null);
+      }}
     >
       {!imageLoaded && (
         <div className="fixed flex items-center justify-center">
@@ -27,10 +31,10 @@ export default function Lightbox() {
         className={`max-h-[95vh] max-w-full rounded-sm object-contain transition-opacity duration-300 ${!imageLoaded ? "opacity-0" : "opacity-100"}`}
         onLoad={() => setImageLoaded(true)}
       />
-      {project?.slug && (
+      {relatedProject?.slug && (
         <NavLink
-          to={`/audiovisual/${project.slug.current}`}
-          className="absolute bottom-0 left-1/2 m-4 rounded-sm bg-white px-4 py-2 text-sm font-bold uppercase hover:bg-gray-200"
+          to={`/audiovisual/${relatedProject.slug.current}`}
+          className="absolute top-1/2 left-1/2 m-4 rounded-sm bg-white px-4 py-2 text-sm font-bold uppercase hover:bg-gray-200"
         >
           ver más
         </NavLink>

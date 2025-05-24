@@ -4,15 +4,14 @@ import useIsMobile from "../hooks/useIsMobile.jsx";
 export default function ImageContainer({ image, item }) {
   const isMobile = useIsMobile();
 
-  const { openLightbox, setProject } = useLightbox();
+  const { openLightbox } = useLightbox();
   if (!image.url) return null;
 
   return (
     <div
       className="h-full w-full overflow-hidden"
       onClick={() => {
-        if (item) setProject(item);
-        if (!isMobile) openLightbox(image);
+        if (!isMobile) openLightbox(image, item);
       }}
       style={{
         backgroundImage: `url(${image.url}?h=10&blur=30&fm=webp)`,
