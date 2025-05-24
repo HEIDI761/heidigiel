@@ -33,7 +33,7 @@ export default function Lightbox() {
       />
       {relatedProject?.slug && (
         <NavLink
-          to={`/audiovisual/${relatedProject.slug.current}`}
+          to={`/${relatedProject._type === "audiovisualProject" ? "audiovisual" : "musica"}/${relatedProject.slug.current}`}
           className="absolute top-1/2 left-1/2 m-4 rounded-sm bg-white px-4 py-2 text-sm font-bold uppercase hover:bg-gray-200"
         >
           ver más
