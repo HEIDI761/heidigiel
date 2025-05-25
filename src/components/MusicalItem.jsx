@@ -20,7 +20,7 @@ export default function MusicalItem() {
   const musicalItem = data.content.find((i) => i.item?.slug?.current === slug);
 
   if (error) return <div>Error: {error.message}</div>;
-  console.log(musicalItem.item);
+
   return (
     <div key={musicalItem.item._id} className="flex flex-col gap-16 pb-4">
       <div className="relative mx-auto flex max-w-3xl items-end gap-2">

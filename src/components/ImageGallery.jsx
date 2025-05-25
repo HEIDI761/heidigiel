@@ -1,5 +1,4 @@
 export default function ImageGallery({ data, closeGallery }) {
-  console.log("data", data);
   return (
     <div
       onClick={() => {

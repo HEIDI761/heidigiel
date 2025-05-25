@@ -9,7 +9,6 @@ export default function Lightbox() {
   const { currentImage, setIsLightboxOpen, relatedProject, setRelatedProject } =
     useLightbox();
 
-  console.log("relatedProject", relatedProject);
   return (
     <motion.div
       initial={{ opacity: 0 }}

@@ -35,7 +35,6 @@ export default function Contact({ closeContact }) {
   }, [closeContact]);
 
   if (!data?.contact) return null;
-  console.log("Contact data:", data.contact);
 
   return (
     <motion.div
