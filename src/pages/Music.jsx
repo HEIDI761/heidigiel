@@ -140,39 +140,45 @@ export default function Music() {
                       onMouseLeave={() => setHovered(null)}
                       to={`/musica/${element.item.slug?.current}`}
                       key={`${element._key}-cover`}
-                      className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                      className={`group relative cursor-pointer overflow-hidden ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} `}
                     >
-                      {element.item.vimeoShortVideos?.length > 0 ? (
-                        <div
-                          style={{
-                            backgroundImage: `url("${element.item.coverImage.url}?fm=webp&h=800")`,
-                          }}
-                          className="relative aspect-video overflow-hidden rounded-sm bg-cover bg-center"
-                        >
-                          <VimeoPlayer
-                            url={element.item.vimeoShortVideos[0]}
-                            autoplay={1}
-                            background={1}
-                            loop={1}
+                      <div
+                        className={`h-full w-full overflow-hidden border shadow-md transition-all duration-500 ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                      >
+                        {element.item.vimeoShortVideos?.length > 0 ? (
+                          <div
+                            style={{
+                              backgroundImage: `url("${element.item.coverImage.url}?fm=webp&h=800")`,
+                            }}
+                            className="relative aspect-video overflow-hidden rounded-sm bg-cover bg-center"
+                          >
+                            <VimeoPlayer
+                              url={element.item.vimeoShortVideos[0]}
+                              autoplay={1}
+                              background={1}
+                              loop={1}
+                            />
+                          </div>
+                        ) : (
+                          <ImageContainer
+                            image={element.item.coverImage}
+                            item={element.item}
                           />
-                        </div>
-                      ) : (
-                        <ImageContainer
-                          image={element.item.coverImage}
-                          item={element.item}
-                        />
-                      )}
-                      {!element.item.isImageGallery && (
-                        <div
-                          className={`absolute inset-0 z-10 flex items-center justify-center p-4 text-center uppercase opacity-0 mix-blend-difference transition-opacity duration-500 ${hovered === element.item._id ? "opacity-100" : ""}`}
-                        >
-                          {element.item.title.es}
-                        </div>
-                      )}
+                        )}
+                        {!element.item.isImageGallery && (
+                          <div
+                            className={`absolute inset-0 z-10 flex items-center justify-center p-4 text-center uppercase opacity-0 mix-blend-difference transition-opacity duration-500 ${hovered === element.item._id ? "opacity-100" : ""}`}
+                          >
+                            {element.item.title.es}
+                          </div>
+                        )}
+                      </div>
                       {element.item.type && (
                         <div className="pointer-events-none absolute inset-0 z-30 flex items-start justify-end p-2">
-                          <p className="rounded-full border px-2 font-mono text-xs lowercase">
-                            concierto
+                          <p
+                            className={`rounded-full border px-2 font-mono text-xs lowercase transition-colors duration-500 ${hovered === element.item._id ? "text-text bg-background" : "bg-text text-background"}`}
+                          >
+                            {element.item.type.type.es}
                           </p>
                         </div>
                       )}
