@@ -136,14 +136,17 @@ export default function Post({
 
         {images && (
           <div className="columns-3 gap-2">
-            {images.map((image) => (
-              <div
-                key={image._key}
-                className="border-background-dim h-auto w-full cursor-zoom-in rounded-sm border pb-2"
-              >
-                <ImageContainer image={image} />
-              </div>
-            ))}
+            {images.map(
+              (image) =>
+                image.url && (
+                  <div
+                    key={image._key}
+                    className="border-background-dim mb-2 h-auto w-full cursor-zoom-in overflow-hidden rounded-sm border"
+                  >
+                    <ImageContainer image={image} />
+                  </div>
+                ),
+            )}
           </div>
         )}
       </div>

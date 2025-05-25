@@ -17,7 +17,7 @@ export default function ImageGallery({ data, closeGallery }) {
           {data.coverImage && (
             <div
               key={data.coverImage._key}
-              className="border-background h-auto w-full rounded-sm border pb-2"
+              className="border-background mb-2 h-auto w-full overflow-hidden rounded-sm border"
             >
               <ImageContainer image={data.coverImage} />
             </div>
@@ -25,7 +25,7 @@ export default function ImageGallery({ data, closeGallery }) {
           {data.images.map((image) => (
             <div
               key={image._key}
-              className="border-background-dim h-auto w-full rounded-sm border pb-2"
+              className="border-background-dim mb-2 h-auto w-full overflow-hidden rounded-sm border"
             >
               <ImageContainer image={image} />
             </div>
