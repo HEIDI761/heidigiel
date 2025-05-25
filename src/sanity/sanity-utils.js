@@ -101,6 +101,7 @@ export async function getMusicContent() {
               "dimensions": asset->metadata.dimensions,
             },
             vimeoVideos,
+            vimeoShortVideos,
             description,
             links,
             customFields
