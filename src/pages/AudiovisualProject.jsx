@@ -69,7 +69,7 @@ export default function AudiovisualProject() {
           </div>
         ) : (
           <div className="border-background h-auto cursor-zoom-in rounded-sm border">
-            <ImageContainer image={project.coverImage} item={project} />
+            <ImageContainer image={project.coverImage} />
           </div>
         )}
 
@@ -88,7 +88,7 @@ export default function AudiovisualProject() {
                 key={image._key}
                 className="border-background h-auto w-full cursor-zoom-in rounded-sm border pb-2"
               >
-                <ImageContainer image={image} item={project} />
+                <ImageContainer image={image} />
               </div>
             ))}
           </div>
