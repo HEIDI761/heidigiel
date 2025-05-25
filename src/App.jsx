@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router";
 import { useAbout } from "./sanity/hooks/getData";
 import useLanguage from "./hooks/useLanguage";
@@ -15,12 +16,14 @@ import Ornaments from "./components/Ornaments";
 import Lightbox from "./components/Lightbox";
 import { AnimatePresence } from "motion/react";
 import MusicalItem from "./components/MusicalItem";
+import Contact from "./components/Contact";
 
 function App() {
   const { data, isLoading, error } = useAbout();
   const { language } = useLanguage();
   const { isLightboxOpen } = useLightbox();
   const navigate = useNavigate();
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   const handleHighlightClick = (highlight) => {
     if (highlight.highlightRef._type === "audiovisualProject") {
@@ -39,6 +42,13 @@ function App() {
     <div className="via-primary/20 to-secondary/40 min-h-screen bg-radial/oklab from-transparent from-40% via-70% bg-fixed">
       <AnimatePresence>
         {isLightboxOpen && <Lightbox key="lightbox" />}
+        {isContactOpen && data?.contact && (
+          <Contact
+            key="contact"
+            data={data.contact}
+            closeContact={() => setIsContactOpen(false)}
+          />
+        )}
       </AnimatePresence>
       <div className="fixed inset-0 -z-10 flex h-screen w-screen items-center justify-center overflow-hidden">
         {/* <div className="via-background to-secondary absolute h-full w-full bg-radial/oklab from-transparent from-40% via-70% bg-fixed"></div> */}
@@ -51,7 +61,7 @@ function App() {
       {/* <Ornaments /> */}
       <CursorDecorationV2 />
 
-      <Menu />
+      <Menu openContact={() => setIsContactOpen(true)} />
 
       {/* {data?.highlight && (
         <div className="bg-accent fixed right-0 bottom-2 z-50 m-8 flex items-end justify-end gap-2 font-mono text-xs">
@@ -80,7 +90,7 @@ function App() {
       <div className="px-4 pt-24">
         <Routes>
           <Route path="/" element={null} />
-          <Route path="/about" element={<About />} />
+          <Route path="/bio" element={<About />} />
           <Route path="/audiovisual" element={<Audiovisual />}>
             <Route path=":slug" element={<AudiovisualProject />} />
           </Route>

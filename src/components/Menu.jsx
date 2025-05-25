@@ -1,11 +1,9 @@
 import useLanguage from "../hooks/useLanguage";
 import { NavLink } from "react-router";
 import LanguageSwitcher from "./LanguageSwitcher";
-import { useLocation } from "react-router";
 
-export default function Menu() {
+export default function Menu({ openContact }) {
   const { language } = useLanguage();
-  const location = useLocation();
 
   return (
     <>
@@ -73,12 +71,12 @@ export default function Menu() {
         <div className="pointer-events-auto flex flex-col items-start gap-2">
           <LanguageSwitcher />
           <div className="flex gap-2">
-            <NavLink to="/about" className="">
+            <NavLink to="/bio" className="">
               BIO
             </NavLink>
-            <NavLink to="/contact" className="">
-              CONTACTO
-            </NavLink>
+            <button onClick={openContact} className="cursor-pointer uppercase">
+              {language === "es" ? "Contacto" : "Contact"}
+            </button>
           </div>
         </div>
       </nav>
