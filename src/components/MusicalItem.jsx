@@ -17,6 +17,7 @@ export default function MusicalItem() {
 
   return (
     <Post
+      section="music"
       title={musicalItem.title}
       client={musicalItem.client}
       types={musicalItem.type}

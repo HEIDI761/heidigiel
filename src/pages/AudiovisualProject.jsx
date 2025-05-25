@@ -17,6 +17,7 @@ export default function AudiovisualProject() {
 
   return (
     <Post
+      section="audiovisual"
       title={project.title}
       client={project.client}
       types={project.audiovisualProjectType}
