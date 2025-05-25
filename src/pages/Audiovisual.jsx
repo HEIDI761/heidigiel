@@ -46,6 +46,16 @@ export default function Audiovisual() {
     setIsImageGalleryOpen(true);
   };
 
+  function checkMatchesFilter(element) {
+    return (
+      !selectedFilter ||
+      element.project.audiovisualProjectType?.some(
+        (t) => t.type === selectedFilter.type,
+      ) ||
+      (element.project.isFavorite && selectedFilter === "fav")
+    );
+  }
+
   if (isLoading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
@@ -57,50 +67,14 @@ export default function Audiovisual() {
           closeGallery={() => setIsImageGalleryOpen(false)}
         />
       )}
-      <Outlet />
       <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
 
-      <div className="sticky top-24 z-50 flex gap-1 font-mono text-xs">
-        <button
-          onClick={() => setSelectedFilter(null)}
-          className="border-text size-4 rounded-full border leading-tight uppercase"
-        >
-          x
-        </button>
-        {filters?.map((type) => (
-          <button
-            key={type._id}
-            onClick={() =>
-              selectedFilter === type
-                ? setSelectedFilter(null)
-                : setSelectedFilter(type)
-            }
-            className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase transition-colors duration-500 ${selectedFilter === type ? "bg-text text-background" : ""}`}
-          >
-            {type.type.es}
-          </button>
-        ))}
-        <button
-          className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase transition-colors duration-500 ${selectedFilter === "fav" ? "bg-text text-background" : ""}`}
-          onClick={() =>
-            selectedFilter === "fav"
-              ? setSelectedFilter(null)
-              : setSelectedFilter("fav")
-          }
-        >
-          fav
-        </button>
-      </div>
+      <Filters />
 
       <div className="grid grid-flow-dense auto-rows-[250px] grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2">
         {data.content.flatMap((element) => {
           if (element._type === "audiovisualProject" && element.project) {
-            const matchesFilter =
-              !selectedFilter ||
-              element.project.audiovisualProjectType?.some(
-                (t) => t.type === selectedFilter.type,
-              ) ||
-              (element.project.isFavorite && selectedFilter === "fav");
+            const matchesFilter = checkMatchesFilter(element);
             if (!matchesFilter) return [];
 
             if (!element.project.isImageGallery) {
@@ -248,15 +222,45 @@ export default function Audiovisual() {
         })}
       </div>
 
-      {/* {projectsData && */}
-      {/*   filteredProjects.length > 0 && */}
-      {/*   (display === "grid" ? ( */}
-      {/*     <ProjectsGrid projects={filteredProjects} /> */}
-      {/*   ) : ( */}
-      {/*     <ProjectsList projects={filteredProjects} /> */}
-      {/*   ))} */}
+      <Outlet />
     </div>
   );
+
+  function Filters() {
+    return (
+      <div className="sticky top-24 z-30 flex gap-1 self-end font-mono text-xs">
+        {filters?.map((type) => (
+          <button
+            key={type._id}
+            onClick={() =>
+              selectedFilter === type
+                ? setSelectedFilter(null)
+                : setSelectedFilter(type)
+            }
+            className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase transition-colors duration-500 ${selectedFilter === type ? "bg-text text-background" : ""}`}
+          >
+            {type.type.es}
+          </button>
+        ))}
+        <button
+          className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase transition-colors duration-500 ${selectedFilter === "fav" ? "bg-text text-background" : ""}`}
+          onClick={() =>
+            selectedFilter === "fav"
+              ? setSelectedFilter(null)
+              : setSelectedFilter("fav")
+          }
+        >
+          fav
+        </button>
+        <button
+          onClick={() => setSelectedFilter(null)}
+          className="border-text size-4 rounded-full border leading-tight uppercase"
+        >
+          x
+        </button>
+      </div>
+    );
+  }
 }
 
 function ProjectsGrid({ projects }) {
