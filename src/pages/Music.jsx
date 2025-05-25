@@ -160,6 +160,13 @@ export default function Music() {
                         {element.item.title.es}
                       </div>
                     )}
+                    {element.item.type && (
+                      <div className="pointer-events-none absolute inset-0 z-50 flex items-start justify-end p-2">
+                        <p className="rounded-full border px-2 font-mono text-xs lowercase">
+                          concierto
+                        </p>
+                      </div>
+                    )}
                   </NavLink>,
                 ]
               : [];
