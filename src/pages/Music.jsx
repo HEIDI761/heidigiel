@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { useMusicContent } from "../sanity/hooks/getData";
+import {
+  useMusicContent,
+  useMusicalProjectsList,
+} from "../sanity/hooks/getData";
 import { NavLink, Outlet } from "react-router";
 import Loading from "../components/Loading";
 import useLanguage from "../hooks/useLanguage";
@@ -12,6 +15,11 @@ import VimeoPlayer from "../components/VimeoPlayer";
 
 export default function Music() {
   const { data, isLoading, error } = useMusicContent();
+  const {
+    data: projectsList,
+    isLoading: isLoadingProjects,
+    error: errorProjects,
+  } = useMusicalProjectsList();
   const [filters, setFilters] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState(null);
   const [projects, setProjects] = useState(null);
@@ -19,6 +27,8 @@ export default function Music() {
   const [hovered, setHovered] = useState(null);
   const [imageGalleryData, setImageGalleryData] = useState(null);
   const [isImageGalleryOpen, setIsImageGalleryOpen] = useState(false);
+  const [isDescriptionOpen, setDescriptionIsOpen] = useState(false);
+  const { language } = useLanguage();
 
   const imgSize = {
     sm: "?h=400&f=webp",
@@ -68,9 +78,15 @@ export default function Music() {
     setIsImageGalleryOpen(true);
   };
 
-  if (isLoading) return <Loading />;
-  if (error) return <div>Error: {error.message}</div>;
+  if (isLoading || isLoadingProjects) return <Loading />;
+  if (error || errorProjects) return <div>Error: {error.message}</div>;
 
+  const matchedProject = projectsList.find(
+    (i) => i.slug.current === selectedProject?.slug?.current,
+  );
+
+  const description =
+    matchedProject?.description?.[language] || matchedProject?.description?.es;
   return (
     <div className="flex flex-col gap-8 pb-24">
       <Outlet />
@@ -83,7 +99,24 @@ export default function Music() {
       <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
 
       <Filters />
-
+      {description && (
+        <>
+          <button
+            className="bg-background -mt-4 size-8 shrink-0 cursor-pointer self-start rounded-full border text-2xl transition-transform duration-300 ease-in-out hover:scale-105 hover:rotate-12"
+            onClick={() => setDescriptionIsOpen(!isDescriptionOpen)}
+          >
+            {isDescriptionOpen ? "-" : "+"}
+          </button>
+          {isDescriptionOpen && (
+            <TextContainer
+              className="absolute top-0 left-1/2 z-10 my-8 max-h-3/4 overflow-y-auto text-xs"
+              variant="2"
+            >
+              <PortableText value={description} />
+            </TextContainer>
+          )}
+        </>
+      )}
       <div className="grid grid-flow-dense auto-rows-[250px] grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2">
         {data.content.flatMap((element) => {
           if (element._type === "item" && element.item) {
