@@ -3,11 +3,13 @@ import { useState } from "react";
 import { motion } from "motion/react";
 import useLightbox from "../hooks/useLightbox";
 import { NavLink } from "react-router";
+import useLanguage from "../hooks/useLanguage";
 
 export default function Lightbox() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const { currentImage, setIsLightboxOpen, relatedProject, setRelatedProject } =
     useLightbox();
+  const { language } = useLanguage();
 
   return (
     <motion.div
@@ -34,9 +36,10 @@ export default function Lightbox() {
       {relatedProject?.slug && (
         <NavLink
           to={`/${relatedProject.audiovisualProjectType ? "audiovisual" : "musica"}/${relatedProject.slug.current}`}
-          className="absolute top-1/2 left-1/2 m-4 rounded-sm bg-white px-4 py-2 text-sm font-bold uppercase hover:bg-gray-200"
+          className="shadow-background-dim group bg-background border-background-dim hover:bg-text hover:text-background fixed top-0 flex cursor-pointer items-center border border-l-0 py-2 pr-4 pl-3 text-sm uppercase shadow-md transition-colors duration-500"
         >
-          ver más
+          {language === "es" ? "ver mas: " : "see more: "}
+          {relatedProject.title[language] || relatedProject.title.es}
         </NavLink>
       )}
     </motion.div>
