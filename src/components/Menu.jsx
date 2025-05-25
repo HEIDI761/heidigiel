@@ -80,7 +80,7 @@ export default function Menu({ openContact }) {
               </NavLink>
               <button
                 onClick={openContact}
-                className="cursor-pointer uppercase"
+                className="hover:bg-text hover:text-background px-1 uppercase transition-colors duration-500"
               >
                 {language === "es" ? "Contacto" : "Contact"}
               </button>
