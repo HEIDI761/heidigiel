@@ -1,26 +1,37 @@
+import ImageContainer from "./ImageContainer";
+import BackButton from "./BackButton";
+
 export default function ImageGallery({ data, closeGallery }) {
   return (
     <div
-      onClick={() => {
-        closeGallery();
-      }}
-      className="fixed inset-0 z-200 grid h-full w-full grid-cols-3 items-center justify-center"
+      // onClick={() => {
+      //   closeGallery();
+      // }}
+      className="bg-background/90 fixed inset-0 z-50 flex h-screen w-full flex-col items-center justify-center gap-4 px-4 py-16 backdrop-grayscale-100 md:px-32"
     >
-      {data.coverImage && (
-        <img
-          src={data.coverImage.url + "?fm=webp&h=800"}
-          alt=""
-          className="h-full w-full object-cover"
-        />
-      )}
-      {data.images.map((image) => (
-        <img
-          key={image._key}
-          src={image.url + "?fm=webp&h=800"}
-          alt=""
-          className="h-full w-full object-cover"
-        />
-      ))}
+      <div className="w-full">
+        <BackButton />
+      </div>
+      <div className="bg-background border-background-dim shadow-background-dim overflow-y-auto border p-4 shadow-md">
+        <div className="columns-3 gap-2">
+          {data.coverImage && (
+            <div
+              key={data.coverImage._key}
+              className="border-background h-auto w-full rounded-sm border pb-2"
+            >
+              <ImageContainer image={data.coverImage} />
+            </div>
+          )}
+          {data.images.map((image) => (
+            <div
+              key={image._key}
+              className="border-background-dim h-auto w-full rounded-sm border pb-2"
+            >
+              <ImageContainer image={image} />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
