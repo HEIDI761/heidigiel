@@ -6,8 +6,9 @@
 }
 
 @theme {
-  --color-background: #40372d;
-  --color-background-dim: #a19b97;
+  /* --color-background: #40372d; */
+  --color-background: #1d1e1d;
+  --color-background-dim: #353635;
   --color-text: #cec6c1;
 
   --color-accent: #bd0000;
