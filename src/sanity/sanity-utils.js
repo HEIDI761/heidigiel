@@ -88,7 +88,7 @@ export async function getMusicContent() {
             title,
             slug,
             date,
-            musicalProject->{_id, title},
+            musicalProject->{_id, slug, title},
             isFavorite,
             type->{_id, type}, 
             coverImage{
