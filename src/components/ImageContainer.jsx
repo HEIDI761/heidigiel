@@ -24,6 +24,7 @@ export default function ImageContainer({ image, item }) {
         src={image.url + "?fm=webp&h=800"}
         alt={item ? item.title.es : ""}
         className="h-full w-full cursor-zoom-in object-cover"
+        loading="lazy"
       />
     </div>
   );
