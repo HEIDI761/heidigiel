@@ -139,7 +139,7 @@ export default function Post({
             {images.map((image) => (
               <div
                 key={image._key}
-                className="border-background h-auto w-full cursor-zoom-in rounded-sm border pb-2"
+                className="border-background-dim h-auto w-full cursor-zoom-in rounded-sm border pb-2"
               >
                 <ImageContainer image={image} />
               </div>
