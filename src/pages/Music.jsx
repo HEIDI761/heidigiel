@@ -81,12 +81,15 @@ export default function Music() {
   if (isLoading || isLoadingProjects) return <Loading />;
   if (error || errorProjects) return <div>Error: {error.message}</div>;
 
-  const matchedProject = projectsList.find(
-    (i) => i.slug.current === selectedProject?.slug?.current,
+  const matchedProject = projectsList.find((i) =>
+    selectedProject
+      ? i.slug.current === selectedProject?.slug?.current
+      : i._id === "1f3fb03a-2431-4977-9753-c80314f61e07",
   );
 
   const description =
     matchedProject?.description?.[language] || matchedProject?.description?.es;
+
   return (
     <div className="flex flex-col gap-8 pb-24">
       <Outlet />
