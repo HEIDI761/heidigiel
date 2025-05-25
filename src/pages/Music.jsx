@@ -8,6 +8,7 @@ import MuscialItem from "../components/MusicalItem";
 import ImageContainer from "../components/ImageContainer";
 import TextContainer from "../components/TextContainer";
 import ImageGallery from "../components/ImageGallery";
+import VimeoPlayer from "../components/VimeoPlayer";
 
 export default function Music() {
   const { data, isLoading, error } = useMusicContent();
@@ -107,11 +108,26 @@ export default function Music() {
                       key={`${element._key}-cover`}
                       className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
                     >
-                      <img
-                        src={element.item.coverImage.url + imgSize.sm}
-                        alt="Cover"
-                        className="h-full w-full object-cover"
-                      />
+                      {element.item.vimeoShortVideos?.length > 0 ? (
+                        <div
+                          style={{
+                            backgroundImage: `url("${element.item.coverImage.url}?fm=webp&h=800")`,
+                          }}
+                          className="relative aspect-video overflow-hidden rounded-sm bg-cover bg-center"
+                        >
+                          <VimeoPlayer
+                            url={element.item.vimeoShortVideos[0]}
+                            autoplay={1}
+                            background={1}
+                            loop={1}
+                          />
+                        </div>
+                      ) : (
+                        <ImageContainer
+                          image={element.item.coverImage}
+                          item={element.item}
+                        />
+                      )}
                       {!element.item.isImageGallery && (
                         <div
                           className={`absolute inset-0 z-10 flex items-center justify-center p-4 text-center uppercase opacity-0 mix-blend-difference transition-opacity duration-500 ${hovered === element.item._id ? "opacity-100" : ""}`}
@@ -224,11 +240,6 @@ export default function Music() {
                 className={`cursor-zoom-in overflow-hidden border transition-all duration-500 ${hovered === element._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
               >
                 <ImageContainer image={element.asset} />
-                {/* <img
-                  className="h-full w-full object-cover"
-                  src={element.asset.url + imgSize.sm}
-                  alt="Loose image"
-                /> */}
               </div>
             );
           }
