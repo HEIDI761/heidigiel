@@ -8,33 +8,14 @@ export default function About() {
   const { language } = useLanguage();
 
   return (
-    <>
-      <div className="from-background fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
-
-      <div className="bg-background border-tertiary fixed bottom-1/4 left-0 flex flex-col rounded-r-sm border px-4 py-2 font-serif uppercase">
-        {data?.contact?.email && (
-          <a href={`mailto:${data?.contact.email}`}>{data.contact.email}</a>
-        )}
-        {data?.contact?.phone && <div>{data.contact.phone}</div>}
-        {data?.contact?.instagram && (
-          <a href={data.contact.instagram}>instagram</a>
-        )}
-        {data?.contact?.spotify && <a href={data.contact.spotify}>spotify</a>}
-        {data?.contact?.links &&
-          data.contact.links.map((link) => (
-            <div key={link._key}>
-              <a href={link.url} target="_blank" rel="noopener noreferrer">
-                {link.title[language] || link.title.es}
-              </a>
-            </div>
-          ))}
-      </div>
+    <div className="pb-24">
+      <div className="from-background via-secondary/70 fixed inset-0 -z-10 h-screen w-full bg-radial to-transparent bg-fixed mix-blend-overlay" />
 
       {data?.bio && (
-        <TextContainer className="mx-auto" variant="3">
+        <div className="mx-auto max-w-prose">
           <PortableText value={data.bio[language] || data.bio.es} />
-        </TextContainer>
+        </div>
       )}
-    </>
+    </div>
   );
 }
