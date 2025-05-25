@@ -7,6 +7,7 @@ import { PortableText } from "@portabletext/react";
 import MuscialItem from "../components/MusicalItem";
 import ImageContainer from "../components/ImageContainer";
 import TextContainer from "../components/TextContainer";
+import ImageGallery from "../components/ImageGallery";
 
 export default function Music() {
   const { data, isLoading, error } = useMusicContent();
@@ -15,6 +16,8 @@ export default function Music() {
   const [projects, setProjects] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
   const [hovered, setHovered] = useState(null);
+  const [imageGalleryData, setImageGalleryData] = useState(null);
+  const [isImageGalleryOpen, setIsImageGalleryOpen] = useState(false);
 
   const imgSize = {
     sm: "?h=400&f=webp",
@@ -59,14 +62,184 @@ export default function Music() {
     }
   }, [setFilters, setProjects, selectedProject, data]);
 
+  const openImageGallery = ({ data }) => {
+    setImageGalleryData(data);
+    setIsImageGalleryOpen(true);
+  };
+
   if (isLoading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div className="flex flex-col gap-8 pb-24">
       <Outlet />
+      {isImageGalleryOpen && (
+        <ImageGallery
+          data={imageGalleryData}
+          closeGallery={() => setIsImageGalleryOpen(false)}
+        />
+      )}
       <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
 
+      <Filters />
+
+      <div className="grid grid-flow-dense auto-rows-[250px] grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2">
+        {data.content.flatMap((element) => {
+          if (element._type === "item" && element.item) {
+            const matchesFilter =
+              !selectedFilter ||
+              element.item.type?._id === selectedFilter._id ||
+              (element.item.isFavorite && selectedFilter === "fav");
+
+            const matchesProject =
+              !selectedProject ||
+              element.item.musicalProject._id === selectedProject._id;
+
+            if (!matchesProject || !matchesFilter) return [];
+
+            if (!element.item.isImageGallery) {
+              const coverImage = element.item.coverImage?.url
+                ? [
+                    <NavLink
+                      onMouseEnter={() => setHovered(element.item._id)}
+                      onMouseLeave={() => setHovered(null)}
+                      to={`/musica/${element.item.slug?.current}`}
+                      key={`${element._key}-cover`}
+                      className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                    >
+                      <img
+                        src={element.item.coverImage.url + imgSize.sm}
+                        alt="Cover"
+                        className="h-full w-full object-cover"
+                      />
+                      {!element.item.isImageGallery && (
+                        <div
+                          className={`absolute inset-0 z-10 flex items-center justify-center p-4 text-center uppercase opacity-0 mix-blend-difference transition-opacity duration-500 ${hovered === element.item._id ? "opacity-100" : ""}`}
+                        >
+                          {element.item.title.es}
+                        </div>
+                      )}
+                      {element.item.type && (
+                        <div className="pointer-events-none absolute inset-0 z-50 flex items-start justify-end p-2">
+                          <p className="rounded-full border px-2 font-mono text-xs lowercase">
+                            concierto
+                          </p>
+                        </div>
+                      )}
+                    </NavLink>,
+                  ]
+                : [];
+
+              const projectImages =
+                element.item.images?.map(
+                  (img, index) =>
+                    element.item.isFavorite &&
+                    index < 4 &&
+                    img.url && (
+                      <div
+                        onMouseEnter={() => setHovered(element.item._id)}
+                        onMouseLeave={() => setHovered(null)}
+                        key={img._key}
+                        className={`overflow-hidden border transition-all duration-500 ${element.item.isFavorite ? "" : ""} ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                      >
+                        <ImageContainer image={img} item={element.item} />
+                      </div>
+                    ),
+                ) || [];
+
+              return [...coverImage, ...projectImages].filter(Boolean);
+            } else {
+              const coverImage = element.item.coverImage?.url
+                ? [
+                    <div
+                      onMouseEnter={() => setHovered(element.item._id)}
+                      onMouseLeave={() => setHovered(null)}
+                      key={`${element._key}-cover`}
+                      onClick={() => openImageGallery({ data: element.item })}
+                      className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                    >
+                      <div
+                        className="h-full w-full overflow-hidden"
+                        style={{
+                          backgroundImage: `url(${element.item.coverImage.url}?h=10&blur=30&fm=webp)`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                          aspectRatio: `${element.item.coverImage.dimensions.aspectRatio}/1`,
+                        }}
+                      >
+                        <img
+                          src={element.item.coverImage.url + imgSize.sm}
+                          alt="Cover"
+                          className="h-full w-full cursor-zoom-in object-cover"
+                        />
+                      </div>
+                    </div>,
+                  ]
+                : [];
+
+              const projectImages =
+                element.item.images?.map(
+                  (img, index) =>
+                    element.item.isFavorite &&
+                    index < 4 &&
+                    img.url && (
+                      <div
+                        onMouseEnter={() => setHovered(element.item._id)}
+                        onMouseLeave={() => setHovered(null)}
+                        onClick={() => openImageGallery({ data: element.item })}
+                        key={img._key}
+                        className={`overflow-hidden border transition-all duration-500 ${element.item.isFavorite ? "" : ""} ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                      >
+                        <div
+                          className="h-full w-full overflow-hidden"
+                          style={{
+                            backgroundImage: `url(${img.url}?h=10&blur=30&fm=webp)`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            aspectRatio: `${img.dimensions.aspectRatio}/1`,
+                          }}
+                        >
+                          <img
+                            src={img.url + "?fm=webp&h=800"}
+                            className="h-full w-full cursor-zoom-in object-cover"
+                          />
+                        </div>
+                      </div>
+                    ),
+                ) || [];
+
+              return [...coverImage, ...projectImages].filter(Boolean);
+            }
+          }
+
+          if (
+            element._type === "image" &&
+            element.asset?.url &&
+            !selectedFilter &&
+            !selectedProject
+          ) {
+            return (
+              <div
+                key={element._key}
+                className={`cursor-zoom-in overflow-hidden border transition-all duration-500 ${hovered === element._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+              >
+                <ImageContainer image={element.asset} />
+                {/* <img
+                  className="h-full w-full object-cover"
+                  src={element.asset.url + imgSize.sm}
+                  alt="Loose image"
+                /> */}
+              </div>
+            );
+          }
+          return [];
+        })}
+      </div>
+    </div>
+  );
+
+  function Filters() {
+    return (
       <div className="sticky top-24 z-50 flex flex-col gap-1 font-mono text-xs">
         <div className="flex gap-1">
           <button
@@ -124,96 +297,6 @@ export default function Music() {
           </button>
         </div>
       </div>
-
-      <div className="grid grid-flow-dense auto-rows-[250px] grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2">
-        {data.content.flatMap((element) => {
-          if (element._type === "item" && element.item) {
-            const matchesFilter =
-              !selectedFilter ||
-              element.item.type?._id === selectedFilter._id ||
-              (element.item.isFavorite && selectedFilter === "fav");
-
-            const matchesProject =
-              !selectedProject ||
-              element.item.musicalProject._id === selectedProject._id;
-
-            if (!matchesProject || !matchesFilter) return [];
-
-            const coverImage = element.item.coverImage?.url
-              ? [
-                  <NavLink
-                    onMouseEnter={() => setHovered(element.item._id)}
-                    onMouseLeave={() => setHovered(null)}
-                    to={`/musica/${element.item.slug?.current}`}
-                    key={`${element._key}-cover`}
-                    className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
-                  >
-                    <img
-                      src={element.item.coverImage.url + imgSize.sm}
-                      alt="Cover"
-                      className="h-full w-full object-cover"
-                    />
-                    {!element.item.isImageGallery && (
-                      <div
-                        className={`absolute inset-0 z-10 flex items-center justify-center p-4 text-center uppercase opacity-0 mix-blend-difference transition-opacity duration-500 ${hovered === element.item._id ? "opacity-100" : ""}`}
-                      >
-                        {element.item.title.es}
-                      </div>
-                    )}
-                    {element.item.type && (
-                      <div className="pointer-events-none absolute inset-0 z-50 flex items-start justify-end p-2">
-                        <p className="rounded-full border px-2 font-mono text-xs lowercase">
-                          concierto
-                        </p>
-                      </div>
-                    )}
-                  </NavLink>,
-                ]
-              : [];
-
-            const projectImages =
-              element.item.images?.map(
-                (img, index) =>
-                  element.item.isFavorite &&
-                  index < 4 &&
-                  img.url && (
-                    <div
-                      onMouseEnter={() => setHovered(element.item._id)}
-                      onMouseLeave={() => setHovered(null)}
-                      key={img._key}
-                      className={`overflow-hidden border transition-all duration-500 ${element.item.isFavorite ? "" : ""} ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
-                    >
-                      <ImageContainer image={img} item={element.item} />
-                    </div>
-                  ),
-              ) || [];
-
-            return [...coverImage, ...projectImages].filter(Boolean);
-          }
-
-          if (
-            element._type === "image" &&
-            element.asset?.url &&
-            !selectedFilter &&
-            !selectedProject
-          ) {
-            return (
-              <div
-                key={element._key}
-                className={`cursor-zoom-in overflow-hidden border transition-all duration-500 ${hovered === element._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
-              >
-                <ImageContainer image={element.asset} />
-                {/* <img
-                  className="h-full w-full object-cover"
-                  src={element.asset.url + imgSize.sm}
-                  alt="Loose image"
-                /> */}
-              </div>
-            );
-          }
-          return [];
-        })}
-      </div>
-    </div>
-  );
+    );
+  }
 }
