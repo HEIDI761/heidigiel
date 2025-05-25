@@ -6,6 +6,7 @@ import VimeoPlayer from "../components/VimeoPlayer";
 import { NavLink, Outlet } from "react-router";
 import Tag from "../components/Tag";
 import ImageContainer from "../components/ImageContainer";
+import ImageGallery from "../components/ImageGallery";
 
 export default function Audiovisual() {
   const { data, isLoading, error } = useAudiovisualContent();
@@ -13,6 +14,8 @@ export default function Audiovisual() {
   const [selectedFilter, setSelectedFilter] = useState(null);
   // const [display, setDisplay] = useState("grid");
   const [hovered, setHovered] = useState(null);
+  const [imageGalleryData, setImageGalleryData] = useState(null);
+  const [isImageGalleryOpen, setIsImageGalleryOpen] = useState(false);
 
   const imgSize = {
     sm: "?h=400&f=webp",
@@ -38,11 +41,22 @@ export default function Audiovisual() {
     }
   }, [setFilters, data]);
 
+  const openImageGallery = ({ data }) => {
+    setImageGalleryData(data);
+    setIsImageGalleryOpen(true);
+  };
+
   if (isLoading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div className="flex flex-col gap-8 pb-24">
+      {isImageGalleryOpen && (
+        <ImageGallery
+          data={imageGalleryData}
+          closeGallery={() => setIsImageGalleryOpen(false)}
+        />
+      )}
       <Outlet />
       <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
 
@@ -89,63 +103,130 @@ export default function Audiovisual() {
               (element.project.isFavorite && selectedFilter === "fav");
             if (!matchesFilter) return [];
 
-            const coverImage = element.project.coverImage?.url
-              ? [
-                  <NavLink
-                    onMouseEnter={() => setHovered(element.project._id)}
-                    onMouseLeave={() => setHovered(null)}
-                    to={`/audiovisual/${element.project.slug?.current}`}
-                    key={`${element._key}-cover`}
-                    className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.project.isFavorite ? (element.project.coverImage.dimensions.height > element.project.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
-                  >
-                    {element.project.previewUrl ? (
-                      <div
-                        style={{
-                          backgroundImage: `url("${element.project.coverImage.url}?fm=webp&h=800")`,
-                        }}
-                        className="relative aspect-video overflow-hidden rounded-sm bg-cover bg-center"
-                      >
-                        <VimeoPlayer
-                          url={element.project.previewUrl}
-                          autoplay={1}
-                          background={1}
-                          loop={1}
+            if (!element.project.isImageGallery) {
+              const coverImage = element.project.coverImage?.url
+                ? [
+                    <NavLink
+                      onMouseEnter={() => setHovered(element.project._id)}
+                      onMouseLeave={() => setHovered(null)}
+                      to={`/audiovisual/${element.project.slug?.current}`}
+                      key={`${element._key}-cover`}
+                      className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.project.isFavorite ? (element.project.coverImage.dimensions.height > element.project.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                    >
+                      {element.project.previewUrl ? (
+                        <div
+                          style={{
+                            backgroundImage: `url("${element.project.coverImage.url}?fm=webp&h=800")`,
+                          }}
+                          className="relative aspect-video overflow-hidden rounded-sm bg-cover bg-center"
+                        >
+                          <VimeoPlayer
+                            url={element.project.previewUrl}
+                            autoplay={1}
+                            background={1}
+                            loop={1}
+                          />
+                        </div>
+                      ) : (
+                        <ImageContainer
+                          image={element.project.coverImage}
+                          item={element.project}
                         />
-                      </div>
-                    ) : (
-                      <ImageContainer
-                        image={element.project.coverImage}
-                        item={element.project}
-                      />
-                    )}
-                    {!element.project.isImageGallery && (
-                      <div
-                        className={`absolute inset-0 z-10 flex items-center justify-center p-4 text-center uppercase opacity-0 mix-blend-difference transition-opacity duration-500 ${hovered === element.project._id ? "opacity-100" : ""}`}
-                      >
-                        {element.project.title.es}
-                      </div>
-                    )}
-                  </NavLink>,
-                ]
-              : [];
+                      )}
+                      {!element.project.isImageGallery && (
+                        <div
+                          className={`absolute inset-0 z-10 flex items-center justify-center p-4 text-center uppercase opacity-0 mix-blend-difference transition-opacity duration-500 ${hovered === element.project._id ? "opacity-100" : ""}`}
+                        >
+                          {element.project.title.es}
+                        </div>
+                      )}
+                    </NavLink>,
+                  ]
+                : [];
 
-            const projectImages =
-              element.project.images?.map(
-                (img, index) =>
-                  element.project.isFavorite &&
-                  index < 4 && (
+              const projectImages =
+                element.project.images?.map(
+                  (img, index) =>
+                    element.project.isFavorite &&
+                    index < 4 && (
+                      <div
+                        onMouseEnter={() => setHovered(element.project._id)}
+                        onMouseLeave={() => setHovered(null)}
+                        key={img._key}
+                        className={`overflow-hidden border transition-all duration-500 ${element.project.isFavorite ? "" : ""} ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                      >
+                        <ImageContainer image={img} item={element.project} />
+                      </div>
+                    ),
+                ) || [];
+
+              return [...coverImage, ...projectImages].filter(Boolean);
+            } else {
+              const coverImage = element.project.coverImage?.url
+                ? [
                     <div
                       onMouseEnter={() => setHovered(element.project._id)}
                       onMouseLeave={() => setHovered(null)}
-                      key={img._key}
-                      className={`overflow-hidden border transition-all duration-500 ${element.project.isFavorite ? "" : ""} ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                      key={`${element._key}-cover`}
+                      onClick={() =>
+                        openImageGallery({ data: element.project })
+                      }
+                      className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.project.isFavorite ? (element.project.coverImage.dimensions.height > element.project.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
                     >
-                      <ImageContainer image={img} item={element.project} />
-                    </div>
-                  ),
-              ) || [];
+                      <div
+                        className="h-full w-full overflow-hidden"
+                        style={{
+                          backgroundImage: `url(${element.project.coverImage.url}?h=10&blur=30&fm=webp)`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                          aspectRatio: `${element.project.coverImage.dimensions.aspectRatio}/1`,
+                        }}
+                      >
+                        <img
+                          src={
+                            element.project.coverImage.url + "?fm=webp&h=800"
+                          }
+                          className="h-full w-full cursor-zoom-in object-cover"
+                        />
+                      </div>
+                    </div>,
+                  ]
+                : [];
 
-            return [...coverImage, ...projectImages].filter(Boolean);
+              const projectImages =
+                element.project.images?.map(
+                  (img, index) =>
+                    element.project.isFavorite &&
+                    index < 4 && (
+                      <div
+                        onMouseEnter={() => setHovered(element.project._id)}
+                        onMouseLeave={() => setHovered(null)}
+                        onClick={() =>
+                          openImageGallery({ data: element.project })
+                        }
+                        key={img._key}
+                        className={`overflow-hidden border transition-all duration-500 ${element.project.isFavorite ? "" : ""} ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                      >
+                        <div
+                          className="h-full w-full overflow-hidden"
+                          style={{
+                            backgroundImage: `url(${img.url}?h=10&blur=30&fm=webp)`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            aspectRatio: `${img.dimensions.aspectRatio}/1`,
+                          }}
+                        >
+                          <img
+                            src={img.url + "?fm=webp&h=800"}
+                            className="h-full w-full cursor-zoom-in object-cover"
+                          />
+                        </div>
+                      </div>
+                    ),
+                ) || [];
+
+              return [...coverImage, ...projectImages].filter(Boolean);
+            }
           }
 
           if (
