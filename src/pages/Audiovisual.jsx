@@ -228,7 +228,7 @@ export default function Audiovisual() {
 
   function Filters() {
     return (
-      <div className="sticky top-24 z-30 flex gap-1 self-end font-mono text-xs">
+      <div className="sticky top-24 z-30 flex flex-wrap justify-end gap-1 self-end font-mono text-xs">
         {filters?.map((type) => (
           <button
             key={type._id}

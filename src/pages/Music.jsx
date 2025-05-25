@@ -7,7 +7,6 @@ import { NavLink, Outlet } from "react-router";
 import Loading from "../components/Loading";
 import useLanguage from "../hooks/useLanguage";
 import { PortableText } from "@portabletext/react";
-import MuscialItem from "../components/MusicalItem";
 import ImageContainer from "../components/ImageContainer";
 import TextContainer from "../components/TextContainer";
 import ImageGallery from "../components/ImageGallery";
@@ -89,7 +88,6 @@ export default function Music() {
     matchedProject?.description?.[language] || matchedProject?.description?.es;
   return (
     <div className="flex flex-col gap-8 pb-24">
-      <Outlet />
       {isImageGalleryOpen && (
         <ImageGallery
           data={imageGalleryData}
@@ -169,7 +167,7 @@ export default function Music() {
                         </div>
                       )}
                       {element.item.type && (
-                        <div className="pointer-events-none absolute inset-0 z-50 flex items-start justify-end p-2">
+                        <div className="pointer-events-none absolute inset-0 z-30 flex items-start justify-end p-2">
                           <p className="rounded-full border px-2 font-mono text-xs lowercase">
                             concierto
                           </p>
@@ -279,13 +277,14 @@ export default function Music() {
           return [];
         })}
       </div>
+      <Outlet />
     </div>
   );
 
   function Filters() {
     return (
       <div className="sticky top-24 z-50 flex flex-col gap-1 font-mono text-xs">
-        <div className="flex gap-1">
+        <div className="flex flex-wrap gap-1">
           <button
             onClick={() => setSelectedProject(null)}
             className="border-text size-4 rounded-full border leading-tight uppercase"
@@ -309,7 +308,7 @@ export default function Music() {
             </button>
           ))}
         </div>
-        <div className="flex gap-1">
+        <div className="flex flex-wrap gap-1">
           <button
             onClick={() => setSelectedFilter(null)}
             className="border-text size-4 rounded-full border leading-tight uppercase"
