@@ -9,7 +9,7 @@ export default function Menu() {
 
   return (
     <>
-      <nav className="pointer-events-none fixed inset-0 z-50 flex h-screen w-full flex-col justify-between overflow-hidden px-4 pt-3 pb-6 uppercase drop-shadow-sm">
+      <nav className="pointer-events-none fixed inset-0 z-50 flex h-screen w-full flex-col justify-between overflow-hidden px-4 pt-3 pb-6 uppercase">
         <div className="flex items-start justify-between">
           <NavLink
             to="/musica"
@@ -28,9 +28,9 @@ export default function Menu() {
 
           <NavLink
             to="/"
-            className="pointer-events-auto w-full max-w-[200px] min-w-[120px] px-2"
+            className={`pointer-events-auto px-2 transition-all duration-500 ${location.pathname === "/" ? "w-1/2" : "w-[400px]"}`}
           >
-            {/* <h1 className="font-display -mt-0.5 text-center text-xl leading-none md:text-4xl">
+            {/* <h1 className="font-display -mt-0.5 text-center text-xl leading-none md:text-2xl">
               Heidi Giel
             </h1> */}
             <svg
@@ -70,30 +70,37 @@ export default function Menu() {
           </NavLink>
         </div>
 
-        <div className="pointer-events-auto flex flex-col items-start gap-2">
-          <LanguageSwitcher />
-          <div className="flex gap-2">
-            <NavLink to="/about" className="">
-              BIO
-            </NavLink>
-            <NavLink to="/contact" className="">
-              CONTACTO
-            </NavLink>
+        <div className="grid grid-cols-[1fr_auto_1fr]">
+          <div className="pointer-events-auto flex flex-col items-start justify-between gap-2 leading-none">
+            <LanguageSwitcher />
+            <div className="-ml-1 flex">
+              <NavLink
+                to="/about"
+                className="hover:bg-text hover:text-background px-1 transition-colors duration-500"
+              >
+                BIO
+              </NavLink>
+              <NavLink
+                to="/contact"
+                className="hover:bg-text hover:text-background px-1 transition-colors duration-500"
+              >
+                CONTACTO
+              </NavLink>
+            </div>
           </div>
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="48px"
+            viewBox="0 -960 960 960"
+            width="48px"
+            fill="var(--color-text)"
+            className="pointer-events-auto mx-auto shrink-0 rotate-20 transition-transform duration-500 hover:rotate-30"
+          >
+            <path d="M451-171q106-28 172.5-114T690-480q0-109-66.5-195T451-789q63 61 95.5 141T579-480q0 88-32.5 168T451-171Zm-81 39h-14q92-55 143.5-148T551-480q0-107-51.5-200T356-828h14q72.21 0 135.72 27.39 63.51 27.39 110.49 74.35 46.98 46.96 74.38 110.43Q718-552.35 718-480.17q0 72.17-27.41 135.73-27.4 63.56-74.38 110.57-46.98 47.02-110.49 74.44Q442.21-132 370-132Zm209-348Z" />
+          </svg>
         </div>
       </nav>
-
-      <div className="pointer-events-none fixed bottom-6 left-0 flex w-full rotate-20 items-center justify-center drop-shadow-sm">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="48px"
-          viewBox="0 -960 960 960"
-          width="48px"
-          fill="var(--color-text)"
-        >
-          <path d="M451-171q106-28 172.5-114T690-480q0-109-66.5-195T451-789q63 61 95.5 141T579-480q0 88-32.5 168T451-171Zm-81 39h-14q92-55 143.5-148T551-480q0-107-51.5-200T356-828h14q72.21 0 135.72 27.39 63.51 27.39 110.49 74.35 46.98 46.96 74.38 110.43Q718-552.35 718-480.17q0 72.17-27.41 135.73-27.4 63.56-74.38 110.57-46.98 47.02-110.49 74.44Q442.21-132 370-132Zm209-348Z" />
-        </svg>
-      </div>
     </>
   );
 }
