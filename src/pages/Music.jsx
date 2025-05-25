@@ -286,7 +286,7 @@ export default function Music() {
 
   function Filters() {
     return (
-      <div className="sticky top-24 z-50 flex flex-col gap-1 font-mono text-xs">
+      <div className="sticky top-24 z-30 flex flex-col gap-1 font-mono text-xs">
         <div className="flex flex-wrap gap-1">
           <button
             onClick={() => setSelectedProject(null)}
