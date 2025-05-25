@@ -11,7 +11,7 @@ export default function Tag({
   const { language } = useLanguage();
   return (
     <div
-      className={`border-text rounded-${roundness} border px-2 transition-colors select-none ${className} ${clickabe ? "hover:bg-text hover:text-background cursor-pointer" : "cursor-default"} ${selected ? "bg-text text-background" : "bg-background/50"}`}
+      className={`border-muted-text rounded-${roundness} border px-2 transition-colors select-none ${className} ${clickabe ? "hover:bg-text hover:text-background cursor-pointer" : "cursor-default"} ${selected ? "bg-text text-background" : "bg-background/50"}`}
       onClick={onClick}
     >
       {tag[language] || tag.es}
