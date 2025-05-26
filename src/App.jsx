@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route, useNavigate } from "react-router";
+import { Routes, Route, NavLink } from "react-router";
 import { useAbout } from "./sanity/hooks/getData";
 import useLanguage from "./hooks/useLanguage";
 import useLightbox from "./hooks/useLightbox";
@@ -11,7 +11,6 @@ import AudiovisualProject from "./pages/AudiovisualProject";
 import Loading from "./components/Loading";
 import CursorDecorationV2 from "./components/CursorDecorationV2";
 import Menu from "./components/Menu";
-// import HighlightedMusicalItem from "./pages/HighlightedMusicalItem";
 import Ornaments from "./components/Ornaments";
 import Lightbox from "./components/Lightbox";
 import { AnimatePresence } from "motion/react";
@@ -23,18 +22,7 @@ function App() {
   const { data, isLoading, error } = useAbout();
   const { language } = useLanguage();
   const { isLightboxOpen } = useLightbox();
-  const navigate = useNavigate();
   const [isContactOpen, setIsContactOpen] = useState(false);
-
-  const handleHighlightClick = (highlight) => {
-    if (highlight.highlightRef._type === "audiovisualProject") {
-      navigate(`/audiovisual/${highlight.highlightRef.slug}`);
-    } else if (highlight._type === "musicalProject") {
-      navigate(`/musica/${highlight.highlightRef.slug}`);
-    } else if (highlight._type === "musicalItem") {
-      navigate(`/${highlight.highlightRef.slug}`);
-    }
-  };
 
   if (isLoading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
@@ -65,30 +53,19 @@ function App() {
 
       <Menu openContact={() => setIsContactOpen(true)} />
 
-      {/* {data?.highlight && (
-        <div className="bg-accent fixed right-0 bottom-2 z-50 m-8 flex items-end justify-end gap-2 font-mono text-xs">
-          <button
-            onClick={() => handleHighlightClick(data.highlight)}
-            className="bg-primary hover:bg-accent border-tertiary max-w-2xs -rotate-8 cursor-pointer justify-end rounded-full border px-6 py-4 text-center uppercase shadow-md transition-all duration-300 hover:scale-105 hover:rotate-3"
+      {data.highlight.highlightRef && (
+        <div className="fixed right-4 bottom-6 z-50">
+          <NavLink
+            to={`${data.highlight.highlightRef._type === "audiovisualProject" ? "audiovisual" : "musica"}/${data.highlight.highlightRef.slug}`}
+            // onClick={() => handleHighlightClick(data.highlight)}
+            className="hover:bg-text hover:text-accent border-text cursor-pointer rounded-full border px-2 text-xs uppercase transition-colors duration-500"
           >
-            {data.highlight.title[language] || data.highlight.title.es}
-          </button>
-          <p className="rotate-180 text-end italic [writing-mode:vertical-rl]">
-            {language === "en" ? "highlighted" : "destacado"}
-          </p>
-        </div> */}
-
-      <div className="fixed right-4 bottom-6 z-50">
-        <button
-          onClick={() => handleHighlightClick(data.highlight)}
-          className="hover:bg-text hover:text-accent border-text cursor-pointer rounded-full border px-2 text-xs uppercase transition-colors duration-500"
-        >
-          {data.highlight.text[language] || data.highlight.text.es}:{" "}
-          {data.highlight.highlightRef.title[language] ||
-            data.highlight.highlightRef.title.es}
-        </button>
-      </div>
-
+            {data.highlight.text[language] || data.highlight.text.es}:{" "}
+            {data.highlight.highlightRef.title[language] ||
+              data.highlight.highlightRef.title.es}
+          </NavLink>
+        </div>
+      )}
       <div className="px-4 pt-24">
         <Routes>
           <Route path="/" element={null} />
@@ -99,7 +76,6 @@ function App() {
           <Route path="/musica" element={<Music />}>
             <Route path=":slug" element={<MusicalItem />} />
           </Route>
-          {/* <Route path="/:slug" element={<HighlightedMusicalItem />} /> */}
         </Routes>
       </div>
 
