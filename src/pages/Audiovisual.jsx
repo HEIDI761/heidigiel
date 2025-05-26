@@ -71,7 +71,7 @@ export default function Audiovisual() {
 
       <Filters />
 
-      <div className="grid grid-flow-dense auto-rows-[250px] gap-2 md:grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
+      <div className="grid grid-flow-dense gap-2 md:auto-rows-[250px] md:grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
         {data.content.flatMap((element) => {
           if (element._type === "audiovisualProject" && element.project) {
             const matchesFilter = checkMatchesFilter(element);
@@ -85,7 +85,7 @@ export default function Audiovisual() {
                       onMouseLeave={() => setHovered(null)}
                       to={`/audiovisual/${element.project.slug?.current}`}
                       key={`${element._key}-cover`}
-                      className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.project.isFavorite ? (element.project.coverImage.dimensions.height > element.project.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                      className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.project.isFavorite ? (element.project.coverImage.dimensions.height > element.project.coverImage.dimensions.width ? "md:row-span-2" : "md:col-span-2") : ""} ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
                     >
                       {element.project.previewUrl ? (
                         <div
@@ -154,7 +154,7 @@ export default function Audiovisual() {
                       onClick={() =>
                         openImageGallery({ data: element.project })
                       }
-                      className={`group border-background-dim relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.project.isFavorite ? (element.project.coverImage.dimensions.height > element.project.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${hovered === element.project._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                      className={`group border-background-dim relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.project.isFavorite ? (element.project.coverImage.dimensions.height > element.project.coverImage.dimensions.width ? "md:row-span-2" : "md:col-span-2") : ""} ${hovered === element.project._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
                     >
                       <div
                         className="h-full w-full overflow-hidden"
@@ -288,7 +288,7 @@ function ProjectsGrid({ projects }) {
         !project.isSingleImage ? (
           <NavLink
             key={project._id}
-            className={`group relative flex flex-col gap-2 overflow-hidden rounded-[0%] transition-all duration-300 hover:rounded-[50%] ${project.isFavorite ? (project.coverImage.dimensions.height > project.coverImage.dimensions.width ? "col-span-2 row-span-2" : "col-span-3") : ""}`}
+            className={`group relative flex flex-col gap-2 overflow-hidden rounded-[0%] transition-all duration-300 hover:rounded-[50%] ${project.isFavorite ? (project.coverImage.dimensions.height > project.coverImage.dimensions.width ? "col-span-2 md:row-span-2" : "md:col-span-3") : ""}`}
             to={`/audiovisual/${project.slug.current}`}
           >
             <h1 className="text-background bg-text absolute z-10 flex h-full w-full items-center justify-center text-center font-serif text-2xl opacity-0 mix-blend-difference transition-opacity duration-300 group-hover:opacity-100">

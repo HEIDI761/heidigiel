@@ -141,7 +141,7 @@ export default function Music() {
         )}
       </div>
 
-      <div className="grid grid-flow-dense auto-rows-[250px] grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2">
+      <div className="grid grid-flow-dense auto-rows-[250px] gap-2 md:grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
         {data.content.flatMap((element) => {
           if (element._type === "item" && element.item) {
             const matchesFilter =
@@ -162,7 +162,7 @@ export default function Music() {
                       key={`${element._key}-cover`}
                       onMouseEnter={() => setHovered(element.item._id)}
                       onMouseLeave={() => setHovered(null)}
-                      className={`group relative cursor-pointer overflow-hidden ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} `}
+                      className={`group relative cursor-pointer overflow-hidden ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "md:row-span-2" : "md:col-span-2") : ""} `}
                     >
                       {element.item.musicEmbed && (
                         <div className="absolute bottom-2 left-2 z-30">
@@ -181,7 +181,7 @@ export default function Music() {
                               style={{
                                 backgroundImage: `url("${element.item.coverImage.url + (element.item.isFavorite ? imgSize.md : imgSize.sm)}")`,
                               }}
-                              className="relative aspect-video overflow-hidden rounded-sm bg-cover bg-center"
+                              className="relative h-full w-full overflow-hidden bg-cover bg-center"
                             >
                               <VimeoPlayer
                                 url={element.item.vimeoShortVideos[0]}
@@ -255,7 +255,7 @@ export default function Music() {
                       onMouseLeave={() => setHovered(null)}
                       key={`${element._key}-cover`}
                       onClick={() => openImageGallery({ data: element.item })}
-                      className={`group border-background-dim relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                      className={`group border-background-dim relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "md:row-span-2" : "md:col-span-2") : ""} ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
                     >
                       <div
                         className="h-full w-full overflow-hidden"
