@@ -37,7 +37,7 @@ export default function Post({
       className="no-doc-scroll bg-background/90 fixed inset-0 z-50 flex h-screen w-full flex-col items-center justify-center gap-4 px-4 py-16 backdrop-grayscale-100 md:px-32"
     >
       <div className="w-full">
-        <BackButton />
+        <BackButton onClick={navigate("..")} />
       </div>
 
       <div
