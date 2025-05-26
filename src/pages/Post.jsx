@@ -4,6 +4,7 @@ import BackButton from "../components/BackButton";
 import VimeoPlayer from "../components/VimeoPlayer";
 import ImageContainer from "../components/ImageContainer";
 import Tag from "../components/Tag";
+import PlayEmbedButton from "../components/PlayEmbedButton";
 
 export default function Post({
   section,
@@ -18,6 +19,7 @@ export default function Post({
   description,
   images,
   links,
+  musicEmbed,
   //   customFields,
 }) {
   const { language } = useLanguage();
@@ -56,6 +58,7 @@ export default function Post({
           {client && <span className="italic">- {client}</span>}
         </h1>
 
+        {musicEmbed && <PlayEmbedButton embed={musicEmbed} />}
         <div className="flex flex-wrap items-center gap-1 font-mono text-xs lowercase">
           {types && !types.length ? (
             <Tag

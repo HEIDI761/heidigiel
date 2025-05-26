@@ -5,6 +5,8 @@ import { BrowserRouter } from "react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { LanguageProvider } from "./context/LanguageContext.jsx";
 import { LightboxProvider } from "./context/LightboxContext.jsx";
+import { EmbedPlayerProvider } from "./context/EmbedPlayerContext.jsx";
+
 import App from "./App.jsx";
 
 const queryClient = new QueryClient({
@@ -21,9 +23,11 @@ createRoot(document.getElementById("root")).render(
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
         <LightboxProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
+          <EmbedPlayerProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </EmbedPlayerProvider>
         </LightboxProvider>
       </LanguageProvider>
     </QueryClientProvider>

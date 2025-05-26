@@ -28,6 +28,7 @@ export default function MusicalItem() {
       description={musicalItem.description}
       images={musicalItem.images}
       links={musicalItem.links}
+      musicEmbed={musicalItem.musicEmbed}
       // customFields={musicalItem.customFields}
     />
   );
