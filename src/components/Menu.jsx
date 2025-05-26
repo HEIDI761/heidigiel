@@ -1,9 +1,10 @@
 import useLanguage from "../hooks/useLanguage";
-import { NavLink } from "react-router";
+import { NavLink, useLocation } from "react-router";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function Menu({ openContact }) {
   const { language } = useLanguage();
+  const location = useLocation();
 
   return (
     <>
