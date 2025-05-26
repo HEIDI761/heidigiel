@@ -51,6 +51,7 @@ export async function getAudiovisualContent() {
             video,
             description,
             links,
+            coverPosition
           }
         },
 
@@ -106,7 +107,8 @@ export async function getMusicContent() {
             vimeoShortVideos,
             description,
             links,
-            customFields
+            customFields,
+            coverPosition
           }
         },
 
