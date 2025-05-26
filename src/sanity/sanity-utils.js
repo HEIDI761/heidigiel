@@ -14,6 +14,7 @@ export async function getAbout() {
         },
         bio,
         contact,
+        initialEmbed,
     }`,
   );
 }
@@ -88,6 +89,7 @@ export async function getMusicContent() {
             title,
             slug,
             date,
+            musicEmbed,
             musicalProject->{_id, slug, title},
             isFavorite,
             type->{_id, type}, 
