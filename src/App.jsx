@@ -17,6 +17,7 @@ import Lightbox from "./components/Lightbox";
 import { AnimatePresence } from "motion/react";
 import MusicalItem from "./components/MusicalItem";
 import Contact from "./components/Contact";
+import EmbedPlayer from "./components/EmbedPlayer";
 
 function App() {
   const { data, isLoading, error } = useAbout();
@@ -50,6 +51,9 @@ function App() {
           />
         )}
       </AnimatePresence>
+
+      <EmbedPlayer />
+
       <div className="fixed inset-0 -z-10 flex h-screen w-screen items-center justify-center overflow-hidden">
         {/* <div className="via-background to-secondary absolute h-full w-full bg-radial/oklab from-transparent from-40% via-70% bg-fixed"></div> */}
         <img
