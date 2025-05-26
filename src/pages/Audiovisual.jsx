@@ -18,8 +18,8 @@ export default function Audiovisual() {
   const [isImageGalleryOpen, setIsImageGalleryOpen] = useState(false);
 
   const imgSize = {
-    sm: "?h=400&f=webp",
-    md: "?h=800&f=webp",
+    sm: "?h=600&f=webp",
+    md: "?h=1000&f=webp",
   };
 
   useEffect(() => {
@@ -71,7 +71,7 @@ export default function Audiovisual() {
 
       <Filters />
 
-      <div className="grid grid-flow-dense auto-rows-[250px] grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2">
+      <div className="grid grid-flow-dense auto-rows-[250px] gap-2 md:grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
         {data.content.flatMap((element) => {
           if (element._type === "audiovisualProject" && element.project) {
             const matchesFilter = checkMatchesFilter(element);
@@ -106,6 +106,9 @@ export default function Audiovisual() {
                           image={element.project.coverImage}
                           item={element.project}
                           className="group-hover:scale-105"
+                          imgSize={
+                            element.project.isFavorite ? imgSize.md : imgSize.sm
+                          }
                         />
                       )}
                       {!element.project.isImageGallery && (
@@ -134,6 +137,7 @@ export default function Audiovisual() {
                           image={img}
                           item={element.project}
                           className="hover:scale-105"
+                          imgSize={imgSize.sm}
                         />
                       </div>
                     ),
@@ -163,7 +167,10 @@ export default function Audiovisual() {
                       >
                         <img
                           src={
-                            element.project.coverImage.url + "?fm=webp&h=800"
+                            element.project.coverImage.url +
+                            (element.project.isFavorite
+                              ? imgSize.md
+                              : imgSize.sm)
                           }
                           className="h-full w-full cursor-zoom-in object-cover transition-transform duration-500 group-hover:scale-105"
                         />
@@ -196,7 +203,7 @@ export default function Audiovisual() {
                           }}
                         >
                           <img
-                            src={img.url + "?fm=webp&h=800"}
+                            src={img.url + imgSize.sm}
                             className="goup-hover:scale-105 h-full w-full cursor-zoom-in object-cover transition-transform duration-500"
                           />
                         </div>
@@ -221,6 +228,7 @@ export default function Audiovisual() {
                 <ImageContainer
                   image={element?.asset}
                   className="hover:scale-105"
+                  imgSize={imgSize.sm}
                 />
               </div>
             );

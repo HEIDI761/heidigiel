@@ -30,8 +30,8 @@ export default function Music() {
   const { language } = useLanguage();
 
   const imgSize = {
-    sm: "?h=400&f=webp",
-    md: "?h=800&f=webp",
+    sm: "?h=600&f=webp",
+    md: "?h=1000&f=webp",
   };
 
   useEffect(() => {
@@ -159,6 +159,7 @@ export default function Music() {
               const coverImage = element.item.coverImage?.url
                 ? [
                     <div
+                      key={`${element._key}-cover`}
                       onMouseEnter={() => setHovered(element.item._id)}
                       onMouseLeave={() => setHovered(null)}
                       className={`group relative cursor-pointer overflow-hidden ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} `}
@@ -178,7 +179,7 @@ export default function Music() {
                           {element.item.vimeoShortVideos?.length > 0 ? (
                             <div
                               style={{
-                                backgroundImage: `url("${element.item.coverImage.url}?fm=webp&h=800")`,
+                                backgroundImage: `url("${element.item.coverImage.url + (element.item.isFavorite ? imgSize.md : imgSize.sm)}")`,
                               }}
                               className="relative aspect-video overflow-hidden rounded-sm bg-cover bg-center"
                             >
@@ -194,6 +195,11 @@ export default function Music() {
                               image={element.item.coverImage}
                               item={element.item}
                               className="group-hover:scale-105"
+                              imgSize={
+                                element.item.isFavorite
+                                  ? imgSize.md
+                                  : imgSize.sm
+                              }
                             />
                           )}
                           {!element.item.isImageGallery && (
@@ -234,6 +240,7 @@ export default function Music() {
                           image={img}
                           item={element.item}
                           className="hover:scale-105"
+                          imgSize={imgSize.sm}
                         />
                       </div>
                     ),
@@ -260,7 +267,10 @@ export default function Music() {
                         }}
                       >
                         <img
-                          src={element.item.coverImage.url + imgSize.sm}
+                          src={
+                            element.item.coverImage.url +
+                            (element.item.isFavorite ? imgSize.md : imgSize.sm)
+                          }
                           alt="Cover"
                           className="h-full w-full cursor-zoom-in object-cover transition-transform duration-500 group-hover:scale-105"
                         />
@@ -292,7 +302,7 @@ export default function Music() {
                           }}
                         >
                           <img
-                            src={img.url + "?fm=webp&h=800"}
+                            src={img.url + imgSize.sm}
                             className="h-full w-full cursor-zoom-in object-cover transition-transform duration-500 hover:scale-105"
                           />
                         </div>
@@ -318,6 +328,7 @@ export default function Music() {
                 <ImageContainer
                   image={element.asset}
                   className="hover:scale-105"
+                  imgSize={imgSize.sm}
                 />
               </div>
             );

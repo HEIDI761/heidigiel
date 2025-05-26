@@ -1,7 +1,7 @@
 import useLightbox from "../hooks/useLightbox.js";
 import useIsMobile from "../hooks/useIsMobile.jsx";
 
-export default function ImageContainer({ image, item, className }) {
+export default function ImageContainer({ image, item, imgSize, className }) {
   const isMobile = useIsMobile();
 
   const { openLightbox } = useLightbox();
@@ -21,7 +21,7 @@ export default function ImageContainer({ image, item, className }) {
       }}
     >
       <img
-        src={image.url + "?fm=webp&h=800"}
+        src={image.url + (imgSize || "?fm=webp&h=800")}
         alt={item ? item.title.es : ""}
         className={`h-full w-full cursor-zoom-in object-cover transition-transform duration-500 ${className}`}
         loading="lazy"

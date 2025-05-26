@@ -2,6 +2,11 @@ import ImageContainer from "./ImageContainer";
 import BackButton from "./BackButton";
 
 export default function ImageGallery({ data, closeGallery }) {
+  const imgSize = {
+    sm: "?h=600&f=webp",
+    md: "?h=1000&f=webp",
+  };
+
   return (
     <div
       onClick={closeGallery}
@@ -10,6 +15,7 @@ export default function ImageGallery({ data, closeGallery }) {
       <div className="w-full">
         <BackButton />
       </div>
+
       <div
         onClick={(event) => event.stopPropagation()}
         className="bg-background border-background-dim shadow-background-dim overflow-y-auto border p-4 shadow-md"
@@ -20,15 +26,16 @@ export default function ImageGallery({ data, closeGallery }) {
               key={data.coverImage._key}
               className="border-background mb-2 h-auto w-full overflow-hidden rounded-sm border"
             >
-              <ImageContainer image={data.coverImage} />
+              <ImageContainer image={data.coverImage} imgSize={imgSize.md} />
             </div>
           )}
+
           {data.images.map((image) => (
             <div
               key={image._key}
               className="border-background-dim mb-2 h-auto w-full overflow-hidden rounded-sm border"
             >
-              <ImageContainer image={image} />
+              <ImageContainer image={image} imgSize={imgSize.md} />
             </div>
           ))}
         </div>

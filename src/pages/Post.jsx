@@ -26,6 +26,11 @@ export default function Post({
   const { language } = useLanguage();
   const navigate = useNavigate();
 
+  const imgSize = {
+    sm: "?h=600&f=webp",
+    md: "?h=1000&f=webp",
+  };
+
   return (
     <div
       onClick={() => navigate("..")}
@@ -103,7 +108,7 @@ export default function Post({
 
         <div className="flex flex-col items-start gap-4 lg:flex-row">
           <div className="border-background-dim mr-auto max-h-5/6 cursor-zoom-in border">
-            <ImageContainer image={coverImage} />
+            <ImageContainer image={coverImage} imgSize={imgSize.md} />
           </div>
 
           <div className="flex w-full flex-col gap-4">
@@ -112,6 +117,7 @@ export default function Post({
                 <PortableText value={description[language] || description.es} />
               </div>
             )}
+
             {links && (
               <ul className="uppercase">
                 <p className="text-muted-text text-xs">
@@ -186,7 +192,7 @@ export default function Post({
                     key={image._key}
                     className="border-background-dim mb-2 h-auto w-full cursor-zoom-in overflow-hidden rounded-sm border"
                   >
-                    <ImageContainer image={image} />
+                    <ImageContainer image={image} imgSize={imgSize.md} />
                   </div>
                 ),
             )}
