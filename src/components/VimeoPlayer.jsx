@@ -7,6 +7,7 @@ export default function VimeoPlayer({
   background = 0,
   loop = 0,
   quality = "720p",
+  shortVideo = false,
 }) {
   const { id: vimeoId, hash: vimeoHash } = getVimeoId(url);
   const iframeRef = useRef(null);
@@ -51,7 +52,7 @@ export default function VimeoPlayer({
     };
   }, [vimeoId]);
 
-  return background == 1 ? (
+  return background == 1 && !shortVideo ? (
     <div className="absolute inset-0 overflow-hidden backdrop-blur-md">
       <iframe
         ref={iframeRef}

@@ -150,13 +150,24 @@ export default function Post({
             </div>
           ))}
 
-        {/* esto hay que hacerlo bien para que esten en background y los puedas desmutear con el sdk? */}
-        {shortVideos &&
-          shortVideos.map((video) => (
-            <div key={video} className="w-full">
-              <VimeoPlayer url={video} />
-            </div>
-          ))}
+        {shortVideos && (
+          <div className="columns-2 gap-2">
+            {shortVideos.map((video) => (
+              <div
+                key={video}
+                className="bg-background-dim border-background-dim mb-2 overflow-hidden rounded-lg border"
+              >
+                <VimeoPlayer
+                  url={video}
+                  shortVideo={true}
+                  background={1}
+                  loop={1}
+                  autoplay={1}
+                />
+              </div>
+            ))}
+          </div>
+        )}
 
         {images && (
           <div className="columns-3 gap-2">
