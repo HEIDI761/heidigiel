@@ -92,7 +92,7 @@ export default function Audiovisual() {
                           style={{
                             backgroundImage: `url("${element.project.coverImage.url}?fm=webp&h=800")`,
                           }}
-                          className="relative aspect-video overflow-hidden rounded-sm bg-cover bg-center"
+                          className="relative h-full w-full rounded-sm bg-cover bg-center"
                         >
                           <VimeoPlayer
                             url={element.project.previewUrl}
