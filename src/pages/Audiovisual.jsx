@@ -105,6 +105,7 @@ export default function Audiovisual() {
                         <ImageContainer
                           image={element.project.coverImage}
                           item={element.project}
+                          className="group-hover:scale-105"
                         />
                       )}
                       {!element.project.isImageGallery && (
@@ -127,9 +128,13 @@ export default function Audiovisual() {
                         onMouseEnter={() => setHovered(element.project._id)}
                         onMouseLeave={() => setHovered(null)}
                         key={img._key}
-                        className={`overflow-hidden border transition-all duration-500 ${element.project.isFavorite ? "" : ""} ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                        className={`overflow-hidden border transition-all duration-500 ${hovered === element.project._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
                       >
-                        <ImageContainer image={img} item={element.project} />
+                        <ImageContainer
+                          image={img}
+                          item={element.project}
+                          className="hover:scale-105"
+                        />
                       </div>
                     ),
                 ) || [];
@@ -145,7 +150,7 @@ export default function Audiovisual() {
                       onClick={() =>
                         openImageGallery({ data: element.project })
                       }
-                      className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.project.isFavorite ? (element.project.coverImage.dimensions.height > element.project.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                      className={`group border-background-dim relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.project.isFavorite ? (element.project.coverImage.dimensions.height > element.project.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${hovered === element.project._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
                     >
                       <div
                         className="h-full w-full overflow-hidden"
@@ -160,7 +165,7 @@ export default function Audiovisual() {
                           src={
                             element.project.coverImage.url + "?fm=webp&h=800"
                           }
-                          className="h-full w-full cursor-zoom-in object-cover"
+                          className="h-full w-full cursor-zoom-in object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       </div>
                     </div>,
@@ -179,7 +184,7 @@ export default function Audiovisual() {
                           openImageGallery({ data: element.project })
                         }
                         key={img._key}
-                        className={`overflow-hidden border transition-all duration-500 ${element.project.isFavorite ? "" : ""} ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                        className={`border-background-dim group overflow-hidden border transition-all duration-500 ${hovered === element.project._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
                       >
                         <div
                           className="h-full w-full overflow-hidden"
@@ -192,7 +197,7 @@ export default function Audiovisual() {
                         >
                           <img
                             src={img.url + "?fm=webp&h=800"}
-                            className="h-full w-full cursor-zoom-in object-cover"
+                            className="goup-hover:scale-105 h-full w-full cursor-zoom-in object-cover transition-transform duration-500"
                           />
                         </div>
                       </div>
@@ -211,9 +216,12 @@ export default function Audiovisual() {
             return (
               <div
                 key={element._key}
-                className={`cursor-zoom-in overflow-hidden border transition-all duration-500 ${hovered === element._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                className={`border-background-dim cursor-zoom-in overflow-hidden rounded-lg border transition-all duration-500 ${hovered === element._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
               >
-                <ImageContainer image={element?.asset} />
+                <ImageContainer
+                  image={element?.asset}
+                  className="hover:scale-105"
+                />
               </div>
             );
           }
@@ -237,13 +245,13 @@ export default function Audiovisual() {
                 ? setSelectedFilter(null)
                 : setSelectedFilter(type)
             }
-            className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase transition-colors duration-500 ${selectedFilter === type ? "bg-text text-background" : ""}`}
+            className={`border-text hover:bg-text hover:text-background cursor-pointer border px-2 leading-tight uppercase backdrop-blur-xl transition-colors duration-500 ${selectedFilter === type ? "bg-text text-background" : "bg-text/10"}`}
           >
             {type.type.es}
           </button>
         ))}
         <button
-          className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase transition-colors duration-500 ${selectedFilter === "fav" ? "bg-text text-background" : ""}`}
+          className={`border-text hover:bg-text hover:text-background cursor-pointer border px-2 leading-tight uppercase backdrop-blur-xl transition-colors duration-500 ${selectedFilter === "fav" ? "bg-text text-background" : "bg-text/10"}`}
           onClick={() =>
             selectedFilter === "fav"
               ? setSelectedFilter(null)
@@ -254,7 +262,7 @@ export default function Audiovisual() {
         </button>
         <button
           onClick={() => setSelectedFilter(null)}
-          className="border-text size-4 rounded-full border leading-tight uppercase"
+          className="border-text bg-text/10 size-4 cursor-pointer rounded-full border leading-tight uppercase backdrop-blur-xl"
         >
           x
         </button>

@@ -144,7 +144,7 @@ export default function Music() {
                       className={`group relative cursor-pointer overflow-hidden ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} `}
                     >
                       <div
-                        className={`h-full w-full overflow-hidden border shadow-md transition-all duration-500 ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                        className={`h-full w-full overflow-hidden border shadow-md transition-all duration-500 ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
                       >
                         {element.item.vimeoShortVideos?.length > 0 ? (
                           <div
@@ -164,6 +164,7 @@ export default function Music() {
                           <ImageContainer
                             image={element.item.coverImage}
                             item={element.item}
+                            className="group-hover:scale-105"
                           />
                         )}
                         {!element.item.isImageGallery && (
@@ -197,9 +198,13 @@ export default function Music() {
                         onMouseEnter={() => setHovered(element.item._id)}
                         onMouseLeave={() => setHovered(null)}
                         key={img._key}
-                        className={`overflow-hidden border transition-all duration-500 ${element.item.isFavorite ? "" : ""} ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                        className={`overflow-hidden border transition-all duration-500 ${hovered === element.item._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
                       >
-                        <ImageContainer image={img} item={element.item} />
+                        <ImageContainer
+                          image={img}
+                          item={element.item}
+                          className="hover:scale-105"
+                        />
                       </div>
                     ),
                 ) || [];
@@ -213,7 +218,7 @@ export default function Music() {
                       onMouseLeave={() => setHovered(null)}
                       key={`${element._key}-cover`}
                       onClick={() => openImageGallery({ data: element.item })}
-                      className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                      className={`group border-background-dim relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
                     >
                       <div
                         className="h-full w-full overflow-hidden"
@@ -227,7 +232,7 @@ export default function Music() {
                         <img
                           src={element.item.coverImage.url + imgSize.sm}
                           alt="Cover"
-                          className="h-full w-full cursor-zoom-in object-cover"
+                          className="h-full w-full cursor-zoom-in object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       </div>
                     </div>,
@@ -245,7 +250,7 @@ export default function Music() {
                         onMouseLeave={() => setHovered(null)}
                         onClick={() => openImageGallery({ data: element.item })}
                         key={img._key}
-                        className={`overflow-hidden border transition-all duration-500 ${element.item.isFavorite ? "" : ""} ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                        className={`border-background-dim overflow-hidden border transition-all duration-500 ${hovered === element.item._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
                       >
                         <div
                           className="h-full w-full overflow-hidden"
@@ -258,7 +263,7 @@ export default function Music() {
                         >
                           <img
                             src={img.url + "?fm=webp&h=800"}
-                            className="h-full w-full cursor-zoom-in object-cover"
+                            className="h-full w-full cursor-zoom-in object-cover transition-transform duration-500 hover:scale-105"
                           />
                         </div>
                       </div>
@@ -278,9 +283,12 @@ export default function Music() {
             return (
               <div
                 key={element._key}
-                className={`cursor-zoom-in overflow-hidden border transition-all duration-500 ${hovered === element._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                className={`border-background-dim cursor-zoom-in overflow-hidden rounded-lg border transition-all duration-500 ${hovered === element._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
               >
-                <ImageContainer image={element.asset} />
+                <ImageContainer
+                  image={element.asset}
+                  className="hover:scale-105"
+                />
               </div>
             );
           }
@@ -297,7 +305,7 @@ export default function Music() {
         <div className="flex flex-wrap gap-1">
           <button
             onClick={() => setSelectedProject(null)}
-            className="border-text bg-text/10 size-4 rounded-full border leading-tight uppercase backdrop-blur-xl"
+            className="border-text bg-text/10 size-4 cursor-pointer rounded-full border leading-tight uppercase backdrop-blur-xl"
           >
             x
           </button>
@@ -310,7 +318,7 @@ export default function Music() {
                   ? setSelectedProject(null)
                   : setSelectedProject(project);
               }}
-              className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase backdrop-blur-xl transition-colors duration-500 ${selectedProject === project ? "bg-text text-background" : "bg-text/10"}`}
+              className={`border-text hover:bg-text hover:text-background cursor-pointer border px-2 leading-tight uppercase backdrop-blur-xl transition-colors duration-500 ${selectedProject === project ? "bg-text text-background" : "bg-text/10"}`}
             >
               {project._id === "1f3fb03a-2431-4977-9753-c80314f61e07"
                 ? "HG"
@@ -321,7 +329,7 @@ export default function Music() {
         <div className="flex flex-wrap gap-1">
           <button
             onClick={() => setSelectedFilter(null)}
-            className="border-text bg-text/10 size-4 rounded-full border leading-tight uppercase backdrop-blur-xl"
+            className="border-text bg-text/10 size-4 cursor-pointer rounded-full border leading-tight uppercase backdrop-blur-xl"
           >
             x
           </button>
@@ -333,7 +341,7 @@ export default function Music() {
                   ? setSelectedFilter(null)
                   : setSelectedFilter(type)
               }
-              className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase backdrop-blur-xl transition-colors duration-500 ${selectedFilter === type ? "bg-text text-background" : "bg-text/10"}`}
+              className={`border-text hover:bg-text hover:text-background cursor-pointer border px-2 leading-tight uppercase backdrop-blur-xl transition-colors duration-500 ${selectedFilter === type ? "bg-text text-background" : "bg-text/10"}`}
             >
               {type.type.es}
             </button>
