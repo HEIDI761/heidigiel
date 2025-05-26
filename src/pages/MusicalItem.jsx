@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 import { useMusicContent } from "../sanity/hooks/getData";
 import Loading from "../components/Loading";
-import Post from "../pages/Post";
+import Post from "./Post";
 
 export default function MusicalItem() {
   const { slug } = useParams();

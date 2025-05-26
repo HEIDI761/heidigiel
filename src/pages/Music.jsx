@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
+import { NavLink, Outlet } from "react-router";
+import { PortableText } from "@portabletext/react";
 import {
   useMusicContent,
   useMusicalProjectsList,
 } from "../sanity/hooks/getData";
-import { NavLink, Outlet } from "react-router";
-import Loading from "../components/Loading";
 import useLanguage from "../hooks/useLanguage";
-import { PortableText } from "@portabletext/react";
+import Loading from "../components/Loading";
 import ImageContainer from "../components/ImageContainer";
-import TextContainer from "../components/TextContainer";
 import ImageGallery from "../components/ImageGallery";
 import VimeoPlayer from "../components/VimeoPlayer";
+import PlayEmbedButton from "../components/PlayEmbedButton";
 
 export default function Music() {
   const { data, isLoading, error } = useMusicContent();
@@ -105,13 +105,35 @@ export default function Music() {
         {description && (
           <>
             <button
-              className="bg-text text-background border-muted-text hover:bg-background hover:text-text size-8 shrink-0 cursor-pointer rounded-full border transition-colors duration-500 ease-in-out"
+              className="bg-text text-background group/description border-muted-text hover:bg-background hover:text-text shadow-background-dim flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full border shadow-md transition-colors duration-500 ease-in-out"
               onClick={() => setDescriptionIsOpen(!isDescriptionOpen)}
             >
-              {isDescriptionOpen ? "-" : "+"}
+              {isDescriptionOpen ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="var(--color-background)"
+                  className="group-hover/description:fill-text"
+                >
+                  <path d="M252-466v-28h456v28H252Z" />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="var(--color-background)"
+                  className="group-hover/description:fill-text"
+                >
+                  <path d="M466-466H252v-28h214v-214h28v214h214v28H494v214h-28v-214Z" />
+                </svg>
+              )}
             </button>
             {isDescriptionOpen && (
-              <div className="bg-text text-background border-muted-text absolute top-0 right-10 flex max-h-[400px] max-w-prose flex-col gap-2 overflow-y-auto border p-4 text-sm">
+              <div className="bg-text text-background border-muted-text shadow-background-dim absolute top-0 right-10 flex max-h-[400px] max-w-prose flex-col gap-2 overflow-y-auto border p-4 text-sm shadow-md">
                 <PortableText value={description} />
               </div>
             )}
@@ -136,54 +158,63 @@ export default function Music() {
             if (!element.item.isImageGallery) {
               const coverImage = element.item.coverImage?.url
                 ? [
-                    <NavLink
+                    <div
                       onMouseEnter={() => setHovered(element.item._id)}
                       onMouseLeave={() => setHovered(null)}
-                      to={`/musica/${element.item.slug?.current}`}
-                      key={`${element._key}-cover`}
                       className={`group relative cursor-pointer overflow-hidden ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} `}
                     >
-                      <div
-                        className={`h-full w-full overflow-hidden border shadow-md transition-all duration-500 ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
-                      >
-                        {element.item.vimeoShortVideos?.length > 0 ? (
-                          <div
-                            style={{
-                              backgroundImage: `url("${element.item.coverImage.url}?fm=webp&h=800")`,
-                            }}
-                            className="relative aspect-video overflow-hidden rounded-sm bg-cover bg-center"
-                          >
-                            <VimeoPlayer
-                              url={element.item.vimeoShortVideos[0]}
-                              autoplay={1}
-                              background={1}
-                              loop={1}
-                            />
-                          </div>
-                        ) : (
-                          <ImageContainer
-                            image={element.item.coverImage}
-                            item={element.item}
-                          />
-                        )}
-                        {!element.item.isImageGallery && (
-                          <div
-                            className={`absolute inset-0 z-10 flex items-center justify-center p-4 text-center uppercase opacity-0 mix-blend-difference transition-opacity duration-500 ${hovered === element.item._id ? "opacity-100" : ""}`}
-                          >
-                            {element.item.title.es}
-                          </div>
-                        )}
-                      </div>
-                      {element.item.type && (
-                        <div className="pointer-events-none absolute inset-0 z-30 flex items-start justify-end p-2">
-                          <p
-                            className={`border-muted-text rounded-full border px-2 font-mono text-xs lowercase transition-colors duration-500 ${hovered === element.item._id ? "text-text bg-background" : "bg-text text-background"}`}
-                          >
-                            {element.item.type.type.es}
-                          </p>
+                      {element.item.musicEmbed && (
+                        <div className="absolute bottom-2 left-2 z-30">
+                          <PlayEmbedButton embed={element.item.musicEmbed} />
                         </div>
                       )}
-                    </NavLink>,
+                      <NavLink
+                        to={`/musica/${element.item.slug?.current}`}
+                        key={`${element._key}-cover`}
+                      >
+                        <div
+                          className={`h-full w-full overflow-hidden border shadow-md transition-all duration-500 ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                        >
+                          {element.item.vimeoShortVideos?.length > 0 ? (
+                            <div
+                              style={{
+                                backgroundImage: `url("${element.item.coverImage.url}?fm=webp&h=800")`,
+                              }}
+                              className="relative aspect-video overflow-hidden rounded-sm bg-cover bg-center"
+                            >
+                              <VimeoPlayer
+                                url={element.item.vimeoShortVideos[0]}
+                                autoplay={1}
+                                background={1}
+                                loop={1}
+                              />
+                            </div>
+                          ) : (
+                            <ImageContainer
+                              image={element.item.coverImage}
+                              item={element.item}
+                              className="group-hover:scale-105"
+                            />
+                          )}
+                          {!element.item.isImageGallery && (
+                            <div
+                              className={`absolute inset-0 z-10 flex items-center justify-center p-4 text-center uppercase opacity-0 mix-blend-difference transition-opacity duration-500 ${hovered === element.item._id ? "opacity-100" : ""}`}
+                            >
+                              {element.item.title.es}
+                            </div>
+                          )}
+                        </div>
+                        {element.item.type && (
+                          <div className="pointer-events-none absolute inset-0 z-30 flex items-start justify-end p-2">
+                            <p
+                              className={`border-muted-text rounded-full border px-2 font-mono text-xs lowercase transition-colors duration-500 ${hovered === element.item._id ? "text-text bg-background" : "bg-text text-background"}`}
+                            >
+                              {element.item.type.type.es}
+                            </p>
+                          </div>
+                        )}
+                      </NavLink>
+                    </div>,
                   ]
                 : [];
 
@@ -197,9 +228,13 @@ export default function Music() {
                         onMouseEnter={() => setHovered(element.item._id)}
                         onMouseLeave={() => setHovered(null)}
                         key={img._key}
-                        className={`overflow-hidden border transition-all duration-500 ${element.item.isFavorite ? "" : ""} ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                        className={`overflow-hidden border transition-all duration-500 ${hovered === element.item._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
                       >
-                        <ImageContainer image={img} item={element.item} />
+                        <ImageContainer
+                          image={img}
+                          item={element.item}
+                          className="hover:scale-105"
+                        />
                       </div>
                     ),
                 ) || [];
@@ -213,7 +248,7 @@ export default function Music() {
                       onMouseLeave={() => setHovered(null)}
                       key={`${element._key}-cover`}
                       onClick={() => openImageGallery({ data: element.item })}
-                      className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                      className={`group border-background-dim relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
                     >
                       <div
                         className="h-full w-full overflow-hidden"
@@ -227,7 +262,7 @@ export default function Music() {
                         <img
                           src={element.item.coverImage.url + imgSize.sm}
                           alt="Cover"
-                          className="h-full w-full cursor-zoom-in object-cover"
+                          className="h-full w-full cursor-zoom-in object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       </div>
                     </div>,
@@ -245,7 +280,7 @@ export default function Music() {
                         onMouseLeave={() => setHovered(null)}
                         onClick={() => openImageGallery({ data: element.item })}
                         key={img._key}
-                        className={`overflow-hidden border transition-all duration-500 ${element.item.isFavorite ? "" : ""} ${element.item.isImageGallery ? "rounded-lg" : ""} ${hovered === element.item._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                        className={`border-background-dim overflow-hidden border transition-all duration-500 ${hovered === element.item._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
                       >
                         <div
                           className="h-full w-full overflow-hidden"
@@ -258,7 +293,7 @@ export default function Music() {
                         >
                           <img
                             src={img.url + "?fm=webp&h=800"}
-                            className="h-full w-full cursor-zoom-in object-cover"
+                            className="h-full w-full cursor-zoom-in object-cover transition-transform duration-500 hover:scale-105"
                           />
                         </div>
                       </div>
@@ -278,9 +313,12 @@ export default function Music() {
             return (
               <div
                 key={element._key}
-                className={`cursor-zoom-in overflow-hidden border transition-all duration-500 ${hovered === element._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                className={`border-background-dim cursor-zoom-in overflow-hidden rounded-lg border transition-all duration-500 ${hovered === element._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
               >
-                <ImageContainer image={element.asset} />
+                <ImageContainer
+                  image={element.asset}
+                  className="hover:scale-105"
+                />
               </div>
             );
           }
@@ -297,7 +335,7 @@ export default function Music() {
         <div className="flex flex-wrap gap-1">
           <button
             onClick={() => setSelectedProject(null)}
-            className="border-text bg-text/10 size-4 rounded-full border leading-tight uppercase backdrop-blur-xl"
+            className="border-text bg-text/10 size-4 cursor-pointer rounded-full border leading-tight uppercase backdrop-blur-xl"
           >
             x
           </button>
@@ -310,7 +348,7 @@ export default function Music() {
                   ? setSelectedProject(null)
                   : setSelectedProject(project);
               }}
-              className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase backdrop-blur-xl transition-colors duration-500 ${selectedProject === project ? "bg-text text-background" : "bg-text/10"}`}
+              className={`border-text hover:bg-text hover:text-background cursor-pointer border px-2 leading-tight uppercase backdrop-blur-xl transition-colors duration-500 ${selectedProject === project ? "bg-text text-background" : "bg-text/10"}`}
             >
               {project._id === "1f3fb03a-2431-4977-9753-c80314f61e07"
                 ? "HG"
@@ -321,7 +359,7 @@ export default function Music() {
         <div className="flex flex-wrap gap-1">
           <button
             onClick={() => setSelectedFilter(null)}
-            className="border-text bg-text/10 size-4 rounded-full border leading-tight uppercase backdrop-blur-xl"
+            className="border-text bg-text/10 size-4 cursor-pointer rounded-full border leading-tight uppercase backdrop-blur-xl"
           >
             x
           </button>
@@ -333,7 +371,7 @@ export default function Music() {
                   ? setSelectedFilter(null)
                   : setSelectedFilter(type)
               }
-              className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase backdrop-blur-xl transition-colors duration-500 ${selectedFilter === type ? "bg-text text-background" : "bg-text/10"}`}
+              className={`border-text hover:bg-text hover:text-background cursor-pointer border px-2 leading-tight uppercase backdrop-blur-xl transition-colors duration-500 ${selectedFilter === type ? "bg-text text-background" : "bg-text/10"}`}
             >
               {type.type.es}
             </button>
