@@ -122,7 +122,7 @@ export default function Post({
         </div>
 
         {videos ? (
-          videos.lenght ? (
+          Array.isArray(videos) ? (
             videos.map((video) => (
               <div key={video} className="w-full">
                 <VimeoPlayer url={video} />
