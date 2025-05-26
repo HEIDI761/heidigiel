@@ -44,7 +44,7 @@ export default function Player() {
         )}
       </div>
       <motion.div
-        className={`border-text/80 flex h-max w-full flex-col justify-center overflow-hidden rounded-t-lg md:w-xl ${isExpanded ? "border border-b-0" : ""} bg-background shadow-background-dim shadow-md select-none`}
+        className={`border-text/80 flex h-max w-full flex-col justify-center overflow-hidden rounded-t-2xl md:w-xl ${isExpanded ? "border border-b-0" : ""} bg-background shadow-background-dim shadow-md select-none`}
       >
         <div className="max-w-content pointer-events-auto overflow-hidden">
           <motion.div
