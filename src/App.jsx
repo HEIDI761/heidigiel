@@ -52,8 +52,6 @@ function App() {
         )}
       </AnimatePresence>
 
-      <EmbedPlayer />
-
       <div className="fixed inset-0 -z-10 flex h-screen w-screen items-center justify-center overflow-hidden">
         {/* <div className="via-background to-secondary absolute h-full w-full bg-radial/oklab from-transparent from-40% via-70% bg-fixed"></div> */}
         <img
@@ -104,6 +102,8 @@ function App() {
           {/* <Route path="/:slug" element={<HighlightedMusicalItem />} /> */}
         </Routes>
       </div>
+
+      <EmbedPlayer />
     </div>
   );
 }
