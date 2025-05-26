@@ -1,38 +1,19 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { useAbout } from "../sanity/hooks/getData";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
 import useLanguage from "../hooks/useLanguage";
+import { useCloseOnOutsideOrEscape } from "../hooks/useCloseOnOutsideOrEscape";
 
 export default function Contact({ closeContact }) {
   const { data } = useAbout();
-  const contactRef = useRef(null);
   const { language } = useLanguage();
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (contactRef.current && !contactRef.current.contains(event.target)) {
-        closeContact();
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [closeContact]);
-
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "Escape") {
-        closeContact();
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [closeContact]);
+  const sectionRef = useRef(null);
+  useCloseOnOutsideOrEscape(sectionRef, {
+    closeCallback: () => closeContact(),
+  });
+  closeContact;
 
   if (!data?.contact) return null;
 
@@ -44,7 +25,7 @@ export default function Contact({ closeContact }) {
       className="bg-background/90 text-text fixed inset-0 z-200 flex h-screen w-full flex-col items-center justify-center"
       //   onClick={closeContact}
     >
-      <div className="text-center" ref={contactRef}>
+      <div className="text-center" ref={sectionRef}>
         {data.contact.email && (
           <a href={`mailto:${data.contact.email}`} className="underline">
             {data.contact.email}
