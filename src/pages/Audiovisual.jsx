@@ -1,12 +1,12 @@
-import { useAudiovisualContent } from "../sanity/hooks/getData";
-import Loading from "../components/Loading";
-import useLanguage from "../hooks/useLanguage";
 import { useEffect, useState } from "react";
-import VimeoPlayer from "../components/VimeoPlayer";
 import { NavLink, Outlet } from "react-router";
-import Tag from "../components/Tag";
+import { useAudiovisualContent } from "../sanity/hooks/getData";
+import useLanguage from "../hooks/useLanguage";
+import Loading from "../components/Loading";
+import VimeoPlayer from "../components/VimeoPlayer";
 import ImageContainer from "../components/ImageContainer";
 import ImageGallery from "../components/ImageGallery";
+import Tag from "../components/Tag";
 
 export default function Audiovisual() {
   const { data, isLoading, error } = useAudiovisualContent();

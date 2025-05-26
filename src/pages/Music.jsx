@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
+import { NavLink, Outlet } from "react-router";
+import { PortableText } from "@portabletext/react";
 import {
   useMusicContent,
   useMusicalProjectsList,
 } from "../sanity/hooks/getData";
-import { NavLink, Outlet } from "react-router";
-import Loading from "../components/Loading";
 import useLanguage from "../hooks/useLanguage";
-import { PortableText } from "@portabletext/react";
+import Loading from "../components/Loading";
 import ImageContainer from "../components/ImageContainer";
-import TextContainer from "../components/TextContainer";
 import ImageGallery from "../components/ImageGallery";
 import VimeoPlayer from "../components/VimeoPlayer";
+import PlayEmbedButton from "../components/PlayEmbedButton";
 
 export default function Music() {
   const { data, isLoading, error } = useMusicContent();

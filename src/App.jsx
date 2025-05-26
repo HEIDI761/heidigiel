@@ -1,22 +1,20 @@
 import { useState } from "react";
 import { Routes, Route, NavLink } from "react-router";
+import { AnimatePresence } from "motion/react";
 import { useAbout } from "./sanity/hooks/getData";
 import useLanguage from "./hooks/useLanguage";
 import useLightbox from "./hooks/useLightbox";
-import About from "./pages/About";
-import Audiovisual from "./pages/Audiovisual";
-import Music from "./pages/Music";
-import AudiovisualProject from "./pages/AudiovisualProject";
-// import MusicalProject from "./pages/MusicalProject";
-import Loading from "./components/Loading";
-import CursorDecorationV2 from "./components/CursorDecorationV2";
 import Menu from "./components/Menu";
-import Ornaments from "./components/Ornaments";
-import Lightbox from "./components/Lightbox";
-import { AnimatePresence } from "motion/react";
-import MusicalItem from "./components/MusicalItem";
+import About from "./pages/About";
 import Contact from "./components/Contact";
+import Audiovisual from "./pages/Audiovisual";
+import AudiovisualProject from "./pages/AudiovisualProject";
+import Music from "./pages/Music";
+import MusicalItem from "./pages/MusicalItem";
+import Loading from "./components/Loading";
+import Lightbox from "./components/Lightbox";
 import EmbedPlayer from "./components/EmbedPlayer";
+import CursorDecorationV2 from "./components/CursorDecorationV2";
 
 function App() {
   const { data, isLoading, error } = useAbout();
@@ -41,14 +39,13 @@ function App() {
       </AnimatePresence>
 
       <div className="fixed inset-0 -z-10 flex h-screen w-screen items-center justify-center overflow-hidden">
-        {/* <div className="via-background to-secondary absolute h-full w-full bg-radial/oklab from-transparent from-40% via-70% bg-fixed"></div> */}
         <img
           className="-z-10 h-full w-full object-cover"
           src={data?.homeImage?.url + "?fm=webp"}
           alt="background"
         />
       </div>
-      {/* <Ornaments /> */}
+
       <CursorDecorationV2 />
 
       <Menu openContact={() => setIsContactOpen(true)} />
