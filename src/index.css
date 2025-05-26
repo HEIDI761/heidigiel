@@ -47,9 +47,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* :root:has(.no-doc-scroll) {
+:root:has(.no-doc-scroll) {
   overflow: hidden;
-} */
+}
 
 html {
   scrollbar-gutter: stable;

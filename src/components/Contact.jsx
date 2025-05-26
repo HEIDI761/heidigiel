@@ -22,8 +22,7 @@ export default function Contact({ closeContact }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="bg-background/90 text-text fixed inset-0 z-200 flex h-screen w-full flex-col items-center justify-center"
-      //   onClick={closeContact}
+      className="no-doc-scroll bg-background/90 text-text fixed inset-0 z-200 flex h-screen w-full flex-col items-center justify-center"
     >
       <div className="text-center" ref={sectionRef}>
         {data.contact.email && (
