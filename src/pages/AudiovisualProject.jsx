@@ -29,6 +29,7 @@ export default function AudiovisualProject() {
       images={project.images}
       links={project.links}
       // customFields={musicalItem.item.customFields}
+      coverPosition={project.coverPosition}
     />
   );
 }

@@ -22,6 +22,7 @@ export default function Post({
   links,
   musicEmbed,
   //   customFields,
+  coverPosition,
 }) {
   const { language } = useLanguage();
   const navigate = useNavigate();
@@ -29,7 +30,10 @@ export default function Post({
   const imgSize = {
     sm: "?h=600&f=webp",
     md: "?h=1000&f=webp",
+    lg: "?h=1300&f=webp",
   };
+
+  console.log(links);
 
   return (
     <div
@@ -77,6 +81,7 @@ export default function Post({
               {title[language] || title.es}
               {client && <span className="italic">- {client}</span>}
             </h1>
+
             <div className="flex flex-wrap items-center gap-1 font-mono text-xs lowercase">
               {types && !types.length ? (
                 <Tag
@@ -106,99 +111,170 @@ export default function Post({
 
         <hr className="border-background-dim" />
 
-        <div className="flex flex-col items-start gap-4 lg:flex-row">
-          <div className="border-background-dim mr-auto max-h-5/6 cursor-zoom-in border">
-            <ImageContainer image={coverImage} imgSize={imgSize.md} />
+        <div
+          className={`flex gap-4 ${coverPosition === "top" ? "flex-col" : "flex-col-reverse"}`}
+        >
+          <div
+            className={`grid gap-2 ${description || links ? "lg:grid-cols-[1fr_2fr]" : "mx-auto lg:grid-cols-1"}`}
+          >
+            <div className="border-background-dim mr-auto cursor-zoom-in border">
+              <ImageContainer
+                image={coverImage}
+                imgSize={imgSize.lg}
+                className={"max-h-[80vh]"}
+              />
+            </div>
+
+            {(description || links) && (
+              <div className="flex w-full flex-col gap-4">
+                {description && (
+                  <div className="flex w-full max-w-prose flex-col gap-4">
+                    <PortableText
+                      value={description[language] || description.es}
+                    />
+                  </div>
+                )}
+
+                {links && (
+                  <ul className="uppercase">
+                    <p className="text-muted-text text-xs">
+                      {language === "en" ? "External links" : "Links externos"}
+                    </p>
+                    {links.map((link) => (
+                      <li key={link._key} className="italic hover:underline">
+                        <a
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24px"
+                            viewBox="0 -960 960 960"
+                            width="24px"
+                            fill="var(--color-muted-text)"
+                          >
+                            <path d="M688-316q-65 0-110-41t-54-109H266q-5 27-25.5 46.5T188-400q-33 0-56.5-23.5T108-480q0-33 23.5-56.5T188-560q32 0 52.5 19.5T266-494h258q9-68 54-109t110-41q68 0 116 49t48 117q0 66-48 114t-116 48Zm0-28q56 0 96-40t40-96q0-56-40-96t-96-40q-56 0-96 40t-40 96q0 56 40 96t96 40Z" />
+                          </svg>
+                          {link.title[language] || link.title.es}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
           </div>
 
-          <div className="flex w-full flex-col gap-4">
-            {description && (
-              <div className="flex w-full max-w-prose flex-col gap-4">
-                <PortableText value={description[language] || description.es} />
+          {(coverImage || description || links) && (
+            <hr className="border-background-dim" />
+          )}
+
+          <div className="flex flex-col gap-4">
+            {videos &&
+              (Array.isArray(videos) ? (
+                videos.map((video) => (
+                  <div key={video} className="w-full">
+                    <VimeoPlayer url={video} />
+                  </div>
+                ))
+              ) : (
+                <div key={videos} className="w-full">
+                  <VimeoPlayer url={videos} />
+                </div>
+              ))}
+
+            {shortVideos && (
+              <div className="columns-2 gap-2">
+                {shortVideos.map((video) => (
+                  <div
+                    key={video}
+                    className="bg-background-dim border-background-dim mb-2 overflow-hidden rounded-lg border"
+                  >
+                    <VimeoPlayer
+                      url={video}
+                      shortVideo={true}
+                      background={1}
+                      loop={1}
+                      autoplay={1}
+                    />
+                  </div>
+                ))}
               </div>
             )}
 
-            {links && (
-              <ul className="uppercase">
-                <p className="text-muted-text text-xs">
-                  {language === "en" ? "External links" : "Links externos"}
-                </p>
-                {links.map((link) => (
-                  <li key={link._key} className="italic hover:underline">
-                    <a
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="24px"
-                        viewBox="0 -960 960 960"
-                        width="24px"
-                        fill="var(--color-muted-text)"
+            {images && (
+              <div className="columns-3 gap-2">
+                {images.map(
+                  (image) =>
+                    image.url && (
+                      <div
+                        key={image._key}
+                        className="border-background-dim mb-2 h-auto w-full cursor-zoom-in overflow-hidden rounded-sm border"
                       >
-                        <path d="M688-316q-65 0-110-41t-54-109H266q-5 27-25.5 46.5T188-400q-33 0-56.5-23.5T108-480q0-33 23.5-56.5T188-560q32 0 52.5 19.5T266-494h258q9-68 54-109t110-41q68 0 116 49t48 117q0 66-48 114t-116 48Zm0-28q56 0 96-40t40-96q0-56-40-96t-96-40q-56 0-96 40t-40 96q0 56 40 96t96 40Z" />
-                      </svg>
-                      {link.title[language] || link.title.es}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+                        <ImageContainer image={image} imgSize={imgSize.md} />
+                      </div>
+                    ),
+                )}
+              </div>
             )}
           </div>
         </div>
-
-        <hr className="border-background-dim" />
-
-        {videos &&
-          (Array.isArray(videos) ? (
-            videos.map((video) => (
-              <div key={video} className="w-full">
-                <VimeoPlayer url={video} />
-              </div>
-            ))
-          ) : (
-            <div key={videos} className="w-full">
-              <VimeoPlayer url={videos} />
-            </div>
-          ))}
-
-        {shortVideos && (
-          <div className="columns-2 gap-2">
-            {shortVideos.map((video) => (
-              <div
-                key={video}
-                className="bg-background-dim border-background-dim mb-2 overflow-hidden rounded-lg border"
-              >
-                <VimeoPlayer
-                  url={video}
-                  shortVideo={true}
-                  background={1}
-                  loop={1}
-                  autoplay={1}
-                />
-              </div>
-            ))}
-          </div>
-        )}
-
-        {images && (
-          <div className="columns-3 gap-2">
-            {images.map(
-              (image) =>
-                image.url && (
-                  <div
-                    key={image._key}
-                    className="border-background-dim mb-2 h-auto w-full cursor-zoom-in overflow-hidden rounded-sm border"
-                  >
-                    <ImageContainer image={image} imgSize={imgSize.md} />
-                  </div>
-                ),
-            )}
-          </div>
-        )}
       </div>
+    </div>
+  );
+}
+
+function CoverAndText(coverImage, imgSize, description, links, language) {
+  return (
+    <div className="grid gap-2 lg:grid-cols-[1fr_2fr]">
+      <div className="border-background-dim mr-auto cursor-zoom-in border">
+        <ImageContainer
+          image={coverImage}
+          imgSize={imgSize}
+          className={"max-h-[80vh]"}
+        />
+      </div>
+
+      {description && links && (
+        <div className="flex w-full flex-col gap-4">
+          {description && (
+            <div className="flex w-full max-w-prose flex-col gap-4">
+              <PortableText value={description[language] || description.es} />
+            </div>
+          )}
+
+          {links && (
+            <ul className="uppercase">
+              <p className="text-muted-text text-xs">
+                {language === "en" ? "External links" : "Links externos"}
+              </p>
+              {links.map((link) => (
+                <li key={link._key} className="italic hover:underline">
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="24px"
+                      viewBox="0 -960 960 960"
+                      width="24px"
+                      fill="var(--color-muted-text)"
+                    >
+                      <path d="M688-316q-65 0-110-41t-54-109H266q-5 27-25.5 46.5T188-400q-33 0-56.5-23.5T108-480q0-33 23.5-56.5T188-560q32 0 52.5 19.5T266-494h258q9-68 54-109t110-41q68 0 116 49t48 117q0 66-48 114t-116 48Zm0-28q56 0 96-40t40-96q0-56-40-96t-96-40q-56 0-96 40t-40 96q0 56 40 96t96 40Z" />
+                    </svg>
+                    {link.title[language] || link.title.es}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
     </div>
   );
 }

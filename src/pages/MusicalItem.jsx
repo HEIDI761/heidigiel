@@ -30,6 +30,7 @@ export default function MusicalItem() {
       links={musicalItem.links}
       musicEmbed={musicalItem.musicEmbed}
       // customFields={musicalItem.customFields}
+      coverPosition={musicalItem.coverPosition}
     />
   );
 }
