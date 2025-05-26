@@ -99,25 +99,26 @@ export default function Music() {
       )}
       <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
 
-      <Filters />
-      {description && (
-        <>
-          <button
-            className="bg-background -mt-4 size-8 shrink-0 cursor-pointer self-start rounded-full border text-2xl transition-transform duration-300 ease-in-out hover:scale-105 hover:rotate-12"
-            onClick={() => setDescriptionIsOpen(!isDescriptionOpen)}
-          >
-            {isDescriptionOpen ? "-" : "+"}
-          </button>
-          {isDescriptionOpen && (
-            <TextContainer
-              className="absolute top-0 left-1/2 z-10 my-8 max-h-3/4 overflow-y-auto text-xs"
-              variant="2"
+      <div className="sticky top-24 z-40 flex flex-wrap justify-between gap-4">
+        <Filters />
+
+        {description && (
+          <>
+            <button
+              className="bg-text text-background border-muted-text hover:bg-background hover:text-text size-8 shrink-0 cursor-pointer rounded-full border transition-colors duration-500 ease-in-out"
+              onClick={() => setDescriptionIsOpen(!isDescriptionOpen)}
             >
-              <PortableText value={description} />
-            </TextContainer>
-          )}
-        </>
-      )}
+              {isDescriptionOpen ? "-" : "+"}
+            </button>
+            {isDescriptionOpen && (
+              <div className="bg-text text-background border-muted-text absolute top-0 right-10 flex max-h-[400px] max-w-prose flex-col gap-2 overflow-y-auto border p-4 text-sm">
+                <PortableText value={description} />
+              </div>
+            )}
+          </>
+        )}
+      </div>
+
       <div className="grid grid-flow-dense auto-rows-[250px] grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2">
         {data.content.flatMap((element) => {
           if (element._type === "item" && element.item) {
@@ -176,7 +177,7 @@ export default function Music() {
                       {element.item.type && (
                         <div className="pointer-events-none absolute inset-0 z-30 flex items-start justify-end p-2">
                           <p
-                            className={`rounded-full border px-2 font-mono text-xs lowercase transition-colors duration-500 ${hovered === element.item._id ? "text-text bg-background" : "bg-text text-background"}`}
+                            className={`border-muted-text rounded-full border px-2 font-mono text-xs lowercase transition-colors duration-500 ${hovered === element.item._id ? "text-text bg-background" : "bg-text text-background"}`}
                           >
                             {element.item.type.type.es}
                           </p>
@@ -292,11 +293,11 @@ export default function Music() {
 
   function Filters() {
     return (
-      <div className="sticky top-24 z-30 flex flex-col gap-1 font-mono text-xs">
+      <div className="flex flex-col gap-1 font-mono text-xs">
         <div className="flex flex-wrap gap-1">
           <button
             onClick={() => setSelectedProject(null)}
-            className="border-text size-4 rounded-full border leading-tight uppercase"
+            className="border-text bg-text/10 size-4 rounded-full border leading-tight uppercase backdrop-blur-xl"
           >
             x
           </button>
@@ -309,7 +310,7 @@ export default function Music() {
                   ? setSelectedProject(null)
                   : setSelectedProject(project);
               }}
-              className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase transition-colors duration-500 ${selectedProject === project ? "bg-text text-background" : ""}`}
+              className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase backdrop-blur-xl transition-colors duration-500 ${selectedProject === project ? "bg-text text-background" : "bg-text/10"}`}
             >
               {project._id === "1f3fb03a-2431-4977-9753-c80314f61e07"
                 ? "HG"
@@ -320,7 +321,7 @@ export default function Music() {
         <div className="flex flex-wrap gap-1">
           <button
             onClick={() => setSelectedFilter(null)}
-            className="border-text size-4 rounded-full border leading-tight uppercase"
+            className="border-text bg-text/10 size-4 rounded-full border leading-tight uppercase backdrop-blur-xl"
           >
             x
           </button>
@@ -332,13 +333,13 @@ export default function Music() {
                   ? setSelectedFilter(null)
                   : setSelectedFilter(type)
               }
-              className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase transition-colors duration-500 ${selectedFilter === type ? "bg-text text-background" : ""}`}
+              className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase backdrop-blur-xl transition-colors duration-500 ${selectedFilter === type ? "bg-text text-background" : "bg-text/10"}`}
             >
               {type.type.es}
             </button>
           ))}
           <button
-            className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase transition-colors duration-500 ${selectedFilter === "fav" ? "bg-text text-background" : ""}`}
+            className={`border-text hover:bg-text hover:text-background border px-2 leading-tight uppercase backdrop-blur-xl transition-colors duration-500 ${selectedFilter === "fav" ? "bg-text text-background" : "bg-text/10"}`}
             onClick={() =>
               selectedFilter === "fav"
                 ? setSelectedFilter(null)
