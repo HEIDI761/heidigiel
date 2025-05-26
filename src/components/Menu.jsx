@@ -12,17 +12,17 @@ export default function Menu({ openContact }) {
           <NavLink
             to="/musica"
             className={({ isActive }) =>
-              `border-text pointer-events-auto w-[120px] shrink-0 rounded-br-full border pl-1 leading-none transition-colors duration-500 ${
+              `border-muted-text pointer-events-auto w-[120px] shrink-0 rounded-br-full border pl-1 leading-none transition-colors duration-500 ${
                 isActive
                   ? "bg-text text-background"
-                  : "text-text hover:bg-text hover:text-background"
+                  : "text-text hover:bg-text hover:text-background bg-text/10 backdrop-blur-xl"
               }`
             }
           >
             {language === "es" ? "Musica" : "Music"}
           </NavLink>
 
-          <hr className="pointer-events-none w-full pt-2" />
+          <hr className="border-muted-text pointer-events-none w-full pt-2" />
 
           <NavLink
             to="/"
@@ -52,15 +52,15 @@ export default function Menu({ openContact }) {
             </svg>
           </NavLink>
 
-          <hr className="pointer-events-none w-full pt-2" />
+          <hr className="border-muted-text pointer-events-none w-full pt-2" />
 
           <NavLink
             to="/audiovisual"
             className={({ isActive }) =>
-              `border-text pointer-events-auto w-[120px] shrink-0 rounded-bl-full border pr-1 text-end leading-none transition-colors duration-500 ${
+              `border-muted-text pointer-events-auto w-[120px] shrink-0 rounded-bl-full border pr-1 text-end leading-none transition-colors duration-500 ${
                 isActive
                   ? "bg-text text-background"
-                  : "text-text hover:bg-text hover:text-background"
+                  : "text-text hover:bg-text hover:text-background bg-text/10 backdrop-blur-xl"
               }`
             }
           >
