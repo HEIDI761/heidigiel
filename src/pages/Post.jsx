@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { PortableText } from "@portabletext/react";
 import useLanguage from "../hooks/useLanguage";
 import BackButton from "../components/BackButton";
@@ -6,7 +5,7 @@ import VimeoPlayer from "../components/VimeoPlayer";
 import ImageContainer from "../components/ImageContainer";
 import Tag from "../components/Tag";
 import PlayEmbedButton from "../components/PlayEmbedButton";
-import { useCloseOnOutsideOrEscape } from "../hooks/useCloseOnOutsideOrEscape";
+import { useNavigate } from "react-router";
 
 export default function Post({
   section,
@@ -25,17 +24,19 @@ export default function Post({
   //   customFields,
 }) {
   const { language } = useLanguage();
-  const sectionRef = useRef(null);
-  useCloseOnOutsideOrEscape(sectionRef, { navigateUp: true });
+  const navigate = useNavigate();
 
   return (
-    <div className="bg-background/90 fixed inset-0 z-50 flex h-screen w-full flex-col items-center justify-center gap-4 px-4 py-16 backdrop-grayscale-100 md:px-32">
+    <div
+      onClick={() => navigate("..")}
+      className="bg-background/90 fixed inset-0 z-50 flex h-screen w-full flex-col items-center justify-center gap-4 px-4 py-16 backdrop-grayscale-100 md:px-32"
+    >
       <div className="w-full">
         <BackButton />
       </div>
 
       <div
-        ref={sectionRef}
+        onClick={(event) => event.stopPropagation()}
         className="bg-background border-background-dim shadow-background-dim flex w-full flex-col gap-4 overflow-y-auto border p-4 shadow-md"
       >
         <div className="flex items-center gap-2">
