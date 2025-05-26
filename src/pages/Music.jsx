@@ -105,13 +105,35 @@ export default function Music() {
         {description && (
           <>
             <button
-              className="bg-text text-background border-muted-text hover:bg-background hover:text-text size-8 shrink-0 cursor-pointer rounded-full border transition-colors duration-500 ease-in-out"
+              className="bg-text text-background group/description border-muted-text hover:bg-background hover:text-text shadow-background-dim flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full border shadow-md transition-colors duration-500 ease-in-out"
               onClick={() => setDescriptionIsOpen(!isDescriptionOpen)}
             >
-              {isDescriptionOpen ? "-" : "+"}
+              {isDescriptionOpen ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="var(--color-background)"
+                  className="group-hover/description:fill-text"
+                >
+                  <path d="M252-466v-28h456v28H252Z" />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24px"
+                  viewBox="0 -960 960 960"
+                  width="24px"
+                  fill="var(--color-background)"
+                  className="group-hover/description:fill-text"
+                >
+                  <path d="M466-466H252v-28h214v-214h28v214h214v28H494v214h-28v-214Z" />
+                </svg>
+              )}
             </button>
             {isDescriptionOpen && (
-              <div className="bg-text text-background border-muted-text absolute top-0 right-10 flex max-h-[400px] max-w-prose flex-col gap-2 overflow-y-auto border p-4 text-sm">
+              <div className="bg-text text-background border-muted-text shadow-background-dim absolute top-0 right-10 flex max-h-[400px] max-w-prose flex-col gap-2 overflow-y-auto border p-4 text-sm shadow-md">
                 <PortableText value={description} />
               </div>
             )}
