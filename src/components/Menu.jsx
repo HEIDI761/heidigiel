@@ -20,7 +20,7 @@ export default function Menu({ openContact }) {
               }`
             }
           >
-            {language === "es" ? "Musica" : "Music"}
+            {language === "es" ? "Música" : "Music"}
           </NavLink>
 
           <hr className="border-muted-text pointer-events-none w-full pt-2" />
