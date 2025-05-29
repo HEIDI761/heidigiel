@@ -361,9 +361,7 @@ export default function Music() {
               }}
               className={`border-text hover:bg-text hover:text-background cursor-pointer border px-2 leading-tight uppercase backdrop-blur-xl transition-colors duration-500 ${selectedProject === project ? "bg-text text-background" : "bg-text/10"}`}
             >
-              {project._id === "1f3fb03a-2431-4977-9753-c80314f61e07"
-                ? "HG"
-                : project.title.es}
+              {project.title[language] || project.title.es}
             </button>
           ))}
         </div>
