@@ -33,8 +33,6 @@ export default function Post({
     lg: "?h=1300&f=webp",
   };
 
-  console.log(links);
-
   return (
     <div
       onClick={() => navigate("..")}
