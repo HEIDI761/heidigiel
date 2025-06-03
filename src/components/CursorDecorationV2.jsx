@@ -68,7 +68,7 @@ export default function CursorDecoration() {
       ctx.save();
 
       // Apply blur filter
-      ctx.filter = "blur(60px)";
+      // ctx.filter = "blur(60px)";
 
       // Set blend mode
       ctx.globalCompositeOperation = "screen";
@@ -135,6 +135,7 @@ export default function CursorDecoration() {
     <canvas
       ref={canvasRef}
       className="pointer-events-none fixed inset-0 -z-10 mix-blend-difference"
+      style={{ filter: "blur(60px)" }}
     />
   );
 }

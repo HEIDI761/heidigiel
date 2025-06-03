@@ -6,6 +6,8 @@ import ImageContainer from "../components/ImageContainer";
 import Tag from "../components/Tag";
 import PlayEmbedButton from "../components/PlayEmbedButton";
 import { useNavigate } from "react-router";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "motion/react";
 
 export default function Post({
   section,
@@ -33,10 +35,10 @@ export default function Post({
     lg: "?h=1300&f=webp",
   };
 
-  console.log(links);
-
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       onClick={() => navigate("..")}
       className="no-doc-scroll bg-background/90 fixed inset-0 z-50 flex h-screen w-full flex-col items-center justify-center gap-4 px-4 py-16 backdrop-grayscale-100 md:px-32"
     >
@@ -222,7 +224,7 @@ export default function Post({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
