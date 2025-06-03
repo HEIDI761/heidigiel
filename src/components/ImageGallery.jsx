@@ -18,18 +18,17 @@ export default function ImageGallery({ data, closeGallery }) {
 
       <div
         onClick={(event) => event.stopPropagation()}
-        className="bg-background border-background-dim shadow-background-dim overflow-y-auto border p-4 shadow-md"
+        className="bg-background border-background-dim shadow-background-dim h-full w-full overflow-y-auto border p-4 shadow-md"
       >
         <div className="columns-3 gap-2">
           {data.coverImage && (
             <div
               key={data.coverImage._key}
-              className="border-background mb-2 h-auto w-full overflow-hidden rounded-sm border"
+              className="border-background-dim mb-2 h-auto w-full overflow-hidden rounded-sm border"
             >
               <ImageContainer image={data.coverImage} imgSize={imgSize.md} />
             </div>
           )}
-
           {data.images.map((image) => (
             <div
               key={image._key}
