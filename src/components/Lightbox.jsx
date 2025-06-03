@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
 import useLightbox from "../hooks/useLightbox";
 import { NavLink } from "react-router";
 import useLanguage from "../hooks/useLanguage";
+import { useEffect } from "react";
 
 export default function Lightbox() {
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -11,16 +12,31 @@ export default function Lightbox() {
     useLightbox();
   const { language } = useLanguage();
 
+  const handleClick = useCallback(() => {
+    setIsLightboxOpen(false);
+    setRelatedProject(null);
+  }, [setIsLightboxOpen, setRelatedProject]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        handleClick();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleClick]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="no-doc-scroll fixed inset-0 z-100 flex h-screen w-screen cursor-zoom-out items-center justify-center backdrop-brightness-20 backdrop-grayscale-100"
-      onClick={() => {
-        setIsLightboxOpen(false);
-        setRelatedProject(null);
-      }}
+      onClick={() => handleClick()}
     >
       {!imageLoaded && (
         <div className="fixed flex items-center justify-center">
