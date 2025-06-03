@@ -80,45 +80,51 @@ export default function Audiovisual() {
             if (!element.project.isImageGallery) {
               const coverImage = element.project.coverImage?.url
                 ? [
-                    <NavLink
+                    <div
                       onMouseEnter={() => setHovered(element.project._id)}
                       onMouseLeave={() => setHovered(null)}
-                      to={`/audiovisual/${element.project.slug?.current}`}
                       key={`${element._key}-cover`}
-                      className={`group relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.project.isFavorite ? (element.project.coverImage.dimensions.height > element.project.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                      className={`group relative cursor-pointer overflow-hidden ${element.project.isFavorite ? (element.project.coverImage.dimensions.height > element.project.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""}`}
                     >
-                      {element.project.previewUrl ? (
-                        <div
-                          style={{
-                            backgroundImage: `url("${element.project.coverImage.url}?fm=webp&h=800")`,
-                          }}
-                          className="relative h-full w-full rounded-sm bg-cover bg-center"
-                        >
-                          <VimeoPlayer
-                            url={element.project.previewUrl}
-                            autoplay={1}
-                            background={1}
-                            loop={1}
+                      <NavLink
+                        to={`/audiovisual/${element.project.slug?.current}`}
+                        className={`absolute h-full w-full overflow-hidden border shadow-md transition-all duration-500 ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                      >
+                        {element.project.previewUrl ? (
+                          <div
+                            style={{
+                              backgroundImage: `url("${element.project.coverImage.url}?fm=webp&h=800")`,
+                            }}
+                            className="relative h-full w-full rounded-sm bg-cover bg-center"
+                          >
+                            <VimeoPlayer
+                              url={element.project.previewUrl}
+                              autoplay={1}
+                              background={1}
+                              loop={1}
+                            />
+                          </div>
+                        ) : (
+                          <ImageContainer
+                            image={element.project.coverImage}
+                            item={element.project}
+                            className="group-hover:scale-105"
+                            imgSize={
+                              element.project.isFavorite
+                                ? imgSize.md
+                                : imgSize.sm
+                            }
                           />
-                        </div>
-                      ) : (
-                        <ImageContainer
-                          image={element.project.coverImage}
-                          item={element.project}
-                          className="group-hover:scale-105"
-                          imgSize={
-                            element.project.isFavorite ? imgSize.md : imgSize.sm
-                          }
-                        />
-                      )}
-                      {!element.project.isImageGallery && (
-                        <div
-                          className={`absolute inset-0 z-10 flex items-center justify-center p-4 text-center uppercase opacity-0 mix-blend-difference transition-opacity duration-500 ${hovered === element.project._id ? "opacity-100" : ""}`}
-                        >
-                          {element.project.title.es}
-                        </div>
-                      )}
-                    </NavLink>,
+                        )}
+                        {!element.project.isImageGallery && (
+                          <div
+                            className={`absolute inset-0 z-10 flex items-center justify-center p-4 text-center uppercase opacity-0 mix-blend-difference transition-opacity duration-500 ${hovered === element.project._id ? "opacity-100" : ""}`}
+                          >
+                            {element.project.title.es}
+                          </div>
+                        )}
+                      </NavLink>
+                    </div>,
                   ]
                 : [];
 
