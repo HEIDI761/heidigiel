@@ -99,7 +99,7 @@ export default function Music() {
       )}
       <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
 
-      <div className="sticky top-16 z-40 flex flex-col flex-wrap justify-between gap-4 md:top-24 md:flex-row">
+      <div className="sticky top-16 z-40 flex flex-wrap justify-between gap-4 md:top-24">
         <Filters />
 
         {description && (
@@ -133,7 +133,7 @@ export default function Music() {
               )}
             </button>
             {isDescriptionOpen && (
-              <div className="bg-text text-background border-muted-text shadow-background-dim absolute top-12 left-10 flex max-h-[400px] max-w-prose flex-col gap-2 overflow-y-auto border p-4 text-sm shadow-md md:top-0 md:right-10 md:left-auto">
+              <div className="bg-text text-background border-muted-text shadow-background-dim absolute top-0 right-10 flex max-h-[400px] max-w-prose flex-col gap-2 overflow-y-auto border p-4 text-sm shadow-md">
                 <PortableText value={description} />
               </div>
             )}
