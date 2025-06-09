@@ -53,7 +53,7 @@ export default function VimeoPlayer({
   }, [vimeoId]);
 
   return background == 1 && !shortVideo ? (
-    <div className="absolute inset-0 overflow-hidden backdrop-blur-md">
+    <div className="absolute inset-0 overflow-hidden bg-black">
       <iframe
         ref={iframeRef}
         className={`absolute ${background == 1 ? "pointer-events-none" : ""}`}
