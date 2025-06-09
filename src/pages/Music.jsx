@@ -230,7 +230,8 @@ export default function Music() {
                             <p
                               className={`border-muted-text rounded-full border px-2 font-mono text-[0.65rem] lowercase transition-colors duration-500 md:text-xs ${hovered === element.item._id ? "text-text bg-background" : "bg-text text-background"}`}
                             >
-                              {element.item.type.type.es}
+                              {element.item.type.type[language] ||
+                                element.item.type.type.es}
                             </p>
                           </div>
                         )}
@@ -397,7 +398,7 @@ export default function Music() {
               }
               className={`border-text hover:bg-text hover:text-background cursor-pointer border px-2 leading-tight uppercase backdrop-blur-xl transition-colors duration-500 ${selectedFilter === type ? "bg-text text-background" : "bg-text/10"}`}
             >
-              {type.type.es}
+              {type.type[language] || type.type.es}
             </button>
           ))}
           <button

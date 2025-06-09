@@ -16,6 +16,7 @@ export default function Audiovisual() {
   const [hovered, setHovered] = useState(null);
   const [imageGalleryData, setImageGalleryData] = useState(null);
   const [isImageGalleryOpen, setIsImageGalleryOpen] = useState(false);
+  const { language } = useLanguage();
 
   const imgSize = {
     sm: "?h=600&f=webp",
@@ -261,7 +262,7 @@ export default function Audiovisual() {
             }
             className={`border-text hover:bg-text hover:text-background cursor-pointer border px-2 leading-tight uppercase backdrop-blur-xl transition-colors duration-500 ${selectedFilter === type ? "bg-text text-background" : "bg-text/10"}`}
           >
-            {type.type.es}
+            {type.type[language] || type.type.es}
           </button>
         ))}
         <button
