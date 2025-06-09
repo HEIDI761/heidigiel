@@ -17,6 +17,7 @@ import EmbedPlayer from "./components/EmbedPlayer";
 import CursorDecorationV2 from "./components/CursorDecorationV2";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
+import MarqueeText from "./components/MarqueeText";
 
 function App() {
   const { data, isLoading, error } = useAbout();
@@ -76,16 +77,19 @@ function App() {
           <Menu openContact={() => setIsContactOpen(true)} />
 
           {data.highlight.highlightRef && (
-            <div className="fixed right-4 bottom-6 z-50">
-              <NavLink
-                to={`${data.highlight.highlightRef._type === "audiovisualProject" ? "audiovisual" : "musica"}/${data.highlight.highlightRef.slug}`}
-                className="hover:bg-text hover:text-accent text-text bg-text/10 border-text cursor-pointer rounded-full border px-2 text-xs uppercase backdrop-blur-xl transition-colors duration-500"
-              >
-                {data.highlight.text[language] || data.highlight.text.es}:{" "}
-                {data.highlight.highlightRef.title[language] ||
-                  data.highlight.highlightRef.title.es}
-              </NavLink>
-            </div>
+            <NavLink
+              to={`${data.highlight.highlightRef._type === "audiovisualProject" ? "audiovisual" : "musica"}/${data.highlight.highlightRef.slug}`}
+              className="fixed right-4 bottom-6 z-50 w-1/3 leading-none"
+            >
+              <MarqueeText
+                text={`${data.highlight.text[language] || data.highlight.text.es}: 
+                ${
+                  data.highlight.highlightRef.title[language] ||
+                  data.highlight.highlightRef.title.es
+                }`}
+                className="hover:bg-text hover:text-accent text-text bg-text/10 border-text cursor-pointer rounded-full border px-2 py-0.25 text-xs uppercase backdrop-blur-xl transition-colors duration-500"
+              />
+            </NavLink>
           )}
 
           <div className="px-4 pt-24">
