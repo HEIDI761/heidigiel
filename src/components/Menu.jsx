@@ -27,7 +27,7 @@ export default function Menu({ openContact }) {
 
           <NavLink
             to="/"
-            className={`font-display pointer-events-auto -mt-2 w-full max-w-max px-2 text-center leading-none transition-all duration-500 ${location.pathname === "/" ? "text-[5vw]" : "text-xl md:text-3xl"}`}
+            className={`font-display pointer-events-auto -mt-2 w-full max-w-max px-2 text-center leading-none transition-all duration-500 ${location.pathname === "/" ? "text-xl md:text-[4vw]" : "text-xl md:text-3xl"}`}
           >
             Heidi Giel
           </NavLink>

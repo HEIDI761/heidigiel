@@ -92,7 +92,7 @@ function App() {
             </NavLink>
           )}
 
-          <div className="px-4 pt-24">
+          <div className="px-4 pt-16 md:pt-24">
             <Routes>
               <Route path="/" element={null} />
               <Route path="/bio" element={<About />} />

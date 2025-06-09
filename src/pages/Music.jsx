@@ -90,7 +90,7 @@ export default function Music() {
     matchedProject?.description?.[language] || matchedProject?.description?.es;
 
   return (
-    <div className="flex flex-col gap-8 pb-24">
+    <div className="flex flex-col gap-4 pb-24 md:gap-8">
       {isImageGalleryOpen && (
         <ImageGallery
           data={imageGalleryData}
@@ -99,7 +99,7 @@ export default function Music() {
       )}
       <div className="from-background/80 fixed inset-0 -z-10 h-screen w-full bg-radial from-40% to-transparent to-80% bg-fixed" />
 
-      <div className="sticky top-24 z-40 flex flex-wrap justify-between gap-4">
+      <div className="sticky top-16 z-40 flex flex-wrap justify-between gap-4 md:top-24">
         <Filters />
 
         {description && (
@@ -141,7 +141,7 @@ export default function Music() {
         )}
       </div>
 
-      <div className="grid grid-flow-dense auto-rows-[250px] gap-2 md:grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
+      <div className="grid grid-flow-dense auto-rows-[150px] grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-2 md:auto-rows-[250px] md:grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
         {data.content.flatMap((element) => {
           if (element._type === "item" && element.item) {
             const matchesFilter =
@@ -162,7 +162,7 @@ export default function Music() {
                       key={`${element._key}-cover`}
                       onMouseEnter={() => setHovered(element.item._id)}
                       onMouseLeave={() => setHovered(null)}
-                      className={`group relative cursor-pointer overflow-hidden ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "md:row-span-2" : "md:col-span-2") : ""} `}
+                      className={`group relative cursor-pointer overflow-hidden ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} `}
                     >
                       {element.item.musicEmbed && (
                         <div className="absolute bottom-2 left-2 z-30">
@@ -213,7 +213,7 @@ export default function Music() {
                         {element.item.type && (
                           <div className="pointer-events-none absolute inset-0 z-30 flex items-start justify-end p-2">
                             <p
-                              className={`border-muted-text rounded-full border px-2 font-mono text-xs lowercase transition-colors duration-500 ${hovered === element.item._id ? "text-text bg-background" : "bg-text text-background"}`}
+                              className={`border-muted-text rounded-full border px-2 font-mono text-[0.65rem] lowercase transition-colors duration-500 md:text-xs ${hovered === element.item._id ? "text-text bg-background" : "bg-text text-background"}`}
                             >
                               {element.item.type.type.es}
                             </p>

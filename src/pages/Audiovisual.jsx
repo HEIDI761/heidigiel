@@ -60,7 +60,7 @@ export default function Audiovisual() {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className="flex flex-col gap-8 pb-24">
+    <div className="flex flex-col gap-4 pb-24 md:gap-8">
       {isImageGalleryOpen && (
         <ImageGallery
           data={imageGalleryData}
@@ -71,7 +71,7 @@ export default function Audiovisual() {
 
       <Filters />
 
-      <div className="grid grid-flow-dense auto-rows-[250px] gap-2 md:grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
+      <div className="grid grid-flow-dense auto-rows-[100px] grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-2 md:auto-rows-[250px] md:grid-cols-[repeat(auto-fill,minmax(250px,1fr))]">
         {data.content.flatMap((element) => {
           if (element._type === "audiovisualProject" && element.project) {
             const matchesFilter = checkMatchesFilter(element);
@@ -250,7 +250,7 @@ export default function Audiovisual() {
 
   function Filters() {
     return (
-      <div className="sticky top-24 z-30 flex flex-wrap justify-end gap-1 self-end font-mono text-xs">
+      <div className="sticky top-16 z-30 flex flex-wrap justify-end gap-1 self-end font-mono text-xs md:top-24">
         {filters?.map((type) => (
           <button
             key={type._id}
