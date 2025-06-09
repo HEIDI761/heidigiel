@@ -79,8 +79,7 @@ function App() {
             <div className="fixed right-4 bottom-6 z-50">
               <NavLink
                 to={`${data.highlight.highlightRef._type === "audiovisualProject" ? "audiovisual" : "musica"}/${data.highlight.highlightRef.slug}`}
-                // onClick={() => handleHighlightClick(data.highlight)}
-                className="hover:bg-text hover:text-accent border-text cursor-pointer rounded-full border px-2 text-xs uppercase transition-colors duration-500"
+                className="hover:bg-text hover:text-accent text-text bg-text/10 border-text cursor-pointer rounded-full border px-2 text-xs uppercase backdrop-blur-xl transition-colors duration-500"
               >
                 {data.highlight.text[language] || data.highlight.text.es}:{" "}
                 {data.highlight.highlightRef.title[language] ||
@@ -88,6 +87,7 @@ function App() {
               </NavLink>
             </div>
           )}
+
           <div className="px-4 pt-24">
             <Routes>
               <Route path="/" element={null} />
