@@ -77,6 +77,21 @@ export default function Music() {
     setIsImageGalleryOpen(true);
   };
 
+  const components = {
+    marks: {
+      link: ({ value, children }) => (
+        <a
+          href={value.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:bg-background -dim hover:text-text underline transition-colors duration-500"
+        >
+          {children}
+        </a>
+      ),
+    },
+  };
+
   if (isLoading || isLoadingProjects) return <Loading />;
   if (error || errorProjects) return <div>Error: {error.message}</div>;
 
@@ -134,7 +149,7 @@ export default function Music() {
             </button>
             {isDescriptionOpen && (
               <div className="bg-text text-background border-muted-text shadow-background-dim absolute top-12 left-10 flex max-h-[400px] max-w-prose flex-col gap-2 overflow-y-auto border p-4 text-sm shadow-md md:top-0 md:right-10 md:left-auto">
-                <PortableText value={description} />
+                <PortableText components={components} value={description} />
               </div>
             )}
           </>

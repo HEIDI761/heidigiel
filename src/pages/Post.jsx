@@ -35,6 +35,21 @@ export default function Post({
     lg: "?h=1300&f=webp",
   };
 
+  const components = {
+    marks: {
+      link: ({ value, children }) => (
+        <a
+          href={value.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:bg-background -dim hover:text-text underline transition-colors duration-500"
+        >
+          {children}
+        </a>
+      ),
+    },
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -132,6 +147,7 @@ export default function Post({
                 {description && (
                   <div className="flex w-full max-w-prose flex-col gap-4">
                     <PortableText
+                      components={components}
                       value={description[language] || description.es}
                     />
                   </div>
