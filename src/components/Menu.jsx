@@ -8,7 +8,7 @@ export default function Menu({ openContact }) {
 
   return (
     <>
-      <nav className="pointer-events-none fixed inset-0 z-50 flex h-screen w-full flex-col justify-between overflow-hidden px-4 pt-3 pb-6 uppercase">
+      <nav className="pointer-events-none fixed top-0 left-0 z-50 flex h-screen w-full flex-col justify-between overflow-hidden px-4 pt-3 pb-6 uppercase">
         <div className="flex items-start justify-between">
           <NavLink
             to="/musica"
@@ -48,7 +48,7 @@ export default function Menu({ openContact }) {
           </NavLink>
         </div>
 
-        <div className="">
+        <div className="fixed bottom-6 left-4">
           <div className="pointer-events-auto flex flex-col items-start justify-between gap-2 leading-none">
             <LanguageSwitcher />
             <div className="-ml-1 flex">
