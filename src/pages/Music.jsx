@@ -189,7 +189,7 @@ export default function Music() {
                         key={`${element._key}-cover`}
                       >
                         <div
-                          className={`h-full w-full overflow-hidden border shadow-md transition-all duration-500 ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                          className={`border-background-dim h-full w-full overflow-hidden border shadow-md transition-all duration-500 ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
                         >
                           {element.item.vimeoShortVideos?.length > 0 ? (
                             <div
@@ -250,7 +250,7 @@ export default function Music() {
                         onMouseEnter={() => setHovered(element.item._id)}
                         onMouseLeave={() => setHovered(null)}
                         key={img._key}
-                        className={`overflow-hidden border transition-all duration-500 ${hovered === element.item._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                        className={`border-background-dim overflow-hidden border transition-all duration-500 ${hovered === element.item._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
                       >
                         <ImageContainer
                           image={img}
@@ -339,7 +339,7 @@ export default function Music() {
             return (
               <div
                 key={element._key}
-                className={`border-background-dim cursor-zoom-in overflow-hidden rounded-lg border transition-all duration-500 ${hovered === element._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                className={`border-background-dim cursor-zoom-in overflow-hidden border transition-all duration-500 ${hovered === element._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
               >
                 <ImageContainer
                   image={element.asset}

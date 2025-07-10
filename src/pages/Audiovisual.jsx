@@ -89,7 +89,7 @@ export default function Audiovisual() {
                     >
                       <NavLink
                         to={`/audiovisual/${element.project.slug?.current}`}
-                        className={`absolute h-full w-full overflow-hidden border shadow-md transition-all duration-500 ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                        className={`border-background-dim absolute h-full w-full overflow-hidden border shadow-md transition-all duration-500 ${element.project.isImageGallery ? "rounded-lg" : ""} ${hovered === element.project._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
                       >
                         {element.project.previewUrl ? (
                           <div
@@ -138,7 +138,7 @@ export default function Audiovisual() {
                         onMouseEnter={() => setHovered(element.project._id)}
                         onMouseLeave={() => setHovered(null)}
                         key={img._key}
-                        className={`overflow-hidden border transition-all duration-500 ${hovered === element.project._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                        className={`border-background-dim overflow-hidden border transition-all duration-500 ${hovered === element.project._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
                       >
                         <ImageContainer
                           image={img}
@@ -230,7 +230,7 @@ export default function Audiovisual() {
             return (
               <div
                 key={element._key}
-                className={`border-background-dim cursor-zoom-in overflow-hidden rounded-lg border transition-all duration-500 ${hovered === element._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
+                className={`border-background-dim cursor-zoom-in overflow-hidden border transition-all duration-500 ${hovered === element._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
               >
                 <ImageContainer
                   image={element?.asset}
