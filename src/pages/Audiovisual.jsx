@@ -269,7 +269,7 @@ export default function Audiovisual() {
 
   function Filters() {
     return (
-      <div className="sticky top-16 z-30 flex flex-wrap items-center justify-end gap-1 self-end font-mono text-sm md:top-24">
+      <div className="sticky top-16 z-30 flex flex-wrap items-center justify-end gap-1 self-end font-mono text-base sm:text-xs md:top-24">
         {filters?.map((type) => (
           <button
             key={type._id}
@@ -295,7 +295,7 @@ export default function Audiovisual() {
         </button>
         <button
           onClick={() => setSelectedFilter(null)}
-          className="border-text bg-text/10 size-6 cursor-pointer rounded-full border leading-tight uppercase backdrop-blur-xl"
+          className="border-text bg-text/10 size-8 cursor-pointer rounded-full border leading-tight uppercase backdrop-blur-xl sm:size-4"
         >
           x
         </button>

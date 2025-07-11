@@ -376,11 +376,11 @@ export default function Music() {
 
   function Filters() {
     return (
-      <div className="flex flex-col gap-1 font-mono text-sm">
+      <div className="flex flex-col gap-1 font-mono text-base sm:text-xs">
         <div className="flex flex-wrap items-center gap-1">
           <button
             onClick={() => setSelectedProject(null)}
-            className="border-text bg-text/10 size-6 cursor-pointer rounded-full border leading-tight uppercase backdrop-blur-xl"
+            className="border-text bg-text/10 size-8 cursor-pointer rounded-full border leading-tight uppercase backdrop-blur-xl sm:size-4"
           >
             x
           </button>
@@ -402,7 +402,7 @@ export default function Music() {
         <div className="flex flex-wrap items-center gap-1">
           <button
             onClick={() => setSelectedFilter(null)}
-            className="border-text bg-text/10 size-6 cursor-pointer rounded-full border leading-tight uppercase backdrop-blur-xl"
+            className="border-text bg-text/10 size-8 cursor-pointer rounded-full border leading-tight uppercase backdrop-blur-xl sm:size-4"
           >
             x
           </button>
