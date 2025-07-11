@@ -11,6 +11,7 @@ import ImageContainer from "../components/ImageContainer";
 import ImageGallery from "../components/ImageGallery";
 import VimeoPlayer from "../components/VimeoPlayer";
 import PlayEmbedButton from "../components/PlayEmbedButton";
+import useIsMobile from "../hooks/useIsMobile";
 
 export default function Music() {
   const { data, isLoading, error } = useMusicContent();
@@ -28,6 +29,7 @@ export default function Music() {
   const [isImageGalleryOpen, setIsImageGalleryOpen] = useState(false);
   const [isDescriptionOpen, setDescriptionIsOpen] = useState(false);
   const { language } = useLanguage();
+  const isMobile = useIsMobile();
 
   const imgSize = {
     sm: "?h=600&f=webp",
@@ -175,8 +177,12 @@ export default function Music() {
                 ? [
                     <div
                       key={`${element._key}-cover`}
-                      onMouseEnter={() => setHovered(element.item._id)}
-                      onMouseLeave={() => setHovered(null)}
+                      onMouseEnter={() => {
+                        !isMobile && setHovered(element.item._id);
+                      }}
+                      onMouseLeave={() => {
+                        !isMobile && setHovered(null);
+                      }}
                       className={`group relative cursor-pointer overflow-hidden ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""} `}
                     >
                       {element.item.musicEmbed && (
@@ -247,8 +253,12 @@ export default function Music() {
                     index < 4 &&
                     img.url && (
                       <div
-                        onMouseEnter={() => setHovered(element.item._id)}
-                        onMouseLeave={() => setHovered(null)}
+                        onMouseEnter={() => {
+                          !isMobile && setHovered(element.item._id);
+                        }}
+                        onMouseLeave={() => {
+                          !isMobile && setHovered(null);
+                        }}
                         key={img._key}
                         className={`border-background-dim overflow-hidden border transition-all duration-500 ${hovered === element.item._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
                       >
@@ -267,8 +277,12 @@ export default function Music() {
               const coverImage = element.item.coverImage?.url
                 ? [
                     <div
-                      onMouseEnter={() => setHovered(element.item._id)}
-                      onMouseLeave={() => setHovered(null)}
+                      onMouseEnter={() => {
+                        !isMobile && setHovered(element.item._id);
+                      }}
+                      onMouseLeave={() => {
+                        !isMobile && setHovered(null);
+                      }}
                       key={`${element._key}-cover`}
                       onClick={() => openImageGallery({ data: element.item })}
                       className={`group border-background-dim relative cursor-pointer overflow-hidden border shadow-md transition-all duration-500 ${element.item.isFavorite ? (element.item.coverImage.dimensions.height > element.item.coverImage.dimensions.width ? "md:row-span-2" : "md:col-span-2") : ""} ${hovered === element.item._id ? "rounded-[50%]" : hovered === null ? "" : "contrast-50 grayscale-100"}`}
@@ -302,8 +316,12 @@ export default function Music() {
                     index < 4 &&
                     img.url && (
                       <div
-                        onMouseEnter={() => setHovered(element.item._id)}
-                        onMouseLeave={() => setHovered(null)}
+                        onMouseEnter={() => {
+                          !isMobile && setHovered(element.item._id);
+                        }}
+                        onMouseLeave={() => {
+                          !isMobile && setHovered(null);
+                        }}
                         onClick={() => openImageGallery({ data: element.item })}
                         key={img._key}
                         className={`border-background-dim overflow-hidden border transition-all duration-500 ${hovered === element.item._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}

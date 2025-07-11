@@ -7,6 +7,7 @@ import VimeoPlayer from "../components/VimeoPlayer";
 import ImageContainer from "../components/ImageContainer";
 import ImageGallery from "../components/ImageGallery";
 import Tag from "../components/Tag";
+import useIsMobile from "../hooks/useIsMobile";
 
 export default function Audiovisual() {
   const { data, isLoading, error } = useAudiovisualContent();
@@ -17,6 +18,7 @@ export default function Audiovisual() {
   const [imageGalleryData, setImageGalleryData] = useState(null);
   const [isImageGalleryOpen, setIsImageGalleryOpen] = useState(false);
   const { language } = useLanguage();
+  const isMobile = useIsMobile();
 
   const imgSize = {
     sm: "?h=600&f=webp",
@@ -82,8 +84,12 @@ export default function Audiovisual() {
               const coverImage = element.project.coverImage?.url
                 ? [
                     <div
-                      onMouseEnter={() => setHovered(element.project._id)}
-                      onMouseLeave={() => setHovered(null)}
+                      onMouseEnter={() => {
+                        !isMobile && setHovered(element.project._id);
+                      }}
+                      onMouseLeave={() => {
+                        !isMobile && setHovered(null);
+                      }}
                       key={`${element._key}-cover`}
                       className={`group relative cursor-pointer overflow-hidden ${element.project.isFavorite ? (element.project.coverImage.dimensions.height > element.project.coverImage.dimensions.width ? "row-span-2" : "col-span-2") : ""}`}
                     >
@@ -135,8 +141,12 @@ export default function Audiovisual() {
                     element.project.isFavorite &&
                     index < 4 && (
                       <div
-                        onMouseEnter={() => setHovered(element.project._id)}
-                        onMouseLeave={() => setHovered(null)}
+                        onMouseEnter={() => {
+                          !isMobile && setHovered(element.project._id);
+                        }}
+                        onMouseLeave={() => {
+                          !isMobile && setHovered(null);
+                        }}
                         key={img._key}
                         className={`border-background-dim overflow-hidden border transition-all duration-500 ${hovered === element.project._id || hovered === null ? "" : "contrast-50 grayscale-100"}`}
                       >
@@ -155,8 +165,12 @@ export default function Audiovisual() {
               const coverImage = element.project.coverImage?.url
                 ? [
                     <div
-                      onMouseEnter={() => setHovered(element.project._id)}
-                      onMouseLeave={() => setHovered(null)}
+                      onMouseEnter={() => {
+                        !isMobile && setHovered(element.project._id);
+                      }}
+                      onMouseLeave={() => {
+                        !isMobile && setHovered(null);
+                      }}
                       key={`${element._key}-cover`}
                       onClick={() =>
                         openImageGallery({ data: element.project })
@@ -192,8 +206,12 @@ export default function Audiovisual() {
                     element.project.isFavorite &&
                     index < 4 && (
                       <div
-                        onMouseEnter={() => setHovered(element.project._id)}
-                        onMouseLeave={() => setHovered(null)}
+                        onMouseEnter={() => {
+                          !isMobile && setHovered(element.project._id);
+                        }}
+                        onMouseLeave={() => {
+                          !isMobile && setHovered(null);
+                        }}
                         onClick={() =>
                           openImageGallery({ data: element.project })
                         }
