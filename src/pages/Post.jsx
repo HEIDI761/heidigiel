@@ -229,7 +229,7 @@ export default function Post({
                     image.url && (
                       <div
                         key={image._key}
-                        className="border-background-dim mb-2 h-auto w-full cursor-zoom-in overflow-hidden rounded-sm border"
+                        className="border-background-dim mb-2 h-auto w-full cursor-zoom-in break-inside-avoid overflow-hidden rounded-sm border"
                       >
                         <ImageContainer image={image} imgSize={imgSize.md} />
                       </div>
