@@ -6,7 +6,7 @@ export default function ImageContainer({ image, item, imgSize, className }) {
 
   return (
     <div
-      className="h-full w-full overflow-hidden"
+      className={`h-full w-full overflow-hidden ${className}`}
       onClick={() => {
         openLightbox(image, item);
       }}
@@ -20,7 +20,7 @@ export default function ImageContainer({ image, item, imgSize, className }) {
       <img
         src={image.url + (imgSize || "?fm=webp&h=800")}
         alt={item ? item.title.es : ""}
-        className={`h-full w-full cursor-zoom-in object-cover transition-transform duration-500 ${className}`}
+        className={`h-full w-full cursor-zoom-in object-cover transition-transform duration-500`}
         loading="lazy"
       />
     </div>
