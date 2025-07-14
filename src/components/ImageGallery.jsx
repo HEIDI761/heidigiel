@@ -24,17 +24,21 @@ export default function ImageGallery({ data, closeGallery }) {
           {data.coverImage && (
             <div
               key={data.coverImage._key}
-              className="border-background-dim mb-2 h-auto w-full overflow-hidden rounded-sm border"
+              className="h-auto w-full break-inside-avoid pb-2"
             >
-              <ImageContainer image={data.coverImage} imgSize={imgSize.md} />
+              <div className="border-background-dim overflow-hidden rounded-sm border">
+                <ImageContainer image={data.coverImage} imgSize={imgSize.md} />
+              </div>
             </div>
           )}
           {data.images.map((image) => (
             <div
               key={image._key}
-              className="border-background-dim mb-2 h-auto w-full overflow-hidden rounded-sm border"
+              className="h-auto w-full break-inside-avoid pb-2"
             >
-              <ImageContainer image={image} imgSize={imgSize.md} />
+              <div className="border-background-dim overflow-hidden rounded-sm border">
+                <ImageContainer image={image} imgSize={imgSize.md} />
+              </div>
             </div>
           ))}
         </div>
