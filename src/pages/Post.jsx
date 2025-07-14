@@ -132,9 +132,9 @@ export default function Post({
           className={`flex gap-4 ${coverPosition === "top" ? "flex-col" : "flex-col-reverse"}`}
         >
           <div
-            className={`grid gap-2 ${description || links ? "items-start lg:grid-cols-[1fr_2fr]" : "mx-auto lg:grid-cols-1"}`}
+            className={`grid gap-2 ${description || links ? "items-start lg:grid-cols-[1fr_2fr]" : "place-items-center"}`}
           >
-            <div className="border-background-dim mr-auto cursor-zoom-in border">
+            <div className="border-background-dimh-auto w-full cursor-zoom-in border">
               <ImageContainer
                 image={coverImage}
                 imgSize={imgSize.lg}
