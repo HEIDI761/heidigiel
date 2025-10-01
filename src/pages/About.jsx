@@ -28,7 +28,7 @@ export default function About() {
 
       {data?.bio && (
         <motion.div
-          className="mx-auto max-w-prose"
+          className="bg-background/70 mx-auto max-w-prose rounded-b-4xl border p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 2 }}
